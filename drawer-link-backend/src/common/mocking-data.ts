@@ -38,6 +38,7 @@ async function mockLinks(drawers: Drawer[]): Promise<Link[]> {
       {
         url: 'https://www.jacobinmag.com/',
         title: 'Jacobin Mag',
+        description: 'Links ? Yep',
         drawer: drawers[0],
         user: drawers[0].user
       }
@@ -45,6 +46,17 @@ async function mockLinks(drawers: Drawer[]): Promise<Link[]> {
     await repo.save(await repo.create(
       {
         url: 'https://www.politico.eu/',
+        title: 'Politico mag',
+        description: 'Not realy a socialist mag',
+        drawer: drawers[0],
+        user: drawers[0].user
+      }
+    )),
+    await repo.save(await repo.create(
+      {
+        url: 'https://berniesanders.com/',
+        title: 'Bernie Sanders',
+        description: 'Yep, do you feel the bern ?',
         drawer: drawers[0],
         user: drawers[0].user
       }
@@ -53,7 +65,7 @@ async function mockLinks(drawers: Drawer[]): Promise<Link[]> {
       {
         url: 'https://www.victoria3game.com/en',
         title: 'Victoria 3',
-        description: 'We are still waiting ...',
+        description: 'We are still waiting ... Yep',
         drawer: drawers[1],
         user: drawers[1].user
       }

@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card v-if="!user">
+      <v-card v-if="!user" shaped>
         <v-card-title class="headline"> Login </v-card-title>
         <v-card-text>
           <v-form v-model="valid" ref="form">
@@ -78,6 +78,7 @@ export default {
 
     logout() {
       this.$store.commit("user/logout");
+      localStorage.removeItem("drawerlinkToken");
     },
   },
 

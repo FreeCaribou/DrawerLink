@@ -1,16 +1,25 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card>
-        <v-card-text v-if="!user"> Go to login please </v-card-text>
+    <v-col>
+      <v-card v-if="!user">
+        <v-card-text> Go to login please </v-card-text>
+      </v-card>
 
-        <v-card-text v-if="user">
+      <v-card v-if="user">
+        <v-card-text>
           Hello {{ user.pseudo }}
+
+          <v-text-field
+            v-model="search"
+            label="Search"
+            prepend-inner-icon="mdi-folder-search"
+            outlined
+          ></v-text-field>
           <v-list>
             <v-list-group
-              v-for="drawer in drawers"
+              v-for="drawer in filteredDrawers"
               :key="drawer.uuid"
-              prepend-icon="mdi-locker-multiple"
+              prepend-icon="mdi-folder"
             >
               <template v-slot:activator>
                 <v-list-item-content>
@@ -32,7 +41,11 @@
               </v-list-item>
             </v-list-group>
           </v-list>
+        </v-card-text>
+      </v-card>
 
+      <v-card v-if="user" class="mt-5">
+        <v-card-text>
           <v-btn class="ma-2" color="primary" @click="addDrawer()">
             Drawer
             <v-icon right> mdi-plus-circle </v-icon>
@@ -44,7 +57,7 @@
         </v-card-text>
       </v-card>
 
-      <v-card v-if="showDrawerForm" class="mt-5">
+      <v-card v-if="showDrawerForm" class="mt-5" shaped>
         <v-card-text>
           <v-form ref="drawerForm">
             <v-text-field
@@ -65,7 +78,7 @@
         </v-card-text>
       </v-card>
 
-      <v-card v-if="showLinkForm" class="mt-5">
+      <v-card v-if="showLinkForm" class="mt-5" shaped>
         <v-card-text>
           <v-form ref="linkForm">
             <v-text-field
@@ -116,6 +129,8 @@ export default {
 
   data: () => ({
     drawers: [],
+    filteredDrawers: [],
+    search: "",
     showDrawerForm: false,
     showLinkForm: false,
 
@@ -182,6 +197,7 @@ export default {
         .get("drawers", { headers: { user_token: this.user.token } })
         .then((res) => {
           this.drawers = res.data;
+          this.filteredDrawers = this.drawers;
         });
     },
   },
@@ -189,6 +205,29 @@ export default {
   computed: {
     user() {
       return this.$store.state.user.user;
+    },
+  },
+
+  watch: {
+    search(value, oldValue) {
+      if (value && value.trim() !== "") {
+        const neutralValue = value.toLowerCase();
+        this.filteredDrawers = [];
+        this.drawers.forEach((d) => {
+          const links = d.links.filter(
+            (l) =>
+              l.url.toLowerCase().includes(neutralValue) ||
+              l.title.toLowerCase().includes(neutralValue) ||
+              l.description.toLowerCase().includes(neutralValue)
+          );
+
+          if (links.length > 0) {
+            this.filteredDrawers.push({...d, links})
+          }
+        });
+      } else {
+        this.filteredDrawers = this.drawers;
+      }
     },
   },
 };
