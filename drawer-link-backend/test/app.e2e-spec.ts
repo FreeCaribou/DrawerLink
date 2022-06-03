@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { mockingData } from '../src/common/mocking-data';
 import { getConnection } from 'typeorm';
-import { Drawer } from 'src/drawers/entities/drawer.entity';
+import { Drawer } from '../src/drawers/entities/drawer.entity';
 
 jest.setTimeout(1000 * 10);
 

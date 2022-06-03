@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../users/entities/user.entity";
 import { Repository } from "typeorm";
 import { Link } from "./entities/link.entity";
-import { Drawer } from "src/drawers/entities/drawer.entity";
+import { Drawer } from "../drawers/entities/drawer.entity";
 import { CreateLinkDto } from "./dto/create-link.dto";
 
 @Injectable()

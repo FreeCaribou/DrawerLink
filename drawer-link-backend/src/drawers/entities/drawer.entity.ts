@@ -1,7 +1,7 @@
 import { User } from "../../users/entities/user.entity";
 import { Entity, Column, PrimaryColumn, BeforeInsert, ManyToOne, OneToMany } from "typeorm";
 import { v5 as uuidv5 } from 'uuid';
-import { Link } from "src/links/entities/link.entity";
+import { Link } from "../../links/entities/link.entity";
 
 @Entity()
 export class Drawer {

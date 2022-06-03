@@ -1,5 +1,5 @@
 import { IsOptional, IsString } from "class-validator";
-import { Drawer } from "src/drawers/entities/drawer.entity";
+import { Drawer } from "../../drawers/entities/drawer.entity";
 
 export class CreateLinkDto {
   @IsString()
