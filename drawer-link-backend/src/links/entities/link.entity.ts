@@ -17,6 +17,9 @@ export class Link {
   @Column()
   description: string;
 
+  @Column('simple-array')
+  tags: string[];
+
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   user: User;
 

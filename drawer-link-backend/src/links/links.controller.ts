@@ -1,4 +1,4 @@
-import { Controller, Headers, Post, Body } from "@nestjs/common";
+import { Controller, Headers, Post, Body, Get } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Auth } from '../common/decorators/auth.decorator';
 import { RoleEnum } from '../common/role.enum';
@@ -17,5 +17,11 @@ export class LinksController {
   @Post()
   create(@Body() createLinkDto: CreateLinkDto, @Headers() header) {
     return this.linksService.create(createLinkDto, header.user_token);
+  }
+
+  @Auth(RoleEnum.Connected)
+  @Get('/tags')
+  getMyTags(@Headers() header) {
+    return this.linksService.getMyTags(header.user_token);
   }
 }

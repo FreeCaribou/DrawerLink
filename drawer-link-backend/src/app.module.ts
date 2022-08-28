@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { DrawersModule } from './drawers/drawers.module';
 import { LinksModule } from './links/links.module';
 import { EncryptionModule } from './encryption/encryption.module';
+import { appDataSourceConfig } from './data-source';
 
 @Module({
   imports: [
@@ -16,18 +17,7 @@ import { EncryptionModule } from './encryption/encryption.module';
       // load: [appConfig],
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST || 'localhost',
-      port: +process.env.DATABASE_PORT || 3306,
-      username: process.env.DATABASE_USER || 'root',
-      password: process.env.DATABASE_PASSWORD || '',
-      database: process.env.NODE_ENV === 'prod' ?
-        process.env.DATABASE_NAME || 'drawer_link' :
-        process.env.DATABASE_NAME_TEST || 'drawer_link',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      logging: true,
-      synchronize: true,
-      keepConnectionAlive: true
+      ...appDataSourceConfig, entities: [__dirname + '/**/*.entity{.ts,.js}']
     }),
     UsersModule,
     DrawersModule,
@@ -38,3 +28,4 @@ import { EncryptionModule } from './encryption/encryption.module';
   providers: [AppService],
 })
 export class AppModule { }
+

@@ -15,6 +15,18 @@
             prepend-inner-icon="mdi-folder-search"
             outlined
           ></v-text-field>
+
+          <div class="text-left mb-5">
+            <v-chip
+              v-for="tag in allTags"
+              @click="onTagClick(tag)"
+              class="mr-2"
+              :color="getTagColorBySelection(tag)"
+              outlined
+              >{{ tag }}</v-chip
+            >
+          </div>
+
           <v-list>
             <v-list-group
               v-for="drawer in filteredDrawers"
@@ -37,6 +49,15 @@
                     {{ link.description }}
                   </v-list-item-subtitle>
                   <a :href="link.url">{{ link.url }}</a>
+                  <div class="text-left mt-2">
+                    <v-chip
+                      v-for="tag in link.tags"
+                      class="mr-2"
+                      :color="getTagColorBySelection(tag)"
+                      outlined
+                      >{{ tag }}</v-chip
+                    >
+                  </div>
                 </v-list-item-content>
               </v-list-item>
             </v-list-group>
@@ -106,6 +127,11 @@
               label="Description"
               outlined
             ></v-text-field>
+            <v-text-field
+              v-model="lTags"
+              label="Tags, separated by commas"
+              outlined
+            ></v-text-field>
             <v-btn color="success" class="mr-4" @click="addLinkForm">
               Add Link
             </v-btn>
@@ -118,18 +144,23 @@
 
 <script>
 // TODO refactor in component
+// TODO form verification
+// TODO form tags better please ...
 export default {
   name: "IndexPage",
 
   created() {
     if (this.user?.token) {
       this.getDrawers();
+      this.getAllTags();
     }
   },
 
   data: () => ({
     drawers: [],
     filteredDrawers: [],
+    allTags: [],
+    selectedTags: [],
     search: "",
     showDrawerForm: false,
     showLinkForm: false,
@@ -141,6 +172,7 @@ export default {
     lTitle: "",
     lDescription: "",
     lDrawer: null,
+    lTags: "",
   }),
 
   methods: {
@@ -180,6 +212,9 @@ export default {
             title: this.lTitle,
             drawerUuid: this.lDrawer.uuid,
             description: this.lDescription,
+            tags: !!this.lTags
+              ? this.lTags.split(",").map((t) => t.trim())
+              : [],
           },
           { headers: { user_token: this.user.token } }
         )
@@ -188,6 +223,7 @@ export default {
           this.lTitle = "";
           this.lDrawer = null;
           this.lDescription = "";
+          this.lTags = "";
           this.getDrawers();
         });
     },
@@ -200,6 +236,56 @@ export default {
           this.filteredDrawers = this.drawers;
         });
     },
+
+    getAllTags() {
+      this.$axios
+        .get("links/tags", { headers: { user_token: this.user.token } })
+        .then((res) => {
+          this.allTags = res.data;
+        });
+    },
+
+    onTagClick(tag) {
+      const index = this.selectedTags.findIndex((t) => t === tag);
+      if (index > -1) {
+        this.selectedTags.splice(index, 1);
+      } else {
+        this.selectedTags.push(tag);
+      }
+    },
+
+    getTagColorBySelection(tag) {
+      return this.selectedTags.includes(tag) ? "secondary" : "primary";
+    },
+
+    filter() {
+      if (
+        (this.search && this.search.trim() !== "") ||
+        this.selectedTags.length > 0
+      ) {
+        console.log("on ti");
+        const neutralValue = this.search.toLowerCase();
+        this.filteredDrawers = [];
+        this.drawers.forEach((d) => {
+          // TODO Make regex in url to avoid the includes of https
+          const links = d.links.filter(
+            (l) =>
+              (l.url.toLowerCase().includes(neutralValue) ||
+                l.title.toLowerCase().includes(neutralValue) ||
+                l.description.toLowerCase().includes(neutralValue)) &&
+              l.tags.filter((t) => {
+                return this.selectedTags.includes(t);
+              }).length > 0
+          );
+
+          if (links.length > 0) {
+            this.filteredDrawers.push({ ...d, links });
+          }
+        });
+      } else {
+        this.filteredDrawers = this.drawers;
+      }
+    },
   },
 
   computed: {
@@ -210,24 +296,10 @@ export default {
 
   watch: {
     search(value, oldValue) {
-      if (value && value.trim() !== "") {
-        const neutralValue = value.toLowerCase();
-        this.filteredDrawers = [];
-        this.drawers.forEach((d) => {
-          const links = d.links.filter(
-            (l) =>
-              l.url.toLowerCase().includes(neutralValue) ||
-              l.title.toLowerCase().includes(neutralValue) ||
-              l.description.toLowerCase().includes(neutralValue)
-          );
-
-          if (links.length > 0) {
-            this.filteredDrawers.push({...d, links})
-          }
-        });
-      } else {
-        this.filteredDrawers = this.drawers;
-      }
+      this.filter();
+    },
+    selectedTags(value, oldValue) {
+      this.filter();
     },
   },
 };

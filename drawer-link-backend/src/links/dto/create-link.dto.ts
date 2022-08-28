@@ -1,5 +1,4 @@
-import { IsOptional, IsString } from "class-validator";
-import { Drawer } from "../../drawers/entities/drawer.entity";
+import { IsArray, IsOptional, IsString } from "class-validator";
 
 export class CreateLinkDto {
   @IsString()
@@ -9,6 +8,8 @@ export class CreateLinkDto {
   @IsOptional()
   @IsString()
   readonly description: string;
+  @IsArray()
+  readonly tags: string[];
   @IsString()
-  readonly drawerUuid: Drawer;
+  readonly drawerUuid: string;
 }

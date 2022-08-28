@@ -18,17 +18,19 @@ export class DrawersService {
   async findAllByUser(token: string) {
     const jwt = require('jsonwebtoken');
     const dToken = jwt.verify(token, process.env.JWT_SECURITY_KEY);
-    const user = await this.userRepository.findOne(dToken.uuid);
+    const user: User = await this.userRepository.findOne({ where: { uuid: dToken.uuid } });
     return this.drawerRepository.find({
-      relations: ['links'],
+      relations: {links: true},
       where: {
-        user: user
+        user: {
+          uuid: user.uuid,
+        },
       },
     });
   }
 
   async deleteOne(uuid: string, token: string) {
-    const drawer = await this.drawerRepository.findOne(uuid, { relations: ['user'] });
+    const drawer = await this.drawerRepository.findOne({ where: {uuid: uuid}, relations: {user: true} });
     if (!drawer) {
       throw new HttpException({ message: ['The drawer didn\'t exist'] }, HttpStatus.NOT_FOUND);
     }
@@ -48,7 +50,7 @@ export class DrawersService {
   async create(createDrawerDto: CreateDrawerDto, token: string) {
     const jwt = require('jsonwebtoken');
     const dToken = jwt.verify(token, process.env.JWT_SECURITY_KEY);
-    const user = await this.userRepository.findOne(dToken.uuid);
+    const user = await this.userRepository.findOne({ where: { uuid: dToken.uuid } });
 
     if (!user) {
       throw new HttpException({ message: ['You are not connected'] }, HttpStatus.FORBIDDEN);

@@ -1,8 +1,8 @@
-import { getConnection } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import { Drawer } from '../drawers/entities/drawer.entity';
 import { Link } from '../links/entities/link.entity';
 import { EncryptionService } from '../encryption/encryption.service';
+import { AppDataSource } from 'src/data-source';
 
 export async function mockingData() {
   const users = await mockUsers();
@@ -11,7 +11,7 @@ export async function mockingData() {
 }
 
 async function mockUsers(): Promise<User[]> {
-  const repo = getConnection().getRepository(User);
+  const repo = AppDataSource.getRepository(User);
   await repo.delete({});
   const e = new EncryptionService();
   return [
@@ -21,7 +21,7 @@ async function mockUsers(): Promise<User[]> {
 }
 
 async function mockDrawers(users: User[]): Promise<Drawer[]> {
-  const repo = getConnection().getRepository(Drawer);
+  const repo = AppDataSource.getRepository(Drawer);
   await repo.delete({});
   return [
     await repo.save(await repo.create({ label: 'Politic', user: users[0] })),
@@ -31,7 +31,7 @@ async function mockDrawers(users: User[]): Promise<Drawer[]> {
 }
 
 async function mockLinks(drawers: Drawer[]): Promise<Link[]> {
-  const repo = getConnection().getRepository(Link);
+  const repo = AppDataSource.getRepository(Link);
   await repo.delete({});
   return [
     await repo.save(await repo.create(
@@ -40,7 +40,8 @@ async function mockLinks(drawers: Drawer[]): Promise<Link[]> {
         title: 'Jacobin Mag',
         description: 'Links ? Yep',
         drawer: drawers[0],
-        user: drawers[0].user
+        user: drawers[0].user,
+        tags: ['journal', 'links', 'daily']
       }
     )),
     await repo.save(await repo.create(
@@ -49,7 +50,8 @@ async function mockLinks(drawers: Drawer[]): Promise<Link[]> {
         title: 'Politico mag',
         description: 'Not realy a socialist mag',
         drawer: drawers[0],
-        user: drawers[0].user
+        user: drawers[0].user,
+        tags: ['journal'],
       }
     )),
     await repo.save(await repo.create(
@@ -67,7 +69,18 @@ async function mockLinks(drawers: Drawer[]): Promise<Link[]> {
         title: 'Victoria 3',
         description: 'We are still waiting ... Yep',
         drawer: drawers[1],
-        user: drawers[1].user
+        user: drawers[1].user,
+        tags: ['paradox']
+      }
+    )),
+    await repo.save(await repo.create(
+      {
+        url: 'https://www.ipcc.ch/',
+        title: 'IPPC',
+        description: 'We are all going to die',
+        drawer: drawers[2],
+        user: drawers[2].user,
+        tags: ['climat', 'warning']
       }
     ))
   ]

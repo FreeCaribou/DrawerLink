@@ -60,11 +60,11 @@ export class UsersService {
   }
 
   findUserByEmail(email: string) {
-    return this.userRepository.findOne({ email: email }, { select: ['uuid', 'pseudo', 'email'] });
+    return this.userRepository.findOne({ where: { email: email }, select: { uuid: true, pseudo: true, email: true } });
   }
 
   findUserByEmailAdmin(email: string) {
-    return this.userRepository.findOne({ email: email });
+    return this.userRepository.findOne({ where: { email: email } });
   }
 
   createUserToken(user: User) {

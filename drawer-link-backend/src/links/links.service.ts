@@ -22,12 +22,12 @@ export class LinksService {
     const jwt = require('jsonwebtoken');
     const dToken = jwt.verify(token, process.env.JWT_SECURITY_KEY);
 
-    const user = await this.userRepository.findOne(dToken.uuid);
+    const user = await this.userRepository.findOne({ where: { uuid: dToken.uuid } });
     if (!user) {
       throw new HttpException({ message: ['You are not connected'] }, HttpStatus.FORBIDDEN);
     }
 
-    const drawer = await this.drawerRepository.findOne(createLinkDto.drawerUuid);
+    const drawer = await this.drawerRepository.findOne({ where: { uuid: createLinkDto.drawerUuid } });
     if (!drawer) {
       throw new HttpException({ message: ['The drawer you try to link does not exit'] }, HttpStatus.FORBIDDEN);
     }
@@ -39,4 +39,28 @@ export class LinksService {
     delete link.user;
     return link;
   }
+
+  async getMyTags(token: string) {
+    const jwt = require('jsonwebtoken');
+    const dToken = jwt.verify(token, process.env.JWT_SECURITY_KEY);
+
+    const user = await this.userRepository.findOne({ where: { uuid: dToken.uuid }, });
+    if (!user) {
+      throw new HttpException({ message: ['You are not connected'] }, HttpStatus.FORBIDDEN);
+    }
+
+    const links = await this.linkRepository.find({
+      select: {
+        tags: true,
+      },
+      where: {
+        user: {
+          uuid: user.uuid
+        }
+      },
+    });
+
+    return [... new Set(links.flatMap(l => l.tags))];
+  };
+
 }
