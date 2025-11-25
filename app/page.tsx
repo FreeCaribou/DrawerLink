@@ -1,6 +1,8 @@
 import AddLinkForm from "@/components/add-link-form";
+import LinkList from "@/components/link-list";
 import { AppDataSource } from "@/database/data-source";
 import { SavedLink } from "@/entities/SavedLink.entity";
+import { List } from "@mantine/core";
 
 export default async function Home() {
 
@@ -17,9 +19,7 @@ export default async function Home() {
         <h1 className="mb-5 text-primary text-xl">Drawer Link - Hello World</h1>
         <div className="mb-5">
           <h2 className="text-secondary">The links</h2>
-          <ul className="list-disc">
-            {savedLinks.map(sl => (<li key={sl.id}>{sl.label}</li>))}
-          </ul>
+          <LinkList savedLinks={savedLinks.map(sl => ({ id: sl.id, label: sl.label }))}></LinkList>
         </div>
         <AddLinkForm></AddLinkForm>
       </main>

@@ -5,8 +5,10 @@ An app to simply keep some link (newspaper article for exemple) to be retrieve e
 ## TODO
 
 - clean code with good architecture
-- probably find a template lib for next js - shadcn/ui or Mantine to test
+- use more mantine
 - make sql script to feed db for the test
+- use service that have parser
+- the theme
 - just finish the app ...
 
 ## TypeOrm
@@ -23,7 +25,7 @@ We need two data source file, the .ts for the nextjs and the .js for the migrati
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Also using Tailwind and TypeOrm
+Also using Tailwind and TypeOrm and Mantine
 
 ## Getting Started
 

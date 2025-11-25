@@ -4,8 +4,8 @@ import { AppDataSource } from "@/database/data-source";
 import { SavedLink } from "@/entities/SavedLink.entity";
 import { refresh } from "next/cache";
 
-export async function createLink(formData: FormData) {
-    const label = formData.get('label')?.toString();
+export async function createLink(data: { label: string }) {
+    const label = data.label;
     console.log('actuion - create link', label)
 
     // TODO in a service !
