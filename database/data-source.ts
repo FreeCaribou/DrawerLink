@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { SavedLink } from "../entities/SavedLink.entity";
 import { DataSource } from "typeorm";
+import { User } from "@/entities/User.entity";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -11,5 +12,5 @@ export const AppDataSource = new DataSource({
     password: process.env.DATABASE_PASSWORD,
     synchronize: false,
     logging: true,
-    entities: [SavedLink],
+    entities: [SavedLink, User],
 })

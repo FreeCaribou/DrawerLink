@@ -4,12 +4,13 @@ An app to simply keep some link (newspaper article for exemple) to be retrieve e
 
 ## TODO
 
-- clean code with good architecture
-- use more mantine
-- make sql script to feed db for the test
-- use service that have parser
 - the theme
+- i18n
+- better test for the auth
+- try delete js ref and pass all in TS
+- rebase the migration before kind of v0.1
 - just finish the app ...
+- no async / await
 
 ## TypeOrm
 

@@ -1,15 +1,16 @@
 'use client'
 
-import { createLink } from "@/app/actions"
+import { createLinkAction } from "@/app/actions"
 import { Button, Group, TextInput } from "@mantine/core";
 import { useForm } from '@mantine/form';
 
 export default function AddLinkForm() {
 
-    const form = useForm({ initialValues: { label: '' } });
+    const form = useForm({ initialValues: { label: '', link: '' } });
 
     const handleSubmit = async (values: typeof form.values) => {
-        await createLink(values);
+        await createLinkAction(values);
+        form.reset();
     }
 
     return (
@@ -22,6 +23,13 @@ export default function AddLinkForm() {
                     label="Label"
                     key={form.key('label')}
                     {...form.getInputProps('label')}
+                />
+
+                <TextInput
+                    withAsterisk
+                    label="Link"
+                    key={form.key('link')}
+                    {...form.getInputProps('link')}
                 />
 
                 <Group justify="flex-end" mt="md">

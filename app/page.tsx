@@ -1,17 +1,10 @@
 import AddLinkForm from "@/components/add-link-form";
 import LinkList from "@/components/link-list";
-import { AppDataSource } from "@/database/data-source";
-import { SavedLink } from "@/entities/SavedLink.entity";
-import { List } from "@mantine/core";
+import { savedLinkService } from "@/services/saved-link.service";
 
 export default async function Home() {
 
-  // TODO in a service !
-  if (!AppDataSource.isInitialized) {
-    await AppDataSource.initialize();
-  }
-  const savedLinks = await AppDataSource.getRepository(SavedLink).find();
-  console.log('saved links', savedLinks)
+  const savedLinks = await savedLinkService.getAll();
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">

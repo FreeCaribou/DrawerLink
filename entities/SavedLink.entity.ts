@@ -9,4 +9,10 @@ export class SavedLink {
     @Column()
     label!: string;
 
+    @Column()
+    link!: string;
+
+    @Column({ nullable: true })
+    description!: string;
+
 }
