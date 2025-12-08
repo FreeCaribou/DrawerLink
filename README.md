@@ -6,11 +6,13 @@ An app to simply keep some link (newspaper article for exemple) to be retrieve e
 
 - the theme
 - i18n
+- link savedLink with user / make savedLink with some filter prop (drawer, tag, other)
 - better test for the auth
 - try delete js ref and pass all in TS
 - rebase the migration before kind of v0.1
 - just finish the app ...
 - no async / await
+- Make link with savedLink (a article can be related to other for exemple)
 
 ## TypeOrm
 
