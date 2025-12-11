@@ -14,9 +14,7 @@ Route::post('/saved-links', [SavedLinkController::class, 'add'])
     ->name('saved-links.add');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    Route::redirect('/dashboard', '/');
 });
 
 require __DIR__ . '/settings.php';

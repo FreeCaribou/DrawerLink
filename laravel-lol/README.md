@@ -18,11 +18,11 @@ composer run dev - run the project in localhost
 
 ## TODO
 
-- real form
 - use of shadcn
-- retrieve the user info in the controller
-- delete or comment all what we dont need (clean up !)
 - i18n
+- clean up migration file for a v1
 - make the app real (drawer link)
+- verify not too long file and divide it if necessary
+- delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - better readme here (for the deploy for exemple)
 - (cookie message)

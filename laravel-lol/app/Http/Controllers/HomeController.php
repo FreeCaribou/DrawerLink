@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\SavedLink;
 use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -12,9 +13,12 @@ class HomeController extends Controller
     {
         $savedLinks = SavedLink::all();
 
+        // TODO to retrieve the user later
+        $user = Auth::user();
+        $user->getAttributeValue("id");
+
         return Inertia::render('welcome', [
             'savedLinks' => $savedLinks,
-            'canRegister' => Features::enabled(Features::registration()),
         ]);
     }
 }

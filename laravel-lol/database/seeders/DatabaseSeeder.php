@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate(
-            ['email' => 'test@example.com'],
+        $primaryUser = User::firstOrCreate(
+            ['email' => 'drawerlink@freecaribou.net'],
             [
-                'name' => 'Test User',
-                'password' => 'password',
+                'name' => 'freecaribou',
+                'password' => 'helloworld',
                 'email_verified_at' => now(),
             ]
         );
