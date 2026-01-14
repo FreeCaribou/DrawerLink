@@ -1,12 +1,12 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: postgres-db-laravellol
+    container_name: postgres-db-drawerlink
     restart: unless-stopped
     environment:
-      POSTGRES_USER: laravellol
-      POSTGRES_PASSWORD: laravellol
-      POSTGRES_DB: laravellol
+      POSTGRES_USER: drawerlink
+      POSTGRES_PASSWORD: drawerlink
+      POSTGRES_DB: drawerlink_pg
     ports:
       - "5432:5432"
     volumes:
