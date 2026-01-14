@@ -1,58 +1,30 @@
-# Drawer link
+# Just some test in Laravel / React
 
-An app to simply keep some link (newspaper article for exemple) to be retrieve easily later
+## Some command
+
+php artisan db:show - see the db stade
+
+php artisan db:table <x> - see the info details of a table
+
+php artisan make:migration create\_<x>\_table - create a migration file (php artisan make:migration <x> - work too)
+
+php artisan migrate - execute the migration file
+
+php artisan db:seed - seed the database with mock data (php artisan migrate:fresh --seed - the same but with refresh all)
+
+composer run dev - run the project in localhost
+
+php artisan app:create-user - cmd to create a new user, usefull in prod
+
+podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman the docker and name it drawerlink_pg
 
 ## TODO
 
-- the theme
 - i18n
-- link savedLink with user / make savedLink with some filter prop (drawer, tag, other)
-- better test for the auth
-- try delete js ref and pass all in TS
-- rebase the migration before kind of v0.1
-- just finish the app ...
-- no async / await
-- Make link with savedLink (a article can be related to other for exemple)
-
-## TypeOrm
-
-Typeorm migration:
-
-We have the script migration generate and run in package.json
-
-We need two data source file, the .ts for the nextjs and the .js for the migration script
-
-// TODO avoid duplicate
-
-## Stack
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-Also using Tailwind and TypeOrm and Mantine
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3333](http://localhost:3333) with your browser to see the result.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- clean up migration file for a v1
+- make the app real (drawer link)
+- make php script to create new user
+- verify not too long file and divide it if necessary
+- delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
+- better readme here (for the deploy for exemple)
+- (cookie message)
