@@ -14,6 +14,8 @@ php artisan db:seed - seed the database with mock data (php artisan migrate:fres
 
 composer run dev - run the project in localhost
 
+php artisan app:create-user - cmd to create a new user, usefull in prod
+
 podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman the docker and name it drawerlink_pg
 
 ## TODO
