@@ -12,16 +12,16 @@ php artisan migrate - execute the migration file
 
 php artisan db:seed - seed the database with mock data (php artisan migrate:fresh --seed - the same but with refresh all)
 
-php artisan db:seed --class=AddOneUserSeeder - after completed the value in the .env, launch that to create one user
-
 composer run dev - run the project in localhost
+
+podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman the docker and name it drawerlink_pg
 
 ## TODO
 
-- use of shadcn
 - i18n
 - clean up migration file for a v1
 - make the app real (drawer link)
+- make php script to create new user
 - verify not too long file and divide it if necessary
 - delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - better readme here (for the deploy for exemple)
