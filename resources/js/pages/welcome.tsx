@@ -76,9 +76,16 @@ export default function Welcome({
                                                         required
                                                     />
                                                 </Field>
+                                                <Field>
+                                                    <FieldLabel htmlFor="link-form-file">
+                                                        A file for the link
+                                                    </FieldLabel>
+                                                    <Input id="link-form-file" name='file' type='file' />
+                                                </Field>
                                             </FieldGroup>
                                         </FieldSet>
                                         <Field>
+                                            {/* TODO disabled when form not valid */}
                                             <Button
                                                 type="submit"
                                                 className="cursor-pointer"
