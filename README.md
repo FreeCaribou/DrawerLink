@@ -1,4 +1,23 @@
-# Just some test in Laravel / React
+# Drawer Link
+
+A little app to store "link" to retrieve it easily later and share it
+
+## TODO
+
+- link user to saved_link
+- clean up migration file for a v1
+- make the app real (drawer link, have "link" in drawer, search it by drawer and tag, share it)
+- i18n
+- for link description, have wysiwyg
+- delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
+- better readme here (for the deploy for exemple, for better link to the stack)
+- (cookie message)
+
+## Tech
+
+### Laravel with React starter kit
+
+https://laravel.com/starter-kits
 
 ## Some command
 
@@ -17,14 +36,3 @@ composer run dev - run the project in localhost
 php artisan app:create-user - cmd to create a new user, usefull in prod
 
 podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman the docker and name it drawerlink_pg
-
-## TODO
-
-- i18n
-- clean up migration file for a v1
-- make the app real (drawer link)
-- make php script to create new user
-- verify not too long file and divide it if necessary
-- delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
-- better readme here (for the deploy for exemple)
-- (cookie message)
