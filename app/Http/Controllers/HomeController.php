@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $savedLinks = SavedLink::all();
+        $savedLinks = SavedLink::with('savedObjectProps')->get();
 
         // TODO to retrieve the user later
         $user = Auth::user();

@@ -45,6 +45,15 @@ export interface User {
 export interface SavedLink {
     id: number;
     label: string;
+    description: string;
+    saved_object_props: SavedObjectProp[];
+    [key: string]: unknown;
+}
+
+export interface SavedObjectProp {
+    id: number;
+    name: string;
+    mime_type: string;
     [key: string]: unknown;
 }
 

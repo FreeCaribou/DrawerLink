@@ -20,7 +20,7 @@ class SavedLinkController extends Controller
         $uploadedFile = $request->file('file');
         if ($uploadedFile) {
             $content = base64_encode(file_get_contents($uploadedFile->getRealPath()));
-            Log::info('Creation of a link v2 doc info ' . $uploadedFile->getClientOriginalName() . ' ' . $uploadedFile->getClientMimeType());
+            // Log::info('Creation of a link v2 doc info ' . $uploadedFile->getClientOriginalName() . ' ' . $uploadedFile->getClientMimeType());
         }
 
         SavedLink::create([

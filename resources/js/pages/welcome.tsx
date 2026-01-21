@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Item, ItemContent, ItemGroup, ItemTitle } from '@/components/ui/item';
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { logout } from '@/routes';
 import { FlashProps, SavedLink, type SharedData } from '@/types';
 import { Field } from '@headlessui/react';
@@ -46,9 +46,23 @@ export default function Welcome({
                             <ItemGroup>
                                 {savedLinks.map((link) => (
                                     <React.Fragment key={link.id}>
-                                        <Item>
+                                        <Item variant="outline" className='mb-2'>
                                             <ItemContent>
                                                 <ItemTitle>{link.label}</ItemTitle>
+                                                <ItemDescription>
+                                                    {link.description}
+                                                </ItemDescription>
+                                                {link.saved_object_props.length > 0 && (
+                                                    <div>
+                                                        The related file:
+                                                        {link.saved_object_props.map((objectProp) => (
+                                                            <React.Fragment key={objectProp.id}>
+                                                                <p>{objectProp.name}</p>
+                                                            </React.Fragment>
+                                                        ))}
+                                                    </div>
+                                                )}
+
                                             </ItemContent>
                                         </Item>
                                     </React.Fragment>
@@ -77,6 +91,7 @@ export default function Welcome({
                                                     />
                                                 </Field>
                                                 <Field>
+                                                    {/* TODO trying multiple file at once */}
                                                     <FieldLabel htmlFor="link-form-file">
                                                         A file for the link
                                                     </FieldLabel>
