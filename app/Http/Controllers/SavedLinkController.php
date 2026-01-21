@@ -25,9 +25,14 @@ class SavedLinkController extends Controller
 
             $uploadedFile = $request->file('file');
             if ($uploadedFile) {
-                $savedLink->savedObjectProps()->create([
+                // $content = base64_encode(file_get_contents($uploadedFile->getRealPath()));
+                $savedObjectProp = $savedLink->savedObjectProps()->create([
                     'name' => $uploadedFile->getClientOriginalName(),
                     'mime_type' => $uploadedFile->getClientMimeType(),
+                ]);
+
+                $savedObjectProp->savedObject()->create([
+                    'content' => base64_encode(file_get_contents($uploadedFile->getRealPath()))
                 ]);
             }
         });

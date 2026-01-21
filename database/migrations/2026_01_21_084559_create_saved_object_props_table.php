@@ -20,7 +20,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('mime_type');
-            $table->foreignIdFor(SavedLink::class);
+            $table->foreignIdFor(SavedLink::class)->onDelete('cascade');
             $table->timestamps();
 
             $table->foreign('saved_link_id')->references('id')->on('saved_links');

@@ -8,6 +8,7 @@ import { FlashProps, SavedLink, type SharedData } from '@/types';
 import { Field } from '@headlessui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { Form } from '@inertiajs/react';
+import { DownloadIcon } from 'lucide-react';
 import React from 'react';
 
 export default function Welcome({
@@ -57,12 +58,21 @@ export default function Welcome({
                                                         The related file:
                                                         {link.saved_object_props.map((objectProp) => (
                                                             <React.Fragment key={objectProp.id}>
-                                                                <p>{objectProp.name}</p>
+                                                                <p className="flex items-center gap-2">
+                                                                    {objectProp.name}
+                                                                    <a
+                                                                        href={"/download-saved-object/" + objectProp.id}
+                                                                        target="_blank"
+                                                                        rel="noopener"
+                                                                        className="flex items-center"
+                                                                    >
+                                                                        <DownloadIcon></DownloadIcon>
+                                                                    </a>
+                                                                </p>
                                                             </React.Fragment>
                                                         ))}
                                                     </div>
                                                 )}
-
                                             </ItemContent>
                                         </Item>
                                     </React.Fragment>
@@ -72,7 +82,7 @@ export default function Welcome({
 
                         <Card className='mt-6'>
                             <CardContent>
-                                <Form action="/saved-links" method='post' resetOnSuccess={['label']} className="mt-6 flex flex-col gap-2">
+                                <Form action="/saved-links" method='post' resetOnSuccess={['label', 'file']} className="mt-6 flex flex-col gap-2">
                                     <FieldGroup>
                                         <FieldSet>
                                             <FieldLegend>Add a link</FieldLegend>

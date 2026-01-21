@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\SavedLink;
 use App\Models\SavedObjectProp;
+use App\Models\SavedObject;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,8 +29,21 @@ class DatabaseSeeder extends Seeder
         $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea']);
         $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?']);
 
-        SavedObjectProp::create(['name' => 'document_one.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);
-        SavedObjectProp::create(['name' => 'document_two.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);
-        SavedObjectProp::create(['name' => 'document_three.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkThree->id]);
+        $savedObjectPropOne = SavedObjectProp::create(['name' => 'document_one.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);
+        $savedObjectPropTwo = SavedObjectProp::create(['name' => 'document_two.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);
+        $savedObjectPropThree = SavedObjectProp::create(['name' => 'document_three.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkThree->id]);
+        $base64StringOne = "JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQKMSAwIG9iago" .
+            "8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9Db3VudCAxCi9La" .
+            "WRzIFszIDAgUl0KPj4KZW5kb2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovTWVkaWFCb3ggWzAgMC" .
+            "A1OTUuMjcgODQxLjg5XQovQ29udGVudHMgNSAwIFIKL1Jlc291cmNlcyA8PAovRm9udCA8PAovRjEgNiAwIFIKPj4KPj" .
+            "4KPj4KZW5kb2JqCjUgMCBvYmoKPDwKL0xlbmd0aCA0NQo+PgpzdHJlYW0KQlQgL0YxIDEyIFRmIDcyIDc2MCBUZCAoaGVsbG8gd29ybGQpIF" .
+            "RqIEVUCmVuZHN0cmVhbQplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHlwZTEKL05hbWUgL0YxCi9CYXNlRm" .
+            "9udCAvSGVsdmV0aWNhCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCj4+CmVuZG9iagp4cmVmCjAgNwowMDAwMDAwMDAwIDY1NTM1" .
+            "IGYgCjAwMDAwMDAwMTAgMDAwMDAgbiAKMDAwMDAwMDA2MCAwMDAwMCBuIAowMDAwMDAwMTIxIDAwMDAwIG4gCjAwMDAwMDAyNTkgMDAwMDA" .
+            "gbiAKMDAwMDAwMDM4MCAwMDAwMCBuIAowMDAwMDAwNDg1IDAwMDAwIG4gCnRyYWlsZXIKPDwKL1Jvb3QgMSAwIFIKL1N" .
+            "pemUgNwo+PgpzdGFydHhyZWYKNTA2CiUlRU9GCg==";
+        SavedObject::create(['content' => $base64StringOne, 'saved_object_prop_id' => $savedObjectPropOne->id]);
+        SavedObject::create(['content' => $base64StringOne, 'saved_object_prop_id' => $savedObjectPropTwo->id]);
+        SavedObject::create(['content' => $base64StringOne, 'saved_object_prop_id' => $savedObjectPropThree->id]);
     }
 }
