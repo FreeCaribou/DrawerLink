@@ -4,12 +4,11 @@ A little app to store "link" to retrieve it easily later and share it
 
 ## TODO
 
-- link user to saved_link
-- clean up migration file for a v1
-- make the app real (drawer link, have "link" in drawer, search it by drawer and tag, share it)
+- make the app real (drawer link, have "link" in drawer, search it by drawer and tag, share it, edit it)
 - i18n
 - for link description, have wysiwyg
 - delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
+- and clean up the code (avoid big file, separate component in front and divide service in back)
 - better readme here (for the deploy for exemple, for better link to the stack)
 - (cookie message)
 

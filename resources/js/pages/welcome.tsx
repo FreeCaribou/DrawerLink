@@ -9,6 +9,7 @@ import { Field } from '@headlessui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { Form } from '@inertiajs/react';
 import { DownloadIcon } from 'lucide-react';
+import { Textarea } from "@/components/ui/textarea"
 import React from 'react';
 
 export default function Welcome({
@@ -82,7 +83,7 @@ export default function Welcome({
 
                         <Card className='mt-6'>
                             <CardContent>
-                                <Form action="/saved-links" method='post' resetOnSuccess={['label', 'file']} className="mt-6 flex flex-col gap-2">
+                                <Form action="/saved-links" method='post' resetOnSuccess={['label', 'description', 'file']} className="flex flex-col gap-2">
                                     <FieldGroup>
                                         <FieldSet>
                                             <FieldLegend>Add a link</FieldLegend>
@@ -94,11 +95,13 @@ export default function Welcome({
                                                     <FieldLabel htmlFor="link-form-label">
                                                         Label of the link
                                                     </FieldLabel>
-                                                    <Input
-                                                        id="link-form-label"
-                                                        name='label'
-                                                        required
-                                                    />
+                                                    <Input id="link-form-label" name='label' required />
+                                                </Field>
+                                                <Field>
+                                                    <FieldLabel htmlFor="link-form-description">
+                                                        Description
+                                                    </FieldLabel>
+                                                    <Textarea id="link-form-description" name='description' rows={3} />
                                                 </Field>
                                                 <Field>
                                                     {/* TODO trying multiple file at once */}

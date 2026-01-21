@@ -25,12 +25,22 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $savedLinkOne = SavedLink::create(['label' => 'Two stupid links about stupid people']);
-        $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea']);
-        $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?']);
+        $userTwo = User::firstOrCreate(
+            ['email' => 'johndoe@freecaribou.net'],
+            [
+                'name' => 'johndoe',
+                'password' => 'helloworld',
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $savedLinkOne = SavedLink::create(['label' => 'Two stupid links about stupid people', 'user_id' => $primaryUser->id]);
+        $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea', 'user_id' => $primaryUser->id]);
+        $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id]);
 
         $savedObjectPropOne = SavedObjectProp::create(['name' => 'document_one.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);
         $savedObjectPropTwo = SavedObjectProp::create(['name' => 'document_two.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);
+
         $savedObjectPropThree = SavedObjectProp::create(['name' => 'document_three.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkThree->id]);
         $base64StringOne = "JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQKMSAwIG9iago" .
             "8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9Db3VudCAxCi9La" .

@@ -10,11 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $savedLinks = SavedLink::with('savedObjectProps')->get();
-
-        // TODO to retrieve the user later
         $user = Auth::user();
-        $user->getAttributeValue("id");
+        $savedLinks = SavedLink::with('savedObjectProps')->where('user_id', $user->id)->get();
 
         return Inertia::render('welcome', [
             'savedLinks' => $savedLinks,

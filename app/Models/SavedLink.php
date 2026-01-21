@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -16,13 +17,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * created_at -> datetime
  * updated_at -> datetime
  * saved_object_props -> SavedObjectProp[]
+ * user -> User
  */
 class SavedLink extends Model
 {
-    protected $fillable = ['label', 'description'];
+    protected $fillable = ['label', 'description', 'user_id'];
 
     public function savedObjectProps(): HasMany
     {
         return $this->hasMany(SavedObjectProp::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
