@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SavedLink;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class SavedLinkController extends Controller
 {
@@ -15,17 +16,21 @@ class SavedLinkController extends Controller
         $request->validate([
             'label' => 'required|string',
         ]);
-        // TODO return message erreur
+        // TODO return err message
 
-        $uploadedFile = $request->file('file');
-        if ($uploadedFile) {
-            $content = base64_encode(file_get_contents($uploadedFile->getRealPath()));
-            // Log::info('Creation of a link v2 doc info ' . $uploadedFile->getClientOriginalName() . ' ' . $uploadedFile->getClientMimeType());
-        }
+        DB::transaction(function () use ($request) {
+            $savedLink = SavedLink::create([
+                'label' => $request->label,
+            ]);
 
-        SavedLink::create([
-            'label' => $request->label,
-        ]);
+            $uploadedFile = $request->file('file');
+            if ($uploadedFile) {
+                $savedLink->savedObjectProps()->create([
+                    'name' => $uploadedFile->getClientOriginalName(),
+                    'mime_type' => $uploadedFile->getClientMimeType(),
+                ]);
+            }
+        });
 
         return redirect()->back()->with('success', 'Saved link add !');
     }
