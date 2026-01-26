@@ -4,19 +4,22 @@ import { FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from 
 import { Input } from '@/components/ui/input';
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from '@/components/ui/item';
 import { logout } from '@/routes';
-import { FlashProps, SavedLink, type SharedData } from '@/types';
+import { Draw, FlashProps, SavedLink, type SharedData } from '@/types';
 import { Field } from '@headlessui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { Form } from '@inertiajs/react';
-import { DownloadIcon } from 'lucide-react';
+import { DownloadIcon, WarehouseIcon } from 'lucide-react';
 import { Textarea } from "@/components/ui/textarea"
 import React from 'react';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function Welcome({
     savedLinks = [],
+    drawBaseList = [],
     flash = {},
 }: {
     savedLinks: SavedLink[];
+    drawBaseList: Draw[];
     flash: FlashProps;
 }) {
     const { auth } = usePage<SharedData>().props;
@@ -54,6 +57,9 @@ export default function Welcome({
                                                 <ItemDescription>
                                                     {link.description}
                                                 </ItemDescription>
+                                                <p className="flex items-center gap-2">
+                                                    <WarehouseIcon></WarehouseIcon> {link.draw.label}
+                                                </p>
                                                 {link.saved_object_props.length > 0 && (
                                                     <div>
                                                         The related file:
@@ -83,7 +89,7 @@ export default function Welcome({
 
                         <Card className='mt-6'>
                             <CardContent>
-                                <Form action="/saved-links" method='post' resetOnSuccess={['label', 'description', 'file']} className="flex flex-col gap-2">
+                                <Form action="/saved-links" method='post' resetOnSuccess={['label', 'description', 'file', 'draw_id']} className="flex flex-col gap-2">
                                     <FieldGroup>
                                         <FieldSet>
                                             <FieldLegend>Add a link</FieldLegend>
@@ -91,6 +97,25 @@ export default function Welcome({
                                                 What is the interesting article you found ?
                                             </FieldDescription>
                                             <FieldGroup>
+                                                <Field>
+                                                    <FieldLabel htmlFor="link-form-draw">
+                                                        The draw for the link
+                                                    </FieldLabel>
+                                                    <Select name='draw_id' required>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Choose a draw" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectGroup>
+                                                                {drawBaseList.map((draw) => (
+                                                                    <React.Fragment key={draw.id}>
+                                                                        <SelectItem value={draw.id.toString()}>{draw.label}</SelectItem>
+                                                                    </React.Fragment>
+                                                                ))}
+                                                            </SelectGroup>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </Field>
                                                 <Field>
                                                     <FieldLabel htmlFor="link-form-label">
                                                         Label of the link
@@ -101,7 +126,7 @@ export default function Welcome({
                                                     <FieldLabel htmlFor="link-form-description">
                                                         Description
                                                     </FieldLabel>
-                                                    <Textarea id="link-form-description" name='description' rows={3} />
+                                                    <Textarea id="link-form-description" name='description' rows={5} />
                                                 </Field>
                                                 <Field>
                                                     {/* TODO trying multiple file at once */}
@@ -109,6 +134,44 @@ export default function Welcome({
                                                         A file for the link
                                                     </FieldLabel>
                                                     <Input id="link-form-file" name='file' type='file' />
+                                                </Field>
+                                            </FieldGroup>
+                                        </FieldSet>
+                                        <Field>
+                                            {/* TODO disabled when form not valid */}
+                                            <Button
+                                                type="submit"
+                                                className="cursor-pointer"
+                                            >
+                                                Add
+                                            </Button>
+                                        </Field>
+                                    </FieldGroup>
+                                </Form>
+                            </CardContent>
+                        </Card>
+
+                        <Card className='mt-6'>
+                            <CardContent>
+                                <Form action="/draws" method='post' resetOnSuccess={['label', 'description']} className="flex flex-col gap-2">
+                                    <FieldGroup>
+                                        <FieldSet>
+                                            <FieldLegend>Add a draw</FieldLegend>
+                                            <FieldDescription>
+                                                You want a new draw / category ?
+                                            </FieldDescription>
+                                            <FieldGroup>
+                                                <Field>
+                                                    <FieldLabel htmlFor="draw-form-label">
+                                                        Label of the draw
+                                                    </FieldLabel>
+                                                    <Input id="draw-form-label" name='label' required />
+                                                </Field>
+                                                <Field>
+                                                    <FieldLabel htmlFor="draw-form-description">
+                                                        Description
+                                                    </FieldLabel>
+                                                    <Textarea id="draw-form-description" name='description' rows={2} />
                                                 </Field>
                                             </FieldGroup>
                                         </FieldSet>

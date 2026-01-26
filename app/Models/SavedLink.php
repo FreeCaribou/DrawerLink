@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class SavedLink extends Model
 {
-    protected $fillable = ['label', 'description', 'user_id'];
+    protected $fillable = ['label', 'description', 'user_id', 'draw_id'];
 
     public function savedObjectProps(): HasMany
     {
@@ -31,5 +31,10 @@ class SavedLink extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function draw(): BelongsTo
+    {
+        return $this->belongsTo(Draw::class);
     }
 }

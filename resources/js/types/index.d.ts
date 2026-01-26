@@ -42,11 +42,20 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
+export interface Draw {
+    id: number;
+    label: string;
+    description: string;
+    saved_links: SavedLink[];
+    [key: string]: unknown;
+}
+
 export interface SavedLink {
     id: number;
     label: string;
     description: string;
     saved_object_props: SavedObjectProp[];
+    draw: Draw;
     [key: string]: unknown;
 }
 

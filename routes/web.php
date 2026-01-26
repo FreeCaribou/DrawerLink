@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DrawController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SavedLinkController;
@@ -13,6 +14,10 @@ Route::post('/saved-links', [SavedLinkController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.add');
 
+Route::post('/draws', [DrawController::class, 'add'])
+    ->middleware(['auth', 'verified'])
+    ->name('draws.add');
+
 Route::get('/download-saved-object/{savedObjectPropId}', [SavedObjectPropController::class, 'download'])
     ->middleware(['auth', 'verified'])
     ->name('download.saved_object');
@@ -20,7 +25,5 @@ Route::get('/download-saved-object/{savedObjectPropId}', [SavedObjectPropControl
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });
-
-
 
 require __DIR__ . '/settings.php';

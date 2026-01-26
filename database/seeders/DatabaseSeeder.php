@@ -6,7 +6,7 @@ use App\Models\SavedLink;
 use App\Models\SavedObjectProp;
 use App\Models\SavedObject;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Draw;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -34,9 +34,13 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $savedLinkOne = SavedLink::create(['label' => 'Two stupid links about stupid people', 'user_id' => $primaryUser->id]);
-        $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea', 'user_id' => $primaryUser->id]);
-        $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id]);
+        $drawOne = Draw::create(['label' => 'Politic', 'user_id' => $primaryUser->id]);
+        $drawTwo = Draw::create(['label' => 'Science', 'user_id' => $primaryUser->id]);
+
+        $savedLinkOne = SavedLink::create(['label' => 'Two stupid links about stupid politicians', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id]);
+        $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id]);
+        $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id, 'draw_id' => $drawOne->id]);
+        $savedLinkFour = SavedLink::create(['label' => 'Tax the scientific', 'user_id' => $primaryUser->id, 'draw_id' => $drawTwo->id]);
 
         $savedObjectPropOne = SavedObjectProp::create(['name' => 'document_one.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);
         $savedObjectPropTwo = SavedObjectProp::create(['name' => 'document_two.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id]);

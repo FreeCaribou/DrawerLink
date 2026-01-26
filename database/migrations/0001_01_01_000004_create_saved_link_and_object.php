@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\SavedLink;
 use App\Models\SavedObjectProp;
 use App\Models\User;
+use App\Models\Draw;
 
 return new class extends Migration
 {
@@ -14,12 +15,23 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('draws', function (Blueprint $table) {
+            $table->id();
+            $table->string('label');
+            $table->string('description', length: 2000)->nullable();
+            $table->foreignIdFor(User::class);
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
         Schema::create('saved_links', function (Blueprint $table) {
             $table->id();
             $table->string('label');
             $table->string('description', length: 2000)->nullable();
-            $table->foreignIdFor(User::class)->onDelete('cascade');
+            $table->foreignIdFor(User::class);
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignIdFor(Draw::class);
+            $table->foreign('draw_id')->references('id')->on('draws');
             $table->timestamps();
         });
 
