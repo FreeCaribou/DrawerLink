@@ -5,11 +5,11 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - make the app real
-  -- Add tag to saved link
-  -- Detail page of saved link with edit
-  -- Search with draw / tags
-  -- Better home page, not reach every saved link, reach each draw and then some link
-  -- Share a saved link to someone else
+    - Add tag to saved link
+    - Detail page of saved link with edit
+    - Search with draw / tags
+    - Better home page, not reach every saved link, reach each draw and then some link
+    - Share a saved link to someone else
 - i18n
 - for link description, have wysiwyg
 - delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
