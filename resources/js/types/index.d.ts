@@ -50,12 +50,18 @@ export interface Draw {
     [key: string]: unknown;
 }
 
+export interface Tag {
+    id: number;
+    label: string;
+}
+
 export interface SavedLink {
     id: number;
     label: string;
     description: string;
     saved_object_props: SavedObjectProp[];
     draw: Draw;
+    tags: Tag[];
     [key: string]: unknown;
 }
 

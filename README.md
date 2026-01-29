@@ -5,17 +5,20 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - make the app real
-    - Add tag to saved link
     - Detail page of saved link with edit
     - Search with draw / tags
-    - Better home page, not reach every saved link, reach each draw and then some link
+    - Better home page, not reach every saved link, reach each draw and then some link (not direct the file with it)
     - Share a saved link to someone else
+    - error management
 - i18n
 - for link description, have wysiwyg
 - delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - and clean up the code (avoid big file, separate component in front and divide service in back)
 - better readme here (for the deploy for exemple, for better link to the stack)
 - (cookie message)
+- For the tag of a saved link
+    - For the form, propose some tag by some logic
+    - For the search, show the most used tag for example
 
 ## Tech
 

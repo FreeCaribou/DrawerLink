@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * updated_at -> datetime
  * saved_object_props -> SavedObjectProp[]
  * user -> User
+ * tags -> Tag[]
  */
 class SavedLink extends Model
 {
@@ -36,5 +38,10 @@ class SavedLink extends Model
     public function draw(): BelongsTo
     {
         return $this->belongsTo(Draw::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

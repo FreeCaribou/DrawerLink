@@ -17,7 +17,7 @@ return new class extends Migration
     {
         Schema::create('draws', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->string('label', length: 255);
             $table->string('description', length: 2000)->nullable();
             $table->foreignIdFor(User::class);
             $table->foreign('user_id')->references('id')->on('users');
@@ -26,7 +26,7 @@ return new class extends Migration
 
         Schema::create('saved_links', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->string('label', length: 255);
             $table->string('description', length: 2000)->nullable();
             $table->foreignIdFor(User::class);
             $table->foreign('user_id')->references('id')->on('users');
@@ -50,6 +50,19 @@ return new class extends Migration
             $table->longText('content');
             $table->foreignIdFor(SavedObjectProp::class)->onDelete('cascade');
             $table->foreign('saved_object_prop_id')->references('id')->on('saved_object_props');
+            $table->timestamps();
+        });
+
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('label', length: 42)->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('saved_link_tag', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('saved_link_id')->constrained();
+            $table->foreignId('tag_id')->constrained();
             $table->timestamps();
         });
     }

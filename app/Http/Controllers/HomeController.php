@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $savedLinks = SavedLink::with('savedObjectProps')->with('draw')->where('user_id', $user->id)->get();
+        $savedLinks = SavedLink::with('savedObjectProps')->with('draw')->with('tags')->where('user_id', $user->id)->get();
         $drawBaseList = Draw::get();
 
         return Inertia::render('welcome', [

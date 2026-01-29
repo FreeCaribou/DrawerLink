@@ -7,6 +7,7 @@ use App\Models\SavedObjectProp;
 use App\Models\SavedObject;
 use App\Models\User;
 use App\Models\Draw;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -59,5 +60,11 @@ class DatabaseSeeder extends Seeder
         SavedObject::create(['content' => $base64StringOne, 'saved_object_prop_id' => $savedObjectPropOne->id]);
         SavedObject::create(['content' => $base64StringOne, 'saved_object_prop_id' => $savedObjectPropTwo->id]);
         SavedObject::create(['content' => $base64StringOne, 'saved_object_prop_id' => $savedObjectPropThree->id]);
+
+        $tagOne = Tag::create(['label' => 'Marx']);
+        $tagTwo = Tag::create(['label' => 'Useful']);
+        $tagThree = Tag::create(['label' => 'Geopolitic']);
+
+        $savedLinkOne->tags()->attach([$tagOne->id, $tagThree->id]);
     }
 }

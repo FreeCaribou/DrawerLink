@@ -13,8 +13,8 @@ class DrawController extends Controller
     public function add(Request $request)
     {
         $request->validate([
-            'label' => 'required|string',
-            'description' => 'nullable|string',
+            'label' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
         ]);
         // TODO return err message
 
