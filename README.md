@@ -8,6 +8,8 @@ A little app to store "link" to retrieve it easily later and share it
     - Detail page of saved link with edit
     - Search with draw / tags
     - Better home page, not reach every saved link, reach each draw and then some link (not direct the file with it)
+    - link source, a string to be fill in by a https text, and we extract the domaine part and the full url
+    - show link date (and can be editable ?)
     - Share a saved link to someone else
     - error management
 - i18n
@@ -20,12 +22,23 @@ A little app to store "link" to retrieve it easily later and share it
     - For the form, propose some tag by some logic
     - For the search, show the most used tag for example
 - Dark mode
+- bash script for the install
 
 ## Tech
 
 ### Laravel with React starter kit
 
 https://laravel.com/starter-kits
+
+## Production
+
+- Most of the information are there, https://laravel.com/docs/12.x/deployment
+
+- php artisan key:generator - usefull to create the APP_KEY env var
+
+- php artisan migrate - to make the migration of the db schema in case of new thing
+
+- npm i && npm build - to launch the frontend part
 
 ## Some command
 
