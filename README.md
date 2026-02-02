@@ -34,11 +34,13 @@ https://laravel.com/starter-kits
 
 - Most of the information are there, https://laravel.com/docs/12.x/deployment
 
-- php artisan key:generator - usefull to create the APP_KEY env var
+- php artisan key:generator - usefull to create the APP_KEY env var - needed for the first deploy
 
 - php artisan migrate - to make the migration of the db schema in case of new thing
 
-- npm i && npm build - to launch the frontend part
+- php artisan optimize
+
+- npm i && npm run build - to launch the frontend part
 
 ## Some command
 
