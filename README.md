@@ -19,6 +19,7 @@ A little app to store "link" to retrieve it easily later and share it
 - For the tag of a saved link
     - For the form, propose some tag by some logic
     - For the search, show the most used tag for example
+- Dark mode
 
 ## Tech
 

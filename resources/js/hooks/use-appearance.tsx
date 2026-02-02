@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+// TODO enable dark mode one day when we are ready for it
+
 export type Appearance = 'light' | 'dark' | 'system';
 
 const prefersDark = () => {
@@ -36,13 +38,15 @@ const mediaQuery = () => {
 };
 
 const handleSystemThemeChange = () => {
-    const currentAppearance = localStorage.getItem('appearance') as Appearance;
-    applyTheme(currentAppearance || 'system');
+    // const currentAppearance = localStorage.getItem('appearance') as Appearance;
+    const currentAppearance = 'light';
+    applyTheme(currentAppearance || 'light');
 };
 
 export function initializeTheme() {
-    const savedAppearance =
-        (localStorage.getItem('appearance') as Appearance) || 'system';
+    // const savedAppearance =
+    //     (localStorage.getItem('appearance') as Appearance) || 'system';
+    const savedAppearance = 'light';
 
     applyTheme(savedAppearance);
 
@@ -51,7 +55,7 @@ export function initializeTheme() {
 }
 
 export function useAppearance() {
-    const [appearance, setAppearance] = useState<Appearance>('system');
+    const [appearance, setAppearance] = useState<Appearance>('light');
 
     const updateAppearance = useCallback((mode: Appearance) => {
         setAppearance(mode);
@@ -71,7 +75,7 @@ export function useAppearance() {
         ) as Appearance | null;
 
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        updateAppearance(savedAppearance || 'system');
+        updateAppearance(savedAppearance || 'light');
 
         return () =>
             mediaQuery()?.removeEventListener(
