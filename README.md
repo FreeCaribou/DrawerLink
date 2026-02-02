@@ -34,6 +34,8 @@ https://laravel.com/starter-kits
 
 - Most of the information are there, https://laravel.com/docs/12.x/deployment
 
+- composer install --no-dev --optimize-autoloader - install the base package
+
 - php artisan key:generator - usefull to create the APP_KEY env var - needed for the first deploy
 
 - php artisan migrate - to make the migration of the db schema in case of new thing
