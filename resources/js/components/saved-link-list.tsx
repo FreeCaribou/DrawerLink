@@ -38,6 +38,9 @@ export default function SavedLinkList({
                                                         className="flex items-center"
                                                     >
                                                         <DownloadIcon className='text-secondary'></DownloadIcon>
+                                                        ({Math.round(objectProp.size / (1024 * 1024) * 100) / 100} Mo
+                                                        {objectProp.size === 0 && (<span> - Probably an error, please reupload the file</span>)}
+                                                        )
                                                     </a>
                                                 </p>
                                             </React.Fragment>

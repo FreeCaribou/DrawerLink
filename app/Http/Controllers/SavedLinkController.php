@@ -50,10 +50,13 @@ class SavedLinkController extends Controller
 
             // Link the file if present
             $uploadedFile = $request->file('file');
+            Log::info('Plop ' . $uploadedFile . ' ');
+            Log::info('Plop 2 ' . $uploadedFile->getSize() . ' ');
             if ($uploadedFile) {
                 $savedObjectProp = $savedLink->savedObjectProps()->create([
                     'name' => $uploadedFile->getClientOriginalName(),
                     'mime_type' => $uploadedFile->getClientMimeType(),
+                    'size' => $uploadedFile->getSize(),
                 ]);
 
                 $savedObjectProp->savedObject()->create([

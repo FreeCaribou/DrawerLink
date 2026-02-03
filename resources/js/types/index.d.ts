@@ -69,6 +69,7 @@ export interface SavedObjectProp {
     id: number;
     name: string;
     mime_type: string;
+    size: number;
     saved_object?: SavedObject
     [key: string]: unknown;
 }

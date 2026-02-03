@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * id -> int
  * name -> string (255) not null
  * mime_type -> string (2000) not null
+ * size -> string not null (bytes)
  * created_at -> datetime
  * updated_at -> datetime
  * saved_link -> SavedLink
@@ -25,7 +26,7 @@ class SavedObjectProp extends Model
     /** @use HasFactory<\Database\Factories\SavedObjectPropFactory> */
     use HasFactory;
 
-    protected $fillable = ['saved_link_id', 'name', 'mime_type'];
+    protected $fillable = ['saved_link_id', 'name', 'mime_type', 'size'];
 
     public function savedLink(): BelongsTo
     {

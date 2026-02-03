@@ -72,7 +72,7 @@ export default function SavedLinkForm({
                                     <Textarea id="link-form-description" name='description' rows={5} />
                                 </Field>
                                 <Field>
-                                    {/* TODO trying multiple file at once */}
+                                    {/* TODO trying multiple file at once, make a max of mb (seem that need less than 8mb) */}
                                     <FieldLabel htmlFor="link-form-file">
                                         A file for the link
                                     </FieldLabel>
