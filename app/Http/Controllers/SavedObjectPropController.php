@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SavedObjectProp;
-use App\Models\SavedObject;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Http\Request;
 
 class SavedObjectPropController extends Controller
 {

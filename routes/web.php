@@ -18,6 +18,10 @@ Route::post('/draws', [DrawController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('draws.add');
 
+Route::get('/data/draws/{drawId}', [DrawController::class, 'dataDrawDetails'])
+    ->middleware(['auth', 'verified'])
+    ->name('draws.data-draw-details');
+
 Route::get('/download-saved-object/{savedObjectPropId}', [SavedObjectPropController::class, 'download'])
     ->middleware(['auth', 'verified'])
     ->name('download.saved_object');

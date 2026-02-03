@@ -5,6 +5,9 @@ import SavedLinkList from '@/components/saved-link-list';
 import DrawerForm from '@/components/drawer-form';
 import SavedLinkForm from '@/components/saved-link-form';
 
+import axios from 'axios';
+import React from 'react';
+
 export default function Welcome({
     savedLinks = [],
     drawBaseList = [],
@@ -15,6 +18,16 @@ export default function Welcome({
     flash: FlashProps;
 }) {
     const { auth } = usePage<SharedData>().props;
+
+    /**
+     * TODO show a loader ? And make it
+     * Get the detail of a draw and show it
+     * @param id 
+     */
+    const getDrawDetails = async (id: number) => {
+        const drawDetails = await axios.get('/data/draws/' + id);
+        console.log('draw details', drawDetails.data);
+    };
 
     return (
         <>
@@ -46,6 +59,15 @@ export default function Welcome({
 
                         <div className='mt-6'>
                             <DrawerForm />
+                        </div>
+
+                        <div className='mt-6'>
+                            <h2>Draws (TODO)</h2>
+                            {drawBaseList.map((d) => (
+                                <React.Fragment key={d.id}>
+                                    <p onClick={() => getDrawDetails(d.id)}>{d.label}</p>
+                                </React.Fragment>
+                            ))}
                         </div>
 
                     </main>

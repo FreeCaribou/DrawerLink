@@ -29,4 +29,10 @@ class DrawController extends Controller
 
         return redirect()->back()->with('success', 'Draw added!');
     }
+
+    public function dataDrawDetails(int $drawId)
+    {
+        $drawDetails = Draw::with('savedLinks')->with('savedLinks.savedObjectProps')->with('savedLinks.tags')->find($drawId);
+        return response()->json($drawDetails);
+    }
 }
