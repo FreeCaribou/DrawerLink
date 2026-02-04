@@ -32,6 +32,7 @@ class DrawController extends Controller
 
     public function dataDrawDetails(int $drawId)
     {
+        // TODO verify that it's really linked to the current user
         $drawDetails = Draw::with('savedLinks')->with('savedLinks.savedObjectProps')->with('savedLinks.tags')->find($drawId);
         return response()->json($drawDetails);
     }

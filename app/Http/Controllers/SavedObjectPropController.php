@@ -9,6 +9,7 @@ class SavedObjectPropController extends Controller
 {
     public function download(int $savedObjectPropId)
     {
+        // TODO verify that it's really linked to the current user
         $savedObjectProp = SavedObjectProp::with('savedObject')->find($savedObjectPropId);
         $fileContent = base64_decode($savedObjectProp->savedObject->content);
 
