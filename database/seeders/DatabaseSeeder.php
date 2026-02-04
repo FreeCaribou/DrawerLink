@@ -37,10 +37,11 @@ class DatabaseSeeder extends Seeder
 
         $drawOne = Draw::create(['label' => 'Politic', 'user_id' => $primaryUser->id]);
         $drawTwo = Draw::create(['label' => 'Science', 'user_id' => $primaryUser->id]);
+        $drawOneBis = Draw::create(['label' => 'Politic Bis', 'user_id' => $userTwo->id]);
 
         $savedLinkOne = SavedLink::create(['label' => 'Two stupid links about stupid politicians', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id]);
         $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id]);
-        $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id, 'draw_id' => $drawOne->id]);
+        $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id, 'draw_id' => $drawOneBis->id]);
         $savedLinkFour = SavedLink::create(['label' => 'Tax the scientific', 'user_id' => $primaryUser->id, 'draw_id' => $drawTwo->id]);
 
         $savedObjectPropOne = SavedObjectProp::create(['name' => 'document_one.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id, 'size' => 12456]);

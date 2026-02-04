@@ -4,6 +4,11 @@ import React from "react";
 import { DownloadIcon, TagIcon, WarehouseIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
 
+/**
+ * Component to show a big preview of saved links, used for list without context
+ * @param savedLinks 
+ * @returns 
+ */
 export default function SavedLinkList({
     savedLinks = [],
 }: {
@@ -11,7 +16,7 @@ export default function SavedLinkList({
 }) {
     return (
         <div>
-            <h1>The saved links</h1>
+            <h2>The saved links</h2>
             <ItemGroup>
                 {savedLinks.map((link) => (
                     <React.Fragment key={link.id}>
@@ -22,7 +27,7 @@ export default function SavedLinkList({
                                     {link.description}
                                 </ItemDescription>
                                 <p className="flex items-center gap-2">
-                                    <WarehouseIcon size={18} className='text-secondary'></WarehouseIcon> {link.draw.label}
+                                    <WarehouseIcon size={18} className='text-secondary'></WarehouseIcon> {link.draw?.label}
                                 </p>
                                 {link.saved_object_props.length > 0 && (
                                     <div>

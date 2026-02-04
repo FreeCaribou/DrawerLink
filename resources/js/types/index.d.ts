@@ -47,6 +47,7 @@ export interface Draw {
     label: string;
     description: string;
     saved_links: SavedLink[];
+    saved_links_count: number;
     [key: string]: unknown;
 }
 

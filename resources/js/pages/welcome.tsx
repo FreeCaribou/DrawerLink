@@ -5,8 +5,8 @@ import SavedLinkList from '@/components/saved-link-list';
 import DrawerForm from '@/components/drawer-form';
 import SavedLinkForm from '@/components/saved-link-form';
 
-import axios from 'axios';
 import React from 'react';
+import DrawCard from '@/components/draw-card';
 
 export default function Welcome({
     savedLinks = [],
@@ -19,15 +19,6 @@ export default function Welcome({
 }) {
     const { auth } = usePage<SharedData>().props;
 
-    /**
-     * TODO show a loader ? And make it
-     * Get the detail of a draw and show it
-     * @param id 
-     */
-    const getDrawDetails = async (id: number) => {
-        const drawDetails = await axios.get('/data/draws/' + id);
-        console.log('draw details', drawDetails.data);
-    };
 
     return (
         <>
@@ -43,7 +34,7 @@ export default function Welcome({
                     </nav>
                 </header>
                 <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-                    <main className="w-full max-w-[335px] lg:max-w-4xl lg:flex-row">
+                    <main className="w-full  lg:max-w-4xl lg:flex-row">
 
                         {flash?.success && (
                             <div className="mb-6 p-3 bg-green-100 text-green-800 rounded">
@@ -51,7 +42,19 @@ export default function Welcome({
                             </div>
                         )}
 
-                        <SavedLinkList savedLinks={savedLinks} />
+                        <h1>Welcome !</h1>
+
+                        <div className='mb-6'>
+                            {drawBaseList.map((d) => (
+                                <React.Fragment key={d.id}>
+                                    <div className='mb-2'>
+                                        <DrawCard drawProp={d}></DrawCard>
+                                    </div>
+                                </React.Fragment>
+                            ))}
+                        </div>
+
+                        {/* <SavedLinkList savedLinks={savedLinks} /> */}
 
                         <div className='mt-6'>
                             <SavedLinkForm drawBaseList={drawBaseList} />
@@ -59,15 +62,6 @@ export default function Welcome({
 
                         <div className='mt-6'>
                             <DrawerForm />
-                        </div>
-
-                        <div className='mt-6'>
-                            <h2>Draws (TODO)</h2>
-                            {drawBaseList.map((d) => (
-                                <React.Fragment key={d.id}>
-                                    <p onClick={() => getDrawDetails(d.id)}>{d.label}</p>
-                                </React.Fragment>
-                            ))}
                         </div>
 
                     </main>
