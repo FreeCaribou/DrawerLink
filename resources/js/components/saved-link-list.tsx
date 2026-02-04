@@ -6,6 +6,7 @@ import { Badge } from "./ui/badge";
 
 /**
  * Component to show a big preview of saved links, used for list without context
+ * TODO make it param to show or not the draw title or the download file and the big title
  * @param savedLinks 
  * @returns 
  */
@@ -16,7 +17,7 @@ export default function SavedLinkList({
 }) {
     return (
         <div>
-            <h2>The saved links</h2>
+            {/* <h2>The saved links</h2> */}
             <ItemGroup>
                 {savedLinks.map((link) => (
                     <React.Fragment key={link.id}>
@@ -26,9 +27,19 @@ export default function SavedLinkList({
                                 <ItemDescription>
                                     {link.description}
                                 </ItemDescription>
-                                <p className="flex items-center gap-2">
+                                {/* <p className="flex items-center gap-2">
                                     <WarehouseIcon size={18} className='text-secondary'></WarehouseIcon> {link.draw?.label}
-                                </p>
+                                </p> */}
+                                {link.tags?.length > 0 &&
+                                    <div className="flex w-full flex-wrap gap-2">
+                                        <TagIcon size={18} className='text-secondary'></TagIcon>
+                                        {link.tags.map((tag) => (
+                                            <React.Fragment key={tag.id}>
+                                                <Badge variant="secondary">{tag.label}</Badge>
+                                            </React.Fragment>
+                                        ))}
+                                    </div>
+                                }
                                 {link.saved_object_props.length > 0 && (
                                     <div>
                                         The related file:
@@ -52,16 +63,6 @@ export default function SavedLinkList({
                                         ))}
                                     </div>
                                 )}
-                                {link.tags?.length > 0 &&
-                                    <div className="flex w-full flex-wrap gap-2">
-                                        <TagIcon size={18} className='text-secondary'></TagIcon>
-                                        {link.tags.map((tag) => (
-                                            <React.Fragment key={tag.id}>
-                                                <Badge variant="secondary">{tag.label}</Badge>
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
-                                }
                             </ItemContent>
                         </Item>
                     </React.Fragment>
