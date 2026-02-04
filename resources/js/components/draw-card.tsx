@@ -38,7 +38,7 @@ export default function DrawCard({
         <Collapsible className="data-[state=open]:bg-muted rounded-md">
             <CollapsibleTrigger asChild>
                 <Button variant="ghost" className="group w-full" onClick={() => getDrawDetails()}>
-                    <span className='text-primary text-xl'>{draw.label}</span> ({draw.saved_links_count} links)
+                    <span className='text-secondary text-xl'>{draw.label}</span> ({draw.saved_links_count} links)
                     <ChevronDownIcon className="ml-auto group-data-[state=open]:rotate-180" />
                 </Button>
             </CollapsibleTrigger>

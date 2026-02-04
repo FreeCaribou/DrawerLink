@@ -152,3 +152,7 @@ h3 {
     @apply text-primary text-2xl sm:text-3xl mb-6 font-extrabold tracking-tight;
 }
 
+h4 {
+    @apply text-primary text-xl sm:text-2xl mb-6 font-extrabold tracking-tight;
+}
+

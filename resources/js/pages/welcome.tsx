@@ -31,7 +31,8 @@ export default function Welcome({
                 </div>
             )}
 
-            <h1>Welcome !</h1>
+            <h2>Welcome {auth.user.name}!</h2>
+            <h3>Your draw</h3>
 
             <div>
                 {drawList.map((d) => (

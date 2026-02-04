@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $primaryUser = User::firstOrCreate(
             ['email' => 'drawerlink@freecaribou.net'],
             [
-                'name' => 'freecaribou',
+                'name' => 'Freecaribou',
                 'password' => 'helloworld',
                 'email_verified_at' => now(),
             ]
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $userTwo = User::firstOrCreate(
             ['email' => 'johndoe@freecaribou.net'],
             [
-                'name' => 'johndoe',
+                'name' => 'Johndoe',
                 'password' => 'helloworld',
                 'email_verified_at' => now(),
             ]

@@ -18,7 +18,7 @@ export default function DrawerForm({
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
-                <Button variant="outline">Add a draw</Button>
+                <Button variant="secondary">Add a draw</Button>
             </DialogTrigger>
             <DialogContent showCloseButton={false} className="sm:max-w-sm">
                 <DialogHeader>

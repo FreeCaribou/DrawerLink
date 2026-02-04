@@ -28,7 +28,7 @@ export default function SavedLinkForm({
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
-                <Button variant="outline">Add a link</Button>
+                <Button variant="secondary">Add a link</Button>
             </DialogTrigger>
             <DialogContent showCloseButton={false} className="sm:max-w-sm">
                 <DialogHeader>
