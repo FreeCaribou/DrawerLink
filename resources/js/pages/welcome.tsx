@@ -1,24 +1,26 @@
 import { logout } from '@/routes';
-import { Draw, FlashProps, SavedLink, type SharedData } from '@/types';
+import { Draw, FlashProps, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import SavedLinkList from '@/components/saved-link-list';
 import DrawerForm from '@/components/drawer-form';
 import SavedLinkForm from '@/components/saved-link-form';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DrawCard from '@/components/draw-card';
 
 export default function Welcome({
-    savedLinks = [],
     drawBaseList = [],
     flash = {},
 }: {
-    savedLinks: SavedLink[];
     drawBaseList: Draw[];
     flash: FlashProps;
 }) {
     const { auth } = usePage<SharedData>().props;
 
+    const [drawList, setDrawList] = useState<Draw[]>([]);
+
+    useEffect(() => {
+        setDrawList(drawBaseList);
+    }, [drawBaseList]);
 
     return (
         <>
@@ -44,8 +46,8 @@ export default function Welcome({
 
                         <h1>Welcome !</h1>
 
-                        <div className='mb-6'>
-                            {drawBaseList.map((d) => (
+                        <div>
+                            {drawList.map((d) => (
                                 <React.Fragment key={d.id}>
                                     <div className='mb-2'>
                                         <DrawCard drawProp={d}></DrawCard>
@@ -55,7 +57,9 @@ export default function Welcome({
                         </div>
 
                         <div className='mt-6'>
-                            <SavedLinkForm drawBaseList={drawBaseList} />
+                            {drawList.length > 0 && (
+                                <SavedLinkForm drawBaseList={drawList} />
+                            )}
                         </div>
 
                         <div className='mt-6'>

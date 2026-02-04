@@ -1,5 +1,5 @@
 import { Draw } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDownIcon } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 import { Button } from "./ui/button";
@@ -15,6 +15,10 @@ export default function DrawCard({
 
     const [draw, setDraw] = useState(drawProp);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setDraw(drawProp);
+    }, [drawProp]);
 
     /**
      * Get the detail of a draw and show it
