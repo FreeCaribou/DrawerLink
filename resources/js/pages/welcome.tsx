@@ -6,6 +6,7 @@ import SavedLinkForm from '@/components/saved-link-form';
 
 import React, { useEffect, useState } from 'react';
 import DrawCard from '@/components/draw-card';
+import AppInternLayout from '@/layouts/app-intern-layout';
 
 export default function Welcome({
     drawBaseList = [],
@@ -23,52 +24,34 @@ export default function Welcome({
     }, [drawBaseList]);
 
     return (
-        <>
-            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
-                <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
-                    <nav className="flex items-center justify-end">
-                        <Link
-                            href={logout()}
-                            className="cursor-pointer inline-block rounded-sm border border-foreground px-5 py-1.5 text-sm"
-                        >
-                            Log out
-                        </Link>
-                    </nav>
-                </header>
-                <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-                    <main className="w-full  lg:max-w-4xl lg:flex-row">
-
-                        {flash?.success && (
-                            <div className="mb-6 p-3 bg-green-100 text-green-800 rounded">
-                                {flash.success}
-                            </div>
-                        )}
-
-                        <h1>Welcome !</h1>
-
-                        <div>
-                            {drawList.map((d) => (
-                                <React.Fragment key={d.id}>
-                                    <div className='mb-2'>
-                                        <DrawCard drawProp={d}></DrawCard>
-                                    </div>
-                                </React.Fragment>
-                            ))}
-                        </div>
-
-                        <div className='mt-6'>
-                            {drawList.length > 0 && (
-                                <SavedLinkForm drawBaseList={drawList} />
-                            )}
-                        </div>
-
-                        <div className='mt-6'>
-                            <DrawerForm />
-                        </div>
-
-                    </main>
+        <AppInternLayout>
+            {flash?.success && (
+                <div className="mb-6 p-3 bg-green-100 text-green-800 rounded">
+                    {flash.success}
                 </div>
+            )}
+
+            <h1>Welcome !</h1>
+
+            <div>
+                {drawList.map((d) => (
+                    <React.Fragment key={d.id}>
+                        <div className='mb-2'>
+                            <DrawCard drawProp={d}></DrawCard>
+                        </div>
+                    </React.Fragment>
+                ))}
             </div>
-        </>
+
+            <div className='mt-6'>
+                {drawList.length > 0 && (
+                    <SavedLinkForm drawBaseList={drawList} />
+                )}
+            </div>
+
+            <div className='mt-6'>
+                <DrawerForm />
+            </div>
+        </AppInternLayout>
     );
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SavedLink;
 use App\Models\Tag;
+use Inertia\Inertia;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -66,5 +67,14 @@ class SavedLinkController extends Controller
         });
 
         return redirect()->back()->with('success', 'Saved link added!');
+    }
+
+    public function getOne(int $savedLinkId)
+    {
+        // TODO verify that it's really linked to the current user
+        $savedLink = SavedLink::with('savedObjectProps')->with('tags')->find($savedLinkId);
+        return Inertia::render('saved-link-detail-page', [
+            'savedLink' => $savedLink
+        ]);
     }
 }

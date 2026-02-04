@@ -3,6 +3,7 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from "./ui/i
 import React from "react";
 import { DownloadIcon, TagIcon, WarehouseIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { Link } from "@inertiajs/react";
 
 /**
  * Component to show a big preview of saved links, used for list without context
@@ -23,7 +24,9 @@ export default function SavedLinkList({
                     <React.Fragment key={link.id}>
                         <Item variant="outline" className='mb-2'>
                             <ItemContent>
-                                <ItemTitle>{link.label}</ItemTitle>
+                                <ItemTitle>
+                                    <Link href={"/saved-links/" + link.id}>{link.label}</Link>
+                                </ItemTitle>
                                 <ItemDescription>
                                     {link.description}
                                 </ItemDescription>

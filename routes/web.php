@@ -14,6 +14,10 @@ Route::post('/saved-links', [SavedLinkController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.add');
 
+Route::get('/saved-links/{savedLinkId}', [SavedLinkController::class, 'getOne'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.get-one');
+
 Route::post('/draws', [DrawController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('draws.add');

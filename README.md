@@ -10,6 +10,7 @@ A little app to store "link" to retrieve it easily later and share it
     - link source, a string to be fill in by a https text, and we extract the domaine part and the full url
     - show link date (and can be editable ?)
     - Share a saved link to someone else
+    - Verify that a get (or post) is really linked to the actual user (user A cannot retrieve something from user B)
     - error management
 - i18n
 - for link description, have wysiwyg
