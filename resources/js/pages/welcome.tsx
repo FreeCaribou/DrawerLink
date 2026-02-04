@@ -54,8 +54,6 @@ export default function Welcome({
                             ))}
                         </div>
 
-                        {/* <SavedLinkList savedLinks={savedLinks} /> */}
-
                         <div className='mt-6'>
                             <SavedLinkForm drawBaseList={drawBaseList} />
                         </div>

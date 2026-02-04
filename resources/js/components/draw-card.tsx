@@ -1,12 +1,10 @@
 import { Draw } from "@/types";
-import React, { useState } from "react";
-import { ChevronDownIcon, DownloadIcon, TagIcon } from "lucide-react";
+import { useState } from "react";
+import { ChevronDownIcon } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 import { Button } from "./ui/button";
 import axios from "axios";
 import { Skeleton } from "./ui/skeleton";
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from "./ui/item";
-import { Badge } from "./ui/badge";
 import SavedLinkList from "./saved-link-list";
 
 export default function DrawCard({
@@ -52,55 +50,6 @@ export default function DrawCard({
                         <div>
                             {draw?.saved_links && (
                                 <SavedLinkList savedLinks={draw.saved_links} />
-                                // <div>
-                                //     <ItemGroup>
-                                //         {draw.saved_links.map(l => (
-                                //             <React.Fragment key={l.id}>
-                                //                 <Item variant="outline" className='mb-2'>
-                                //                     <ItemContent>
-                                //                         <ItemTitle>{l.label}</ItemTitle>
-                                //                         <ItemDescription>
-                                //                             {l.description}
-                                //                         </ItemDescription>
-                                //                         {l.tags?.length > 0 &&
-                                //                             <div className="flex w-full flex-wrap gap-2">
-                                //                                 <TagIcon size={18} className='text-secondary'></TagIcon>
-                                //                                 {l.tags.map((tag) => (
-                                //                                     <React.Fragment key={tag.id}>
-                                //                                         <Badge variant="secondary">{tag.label}</Badge>
-                                //                                     </React.Fragment>
-                                //                                 ))}
-                                //                             </div>
-                                //                         }
-                                //                         {l.saved_object_props.length > 0 && (
-                                //                             <div>
-                                //                                 The related file:
-                                //                                 {l.saved_object_props.map((objectProp) => (
-                                //                                     <React.Fragment key={objectProp.id}>
-                                //                                         <p className="flex items-center gap-2">
-                                //                                             {objectProp.name}
-                                //                                             <a
-                                //                                                 href={"/download-saved-object/" + objectProp.id}
-                                //                                                 target="_blank"
-                                //                                                 rel="noopener"
-                                //                                                 className="flex items-center"
-                                //                                             >
-                                //                                                 <DownloadIcon className='text-secondary'></DownloadIcon>
-                                //                                                 ({Math.round(objectProp.size / (1024 * 1024) * 100) / 100} Mo
-                                //                                                 {objectProp.size === 0 && (<span> - Probably an error, please reupload the file</span>)}
-                                //                                                 )
-                                //                                             </a>
-                                //                                         </p>
-                                //                                     </React.Fragment>
-                                //                                 ))}
-                                //                             </div>
-                                //                         )}
-                                //                     </ItemContent>
-                                //                 </Item>
-                                //             </React.Fragment>
-                                //         ))}
-                                //     </ItemGroup>
-                                // </div>
                             )}
                         </div>
                     )}
