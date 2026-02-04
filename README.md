@@ -7,8 +7,6 @@ A little app to store "link" to retrieve it easily later and share it
 - make the app real
     - Detail page of saved link with edit
     - Search with draw / tags
-    - Better home page, not reach every saved link, reach each draw and then some link (not direct the file with it)
-    - add form in modal
     - link source, a string to be fill in by a https text, and we extract the domaine part and the full url
     - show link date (and can be editable ?)
     - Share a saved link to someone else
