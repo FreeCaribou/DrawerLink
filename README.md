@@ -5,7 +5,7 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - make the app real
-    - Detail page of saved link with edit
+    - Detail page of saved link with edit and delete
     - Search with draw / tags
     - link source, a string to be fill in by a https text, and we extract the domaine part and the full url
     - show link date (and can be editable ?)
@@ -16,7 +16,7 @@ A little app to store "link" to retrieve it easily later and share it
 - for link description, have wysiwyg
 - delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - and clean up the code (avoid big file, separate component in front and divide service in back)
-- better readme here (for the deploy for exemple, for better link to the stack)
+- have an icon not AI generated
 - (cookie message)
 - For the tag of a saved link
     - For the form, propose some tag by some logic
