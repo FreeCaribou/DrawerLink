@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SavedLink;
+use App\Models\Draw;
 use App\Models\Tag;
 use Inertia\Inertia;
 
@@ -15,23 +16,30 @@ class SavedLinkController extends Controller
 {
     public function add(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'label' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
             'draw_id' => 'required',
             'tags' => 'nullable|string'
         ]);
-        // TODO return err message
-        // Verify that the draw belong to the user
+        // TODO return err message if not valid
 
-        DB::transaction(function () use ($request) {
+        $userId = Auth::user()->id;
+        $draw = Draw::find($request->draw_id);
+        if ($userId != $draw->user_id) {
+            return Inertia::render('error-page', [
+                'error' => 'Unauthorized',
+                'messages' => ['error.not-your-draw']
+            ]);
+        }
+
+        DB::transaction(function () use ($request, $userId) {
             Log::info('Trying creation of a link');
             // Base creation
-            $user = Auth::user();
             $savedLink = SavedLink::create([
                 'label' => $request->label,
                 'description' => $request->description,
-                'user_id' => $user->id,
+                'user_id' => $userId,
                 'draw_id' => $request->draw_id,
             ]);
 
@@ -71,8 +79,14 @@ class SavedLinkController extends Controller
 
     public function getOne(int $savedLinkId)
     {
-        // TODO verify that it's really linked to the current user
+        $userId = Auth::user()->id;
         $savedLink = SavedLink::with('savedObjectProps')->with('tags')->find($savedLinkId);
+        if ($userId != $savedLink->user_id) {
+            return Inertia::render('error-page', [
+                'error' => 'Unauthorized',
+                'messages' => ['error.not-your-link']
+            ]);
+        }
         return Inertia::render('saved-link-detail-page', [
             'savedLink' => $savedLink
         ]);

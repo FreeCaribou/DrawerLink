@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import axios from "axios";
 import { Skeleton } from "./ui/skeleton";
 import SavedLinkList from "./saved-link-list";
+import { toast } from "sonner";
 
 export default function DrawCard({
     drawProp,
@@ -28,9 +29,24 @@ export default function DrawCard({
         // We don't re make the call if the saved links are already present
         if (!draw?.saved_links) {
             setIsLoading(true);
-            const drawDetails = await axios.get('/data/draws/' + draw.id);
-            setDraw({ ...draw, saved_links: drawDetails.data.saved_links });
-            setIsLoading(false);
+            try {
+                const response = await axios.get('/data/draws/' + draw.id);
+                setDraw({ ...draw, saved_links: response.data.saved_links });
+            } catch (error: any) {
+                console.error("Error :", error.response.data);
+                toast(
+                    error.response.data.error,
+                    {
+                        position: "top-right",
+                        description: error.response.data.messages?.map(
+                            (m: string, key: number) =>
+                                `${m}${key + 1 >= error.response.data.messages.length ? '' : '/'}`
+                        )
+                    }
+                );
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
