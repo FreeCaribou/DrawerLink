@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import { logout } from "@/routes";
 import { Link } from "@inertiajs/react";
 
@@ -24,6 +25,7 @@ export default function AppInternLayout({
                 <main className="w-full  lg:max-w-4xl lg:flex-row">
                     {children}
                 </main>
+                <Toaster></Toaster>
             </div>
         </div>
     );

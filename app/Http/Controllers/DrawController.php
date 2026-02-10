@@ -16,7 +16,7 @@ class DrawController extends Controller
             'label' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
         ]);
-        // TODO return err message
+        // TODO return err message if not valid
 
         $user = Auth::user();
         Draw::create([
@@ -32,8 +32,11 @@ class DrawController extends Controller
 
     public function dataDrawDetails(int $drawId)
     {
-        // TODO verify that it's really linked to the current user
+        $userId = Auth::user()->id;
         $drawDetails = Draw::with('savedLinks')->with('savedLinks.savedObjectProps')->with('savedLinks.tags')->find($drawId);
+        if ($userId != $drawDetails->user_id) {
+            return response()->json(['error' => 'Unauthorized', 'messages' => ['error.not-your-draw']], 403);
+        }
         return response()->json($drawDetails);
     }
 }

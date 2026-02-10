@@ -4,23 +4,24 @@ A little app to store "link" to retrieve it easily later and share it
 
 ## TODO
 
-- make the app real
-    - Detail page of saved link with edit
+- make the app real, what needed for a v1
+    - Detail page of saved link with delete and edit
+    - Link source, a string to be fill in by a https text, and we extract the domaine part and the full url
+    - Show link date (the created on and the "source date")
     - Search with draw / tags
-    - link source, a string to be fill in by a https text, and we extract the domaine part and the full url
-    - show link date (and can be editable ?)
     - Share a saved link to someone else
-    - Verify that a get (or post) is really linked to the actual user (user A cannot retrieve something from user B)
-    - error management
+    - Error management, make redirect, check best pratice
+    - Remove all the TODO from code !
 - i18n
 - for link description, have wysiwyg
 - delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - and clean up the code (avoid big file, separate component in front and divide service in back)
-- better readme here (for the deploy for exemple, for better link to the stack)
+- have an icon not AI generated
 - (cookie message)
 - For the tag of a saved link
     - For the form, propose some tag by some logic
     - For the search, show the most used tag for example
+- Make relations between link
 - Dark mode
 - bash script for the install
 
