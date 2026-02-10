@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * A draw, is like a category
- * 
+ *
  * id -> int
  * label -> string (255) not null
  * description -> string (2000) null

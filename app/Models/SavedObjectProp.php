@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * The props of the file
- * 
+ *
  * The divide the object prop and the object so I can easily get the prop data without the big content
- * 
+ *
  * id -> int
  * name -> string (255) not null
  * mime_type -> string (2000) not null

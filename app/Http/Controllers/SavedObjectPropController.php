@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\SavedObjectProp;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Inertia\Inertia;
 
 class SavedObjectPropController extends Controller
@@ -17,13 +17,13 @@ class SavedObjectPropController extends Controller
         if ($userId != $savedObjectProp->savedLink->user_id) {
             return Inertia::render('error-page', [
                 'error' => 'Unauthorized',
-                'messages' => ['error.not-your-document']
+                'messages' => ['error.not-your-document'],
             ]);
         }
 
         return Response::make($fileContent, 200, [
             'Content-Type' => $savedObjectProp->mime_type,
-            'Content-Disposition' => 'attachment; filename="' . $savedObjectProp->name . '"',
+            'Content-Disposition' => 'attachment; filename="'.$savedObjectProp->name.'"',
             'Content-Length' => strlen($fileContent),
         ]);
     }

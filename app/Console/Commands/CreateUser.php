@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\User;
+use Illuminate\Console\Command;
 
 class CreateUser extends Command
 {
@@ -28,9 +28,9 @@ class CreateUser extends Command
     {
         $this->info('We will create a new user');
         $email = $this->ask('What is the email of the new user?', 'admin@drawerlink.net');
-        $this->info('Ok, ' . $email);
+        $this->info('Ok, '.$email);
         $name = $this->ask('And his name?', $email);
-        $this->info('Ok, ' . $name);
+        $this->info('Ok, '.$name);
         $password = $this->secret('And now type a password please (it will be hidden in the console');
 
         User::firstOrCreate(

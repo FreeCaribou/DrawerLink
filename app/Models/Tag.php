@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * A tag for the saved link
  * Useful for searching
- * 
+ *
  * id -> int
  * label -> string (42) not null
  * created_at -> datetime

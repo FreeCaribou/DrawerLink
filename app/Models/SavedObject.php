@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * The file
- * 
+ *
  * id -> int
  * content -> text not null
  * saved_object -> SavedObject

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\SavedLink;
 use App\Models\Draw;
+use App\Models\SavedLink;
 use App\Models\Tag;
-use Inertia\Inertia;
-
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class SavedLinkController extends Controller
 {
@@ -20,7 +19,7 @@ class SavedLinkController extends Controller
             'label' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
             'draw_id' => 'required',
-            'tags' => 'nullable|string'
+            'tags' => 'nullable|string',
         ]);
         // TODO return err message if not valid
 
@@ -29,7 +28,7 @@ class SavedLinkController extends Controller
         if ($userId != $draw->user_id) {
             return Inertia::render('error-page', [
                 'error' => 'Unauthorized',
-                'messages' => ['error.not-your-draw']
+                'messages' => ['error.not-your-draw'],
             ]);
         }
 
@@ -45,7 +44,7 @@ class SavedLinkController extends Controller
 
             // Link some tags if present
             // We separate the string with the "," and then we upper case the first letter
-            if (!empty(trim($request->tags))) {
+            if (! empty(trim($request->tags))) {
                 $tagLabels = array_map(function ($item) {
                     return ucfirst(strtolower(trim($item)));
                 }, explode(',', $request->tags));
@@ -67,7 +66,7 @@ class SavedLinkController extends Controller
                 ]);
 
                 $savedObjectProp->savedObject()->create([
-                    'content' => base64_encode(file_get_contents($uploadedFile->getRealPath()))
+                    'content' => base64_encode(file_get_contents($uploadedFile->getRealPath())),
                 ]);
             }
 
@@ -84,11 +83,12 @@ class SavedLinkController extends Controller
         if ($userId != $savedLink->user_id) {
             return Inertia::render('error-page', [
                 'error' => 'Unauthorized',
-                'messages' => ['error.not-your-link']
+                'messages' => ['error.not-your-link'],
             ]);
         }
+
         return Inertia::render('saved-link-detail-page', [
-            'savedLink' => $savedLink
+            'savedLink' => $savedLink,
         ]);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\DrawController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SavedLinkController;
 use App\Http\Controllers\SavedObjectPropController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -34,4 +34,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';
