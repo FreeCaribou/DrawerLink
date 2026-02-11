@@ -14,6 +14,10 @@ Route::post('/saved-links', [SavedLinkController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.add');
 
+Route::delete('/saved-links/{savedLinkId}', [SavedLinkController::class, 'deleteOne'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.delete');
+
 Route::get('/saved-links/{savedLinkId}', [SavedLinkController::class, 'getOne'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.get-one');
@@ -34,4 +38,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
