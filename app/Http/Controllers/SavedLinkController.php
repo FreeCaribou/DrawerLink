@@ -89,19 +89,12 @@ class SavedLinkController extends Controller
     public function deleteOne(int $savedLinkId)
     {
         $userId = Auth::user()->id;
-        $savedLink = SavedLink::with('savedObjectProps')->with('savedObjectProps.savedObject')->with('tags')->find($savedLinkId);
+        $savedLink = SavedLink::find($savedLinkId);
         if ($userId != $savedLink->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-link']);
         }
 
-        foreach ($savedLink->savedObjectProps as $prop) {
-            if ($prop->savedObject) {
-                $prop->savedObject->delete();
-            }
-            $prop->delete();
-        }
         // TODO if the tags don't belong to other saved links, just delete it
-        $savedLink->tags()->detach();
         $savedLink->delete();
 
         return redirect()->route('home')->with('success', 'Saved link deleted!');
