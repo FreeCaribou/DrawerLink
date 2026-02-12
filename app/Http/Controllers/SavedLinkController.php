@@ -76,7 +76,7 @@ class SavedLinkController extends Controller
     public function getOne(int $savedLinkId)
     {
         $userId = Auth::user()->id;
-        $savedLink = SavedLink::with('savedObjectProps')->with('tags')->find($savedLinkId);
+        $savedLink = SavedLink::with('savedObjectProps')->with('tags')->with('draw')->find($savedLinkId);
         if ($userId != $savedLink->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-link']);
         }

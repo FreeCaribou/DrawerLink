@@ -1,10 +1,12 @@
 import { SavedLink } from "@/types";
 import AppInternLayout from "@/layouts/app-intern-layout";
 import React, { useState } from "react";
-import { DownloadIcon, Trash2Icon } from "lucide-react";
+import { DownloadIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@inertiajs/react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import DateFormater from "@/components/date-formater";
 
 export default function DrawCard({
     savedLink,
@@ -20,9 +22,32 @@ export default function DrawCard({
     return (
         <AppInternLayout>
             <h2>{savedLink.label}</h2>
+
+            <div className="mt-5 flex">
+                <WarehouseIcon size={18} className='text-secondary mr-2'></WarehouseIcon> {savedLink.draw?.label}
+
+                {savedLink.tags?.length > 0 &&
+                    <div className="flex w-full flex-wrap gap-2 ml-5">
+                        <TagIcon size={18} className='text-secondary'></TagIcon>
+                        {savedLink.tags.map((tag) => (
+                            <React.Fragment key={tag.id}>
+                                <Badge variant="secondary">{tag.label}</Badge>
+                            </React.Fragment>
+                        ))}
+                    </div>
+                }
+                <span className="ml-5">
+                    <DateFormater date={savedLink.updated_at}></DateFormater>
+                </span>
+            </div>
+
+            <div className="mt-5">
+                {savedLink.description}
+            </div>
+
             {savedLink.saved_object_props.length > 0 && (
                 <div className="mt-5">
-                    The related file:
+                    <p className="text-secondary font-extrabold tracking-tight">The related file:</p>
                     {savedLink.saved_object_props.map((objectProp) => (
                         <React.Fragment key={objectProp.id}>
                             <p className="flex items-center gap-2">
@@ -70,7 +95,7 @@ export default function DrawCard({
                 </Dialog>
             </div>
 
-            <h3 className="mt-5">Todo</h3>
+            <h3 className="mt-5">Todo - source (base, detail and date, all optionnal)</h3>
         </AppInternLayout>
     );
 }

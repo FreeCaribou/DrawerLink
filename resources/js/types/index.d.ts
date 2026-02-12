@@ -63,6 +63,8 @@ export interface SavedLink {
     saved_object_props: SavedObjectProp[];
     draw: Draw;
     tags: Tag[];
+    created_at: Date;
+    updated_at: Date;
     [key: string]: unknown;
 }
 
