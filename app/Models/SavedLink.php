@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 
 /**
  * The core of the app, the link that we want to save
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class SavedLink extends Model
 {
-    protected $fillable = ['label', 'description', 'user_id', 'draw_id'];
+    protected $fillable = ['label', 'description', 'user_id', 'draw_id', 'source_date', 'full_source', 'base_source'];
 
     public function savedObjectProps(): HasMany
     {
@@ -43,5 +44,18 @@ class SavedLink extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function setSourceDateAttribute($value)
+    {
+        if (!empty($value)) {
+            try {
+                $this->attributes['source_date'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+            } catch (\Exception $e) {
+                $this->attributes['source_date'] = null;
+            }
+        } else {
+            $this->attributes['source_date'] = null;
+        }
     }
 }

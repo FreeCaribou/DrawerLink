@@ -20,6 +20,7 @@ class SavedLinkController extends Controller
             'description' => 'nullable|string|max:2000',
             'draw_id' => 'required',
             'tags' => 'nullable|string',
+            'source_date' => 'nullable',
         ]);
         // TODO return err message if not valid
 
@@ -37,6 +38,7 @@ class SavedLinkController extends Controller
                 'description' => $request->description,
                 'user_id' => $userId,
                 'draw_id' => $request->draw_id,
+                'source_date' => $request->source_date,
             ]);
 
             // Link some tags if present
