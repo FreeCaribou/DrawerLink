@@ -1,15 +1,22 @@
 import { SavedLink } from "@/types";
 import AppInternLayout from "@/layouts/app-intern-layout";
-import React from "react";
-import { DownloadIcon, Link, Trash2Icon, TrashIcon } from "lucide-react";
+import React, { useState } from "react";
+import { DownloadIcon, Trash2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@inertiajs/react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export default function DrawCard({
     savedLink,
 }: {
     savedLink: SavedLink;
 }) {
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleSuccess = () => {
+        setOpenDialog(false);
+    };
+
     return (
         <AppInternLayout>
             <h2>{savedLink.label}</h2>
@@ -37,18 +44,30 @@ export default function DrawCard({
                 </div>
             )}
 
-            {/* TODO make a "sur" button */}
             <div className="mt-5">
-                <Form action={"/saved-links/" + savedLink.id} method="delete">
-                    <Button
-                        type="submit"
-                        variant="destructive"
-                        className="cursor-pointer"
-                    >
-                        <Trash2Icon></Trash2Icon>
-                        Delete
-                    </Button>
-                </Form>
+                <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                    <DialogTrigger asChild>
+                        <Button variant="destructive" className="cursor-pointer">
+                            <Trash2Icon></Trash2Icon>
+                            Delete
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent showCloseButton={false} className="sm:max-w-sm">
+                        <DialogHeader>
+                            <DialogTitle>Are you sur to delete this saved link ?</DialogTitle>
+                        </DialogHeader>
+                        <Form action={"/saved-links/" + savedLink.id} method="delete" onSuccess={handleSuccess}>
+                            <Button
+                                type="submit"
+                                variant="destructive"
+                                className="cursor-pointer"
+                            >
+                                <Trash2Icon></Trash2Icon>
+                                Yes
+                            </Button>
+                        </Form>
+                    </DialogContent>
+                </Dialog>
             </div>
 
             <h3 className="mt-5">Todo</h3>

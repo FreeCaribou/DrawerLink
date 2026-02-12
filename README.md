@@ -5,7 +5,7 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - make the app real, what needed for a v1
-    - Detail page of saved link with delete and edit
+    - Detail page of saved link with edit
     - Link source, a string to be fill in by a https text, and we extract the domaine part and the full url
     - Show link date (the created on and the "source date")
     - Search with draw / tags
