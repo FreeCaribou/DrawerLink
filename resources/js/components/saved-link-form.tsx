@@ -180,6 +180,14 @@ export default function SavedLinkForm({
                                         </InputGroup>
                                     </Field>
 
+                                    {/* TODO validation that it is a url */}
+                                    <Field>
+                                        <FieldLabel htmlFor="link-form-fullSource">
+                                            Source of the link
+                                        </FieldLabel>
+                                        <Input id="link-form-fullSource" name='full_source' placeholder='https://' />
+                                    </Field>
+
                                 </FieldGroup>
                             </FieldSet>
                         </FieldGroup>

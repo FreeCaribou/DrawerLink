@@ -21,6 +21,7 @@ class SavedLinkController extends Controller
             'draw_id' => 'required',
             'tags' => 'nullable|string',
             'source_date' => 'nullable',
+            'full_source' => 'nullable|string|max:255',
         ]);
         // TODO return err message if not valid
 
@@ -32,6 +33,10 @@ class SavedLinkController extends Controller
 
         DB::transaction(function () use ($request, $userId) {
             Log::info('Trying creation of a link');
+            // TODO make the base source when the full source is present
+            $baseSource = null;
+            if (!empty($request->full_source)) {
+            }
             // Base creation
             $savedLink = SavedLink::create([
                 'label' => $request->label,
@@ -39,6 +44,8 @@ class SavedLinkController extends Controller
                 'user_id' => $userId,
                 'draw_id' => $request->draw_id,
                 'source_date' => $request->source_date,
+                'full_source' => $request->full_source,
+                'base_source' => $baseSource,
             ]);
 
             // Link some tags if present
