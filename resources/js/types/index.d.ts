@@ -84,5 +84,6 @@ export interface SavedObject {
 export interface FlashProps {
     success?: string;
     error?: string;
+    messages?: string[];
     [key: string]: unknown;
 }

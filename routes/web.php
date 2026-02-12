@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\DrawController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\SavedLinkController;
 use App\Http\Controllers\SavedObjectPropController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/error', [ErrorController::class, 'manageError'])
+    ->name('error');
 
 Route::get('/', [HomeController::class, 'index'])
     ->middleware(['auth', 'verified'])

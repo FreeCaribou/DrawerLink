@@ -10,7 +10,6 @@ A little app to store "link" to retrieve it easily later and share it
     - Show link date (the created on and the "source date")
     - Search with draw / tags
     - Share a saved link to someone else
-    - Error management, make redirect, check best pratice
     - Remove all the TODO from code !
 - i18n
 - for link description, have wysiwyg

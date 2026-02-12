@@ -26,10 +26,7 @@ class SavedLinkController extends Controller
         $userId = Auth::user()->id;
         $draw = Draw::find($request->draw_id);
         if ($userId != $draw->user_id) {
-            return Inertia::render('error-page', [
-                'error' => 'Unauthorized',
-                'messages' => ['error.not-your-draw'],
-            ]);
+            return redirect()->route('error')->withErrors(['error.not-your-draw']);
         }
 
         DB::transaction(function () use ($request, $userId) {
@@ -81,10 +78,7 @@ class SavedLinkController extends Controller
         $userId = Auth::user()->id;
         $savedLink = SavedLink::with('savedObjectProps')->with('tags')->find($savedLinkId);
         if ($userId != $savedLink->user_id) {
-            return Inertia::render('error-page', [
-                'error' => 'Unauthorized',
-                'messages' => ['error.not-your-link'],
-            ]);
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
         }
 
         return Inertia::render('saved-link-detail-page', [
@@ -97,10 +91,7 @@ class SavedLinkController extends Controller
         $userId = Auth::user()->id;
         $savedLink = SavedLink::with('savedObjectProps')->with('savedObjectProps.savedObject')->with('tags')->find($savedLinkId);
         if ($userId != $savedLink->user_id) {
-            return Inertia::render('error-page', [
-                'error' => 'Unauthorized',
-                'messages' => ['error.not-your-link'],
-            ]);
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
         }
 
         foreach ($savedLink->savedObjectProps as $prop) {
