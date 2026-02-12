@@ -21,6 +21,10 @@ use Carbon\Carbon;
  * saved_object_props -> SavedObjectProp[]
  * user -> User
  * tags -> Tag[]
+ * full_source -> string
+ * base_source -> string a full source is https://jacobin.com/2026/02/natural-disaster-insurance-california-wildfires and the base source is jacobin.com
+ * source_date -> date
+
  */
 class SavedLink extends Model
 {
