@@ -23,6 +23,7 @@ export default function AuthCardLayout({
                 <div className="flex flex-col gap-6">
                     <Card className="rounded-xl">
                         <CardHeader className="px-10 pt-8 pb-0 text-center">
+                            <h2>Drawer Link</h2>
                             <CardTitle className="text-xl text-primary">{title}</CardTitle>
                             <CardDescription className='text-secondary'>{description}</CardDescription>
                         </CardHeader>

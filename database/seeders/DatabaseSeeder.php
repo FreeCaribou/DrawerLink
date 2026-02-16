@@ -39,8 +39,16 @@ class DatabaseSeeder extends Seeder
         $drawTwo = Draw::create(['label' => 'Science', 'user_id' => $primaryUser->id]);
         $drawOneBis = Draw::create(['label' => 'Politic Bis', 'user_id' => $userTwo->id]);
 
-        $savedLinkOne = SavedLink::create(['label' => 'Two stupid links about stupid politicians', 'description' => 'You will be surprise !', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id]);
-        $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id]);
+        $savedLinkOne = SavedLink::create([
+            'label' => 'Two stupid links about stupid politicians',
+            'description' => 'You will be surprise !',
+            'user_id' => $primaryUser->id,
+            'draw_id' => $drawOne->id,
+            'full_source' => 'https://jacobin.com/2026/02/natural-disaster-insurance-california-wildfires',
+            'base_source' => 'jacobin.com',
+            'source_date' => '2026-01-01'
+        ]);
+        $savedLinkTwo = SavedLink::create(['label' => 'Tax the Rich', 'description' => 'And other good idea', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id, 'source_date' => '01/01/2026']);
         $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id, 'draw_id' => $drawOneBis->id]);
         $savedLinkFour = SavedLink::create(['label' => 'Tax the scientific', 'user_id' => $primaryUser->id, 'draw_id' => $drawTwo->id]);
 

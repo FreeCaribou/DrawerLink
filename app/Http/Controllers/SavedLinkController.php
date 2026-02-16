@@ -33,9 +33,15 @@ class SavedLinkController extends Controller
 
         DB::transaction(function () use ($request, $userId) {
             Log::info('Trying creation of a link');
-            // TODO make the base source when the full source is present
             $baseSource = null;
             if (!empty($request->full_source)) {
+                try {
+                    $parsedUrl = parse_url($request->full_source);
+                    // I assume that if a website is called hellowww.net it will not be taken in consideration
+                    $baseSource = str_replace('www.', '', $parsedUrl['host']) ?? null;
+                } catch (\Exception $e) {
+                    // Do nothing
+                }
             }
             // Base creation
             $savedLink = SavedLink::create([
@@ -43,7 +49,8 @@ class SavedLinkController extends Controller
                 'description' => $request->description,
                 'user_id' => $userId,
                 'draw_id' => $request->draw_id,
-                'source_date' => $request->source_date,
+                // For the search function or this kind of thing, it's better to assume that if the user don't put source date, it's now
+                'source_date' => $request->source_date ?? now()->format('Y-m-d'),
                 'full_source' => $request->full_source,
                 'base_source' => $baseSource,
             ]);

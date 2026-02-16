@@ -52,14 +52,21 @@ class SavedLink extends Model
 
     public function setSourceDateAttribute($value)
     {
-        if (!empty($value)) {
-            try {
-                $this->attributes['source_date'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
-            } catch (\Exception $e) {
-                $this->attributes['source_date'] = null;
-            }
-        } else {
+        if (empty($value)) {
             $this->attributes['source_date'] = null;
+            return;
         }
+
+        $formats = ['d/m/Y', 'Y-m-d'];
+        foreach ($formats as $format) {
+            try {
+                $this->attributes['source_date'] = Carbon::createFromFormat($format, $value)->format('Y-m-d');
+                return;
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
+
+        $this->attributes['source_date'] = null;
     }
 }
