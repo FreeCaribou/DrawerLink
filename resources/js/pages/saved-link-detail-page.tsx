@@ -1,7 +1,7 @@
 import { SavedLink } from "@/types";
 import AppInternLayout from "@/layouts/app-intern-layout";
 import React, { useState } from "react";
-import { DownloadIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
+import { DownloadIcon, ExternalLinkIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@inertiajs/react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -24,11 +24,11 @@ export default function DrawCard({
             <h2>{savedLink.label}</h2>
 
             <div className="mt-5 flex">
-                <WarehouseIcon size={18} className='text-secondary mr-2'></WarehouseIcon> {savedLink.draw?.label}
+                <WarehouseIcon className='text-secondary mr-2'></WarehouseIcon> {savedLink.draw?.label}
 
                 {savedLink.tags?.length > 0 &&
                     <div className="flex w-full flex-wrap gap-2 ml-5">
-                        <TagIcon size={18} className='text-secondary'></TagIcon>
+                        <TagIcon className='text-secondary'></TagIcon>
                         {savedLink.tags.map((tag) => (
                             <React.Fragment key={tag.id}>
                                 <Badge variant="secondary">{tag.label}</Badge>
@@ -36,7 +36,7 @@ export default function DrawCard({
                         ))}
                     </div>
                 }
-                <span className="ml-5">
+                <span className="ml-5 flex">
                     <DateFormater date={savedLink.updated_at}></DateFormater>
                 </span>
             </div>
@@ -45,9 +45,16 @@ export default function DrawCard({
                 {savedLink.description}
             </div>
 
+            {savedLink.full_source && (
+                <a href={savedLink.full_source} target="_blank" className="flex gap-2 mt-5 text-secondary font-bold">
+                    {savedLink.base_source || savedLink.full_source}
+                    <ExternalLinkIcon className='text-secondary'></ExternalLinkIcon>
+                </a>
+            )}
+
             {savedLink.saved_object_props.length > 0 && (
                 <div className="mt-5">
-                    <p className="text-secondary font-extrabold tracking-tight">The related file:</p>
+                    <p className="text-secondary font-extrabold tracking-tight">The related file</p>
                     {savedLink.saved_object_props.map((objectProp) => (
                         <React.Fragment key={objectProp.id}>
                             <p className="flex items-center gap-2">
@@ -66,6 +73,13 @@ export default function DrawCard({
                             </p>
                         </React.Fragment>
                     ))}
+
+                </div>
+            )}
+
+            {savedLink.source_date && (
+                <div className="flex gap-2 mt-5 text-secondary">
+                    Source date <DateFormater date={savedLink.source_date}></DateFormater>
                 </div>
             )}
 
@@ -94,8 +108,6 @@ export default function DrawCard({
                     </DialogContent>
                 </Dialog>
             </div>
-
-            <h3 className="mt-5">Todo - source (base, detail and date, all optionnal)</h3>
         </AppInternLayout>
     );
 }
