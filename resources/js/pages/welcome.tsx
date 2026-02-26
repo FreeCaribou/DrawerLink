@@ -50,8 +50,7 @@ export default function Welcome({
                     </CollapsibleContent>
                 </Collapsible>
             </div> */}
-            <BigSearch drawBaseList={drawList}></BigSearch>
-
+            <BigSearch></BigSearch>
 
             <h3>Your draw</h3>
 

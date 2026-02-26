@@ -122,7 +122,7 @@ class SavedLinkController extends Controller
         $userId = Auth::user()->id;
 
         $text = trim($request->get('text'));
-        $drawers = $request->get('drawers', []);
+        $draws = $request->get('draws', []);
         $tags = $request->get('tags', []);
 
         $savedLinks = SavedLink::where('user_id', $userId)
@@ -132,8 +132,28 @@ class SavedLinkController extends Controller
                         ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($text) . '%']);
                 });
             })
+            ->when(!empty($tags), function (Builder $query) use ($tags) {
+                $query->whereHas('tags', function (Builder $q) use ($tags) {
+                    $q->whereIn('tags.id', $tags);
+                });
+            })
+            ->when(!empty($draws), function (Builder $query) use ($draws) {
+                $query->whereIn('draw_id', $draws);
+            })
             ->with('draw')->with('tags')->with('savedObjectProps')->get();
 
         return response()->json($savedLinks);
+    }
+
+    public function dataSearchFilterElement()
+    {
+        $userId = Auth::user()->id;
+
+        $draws = Draw::where('user_id', $userId)->get();
+        $tags = Tag::whereHas('savedLinks', function (Builder $query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
+
+        return response()->json(['draws' => $draws, 'tags' => $tags]);
     }
 }

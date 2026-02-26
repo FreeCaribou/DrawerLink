@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         $drawOneBis = Draw::create(['label' => 'Politic Bis', 'user_id' => $userTwo->id]);
 
         $savedLinkOne = SavedLink::create([
-            'label' => 'Two stupid links about stupid politicians',
+            'label' => 'Two stupid good links about stupid politicians',
             'description' => 'You will be surprise !',
             'user_id' => $primaryUser->id,
             'draw_id' => $drawOne->id,
