@@ -22,6 +22,10 @@ Route::delete('/saved-links/{savedLinkId}', [SavedLinkController::class, 'delete
     ->middleware(['auth', 'verified'])
     ->name('saved-links.delete');
 
+Route::get('/data/saved-links', [SavedLinkController::class, 'dataSearch'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.data-search');
+
 Route::get('/saved-links/{savedLinkId}', [SavedLinkController::class, 'getOne'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.get-one');

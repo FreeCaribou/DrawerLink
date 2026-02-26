@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 
 class SavedLinkController extends Controller
@@ -114,5 +115,25 @@ class SavedLinkController extends Controller
         $savedLink->delete();
 
         return redirect()->route('home')->with('success', 'Saved link deleted!');
+    }
+
+    public function dataSearch(Request $request)
+    {
+        $userId = Auth::user()->id;
+
+        $text = trim($request->get('text'));
+        $drawers = $request->get('drawers', []);
+        $tags = $request->get('tags', []);
+
+        $savedLinks = SavedLink::where('user_id', $userId)
+            ->when($text, function (Builder $query, string $text) {
+                $query->where(function (Builder $q) use ($text) {
+                    $q->whereRaw('LOWER(label) LIKE ?', ['%' . strtolower($text) . '%'])
+                        ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($text) . '%']);
+                });
+            })
+            ->with('draw')->with('tags')->with('savedObjectProps')->get();
+
+        return response()->json($savedLinks);
     }
 }

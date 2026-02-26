@@ -14,8 +14,10 @@ import DateFormater from "./date-formater";
  */
 export default function SavedLinkList({
     savedLinks = [],
+    withDrawTitle = false,
 }: {
     savedLinks: SavedLink[];
+    withDrawTitle?: boolean;
 }) {
     return (
         <div>
@@ -33,9 +35,13 @@ export default function SavedLinkList({
                                         <ItemDescription>
                                             {link.description}
                                         </ItemDescription>
-                                        {/* <p className="flex items-center gap-2">
-                                    <WarehouseIcon size={18} className='text-secondary'></WarehouseIcon> {link.draw?.label}
-                                </p> */}
+                                        {
+                                            withDrawTitle && (
+                                                <p className="flex items-center gap-2">
+                                                    <WarehouseIcon size={18} className='text-secondary'></WarehouseIcon> {link.draw?.label}
+                                                </p>
+                                            )
+                                        }
                                         {link.tags?.length > 0 &&
                                             <div className="flex w-full flex-wrap gap-2">
                                                 <TagIcon size={18} className='text-secondary'></TagIcon>
@@ -54,7 +60,7 @@ export default function SavedLinkList({
                                         )}
                                     </div>
                                     <div>
-                                        {link.saved_object_props.length > 0 && (
+                                        {link.saved_object_props?.length > 0 && (
                                             <div>
                                                 {link.saved_object_props.map((objectProp) => (
                                                     <React.Fragment key={objectProp.id}>
