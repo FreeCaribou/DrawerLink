@@ -5,7 +5,7 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - make the app real, what needed for a v1
-    - Search with draw / tags
+    - Search with source and date
     - Edit a link (source, title, description, remove/add file)
     - Share a saved link to someone else
     - Remove all the TODO from code !
