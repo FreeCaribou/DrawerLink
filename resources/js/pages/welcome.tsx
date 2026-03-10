@@ -37,8 +37,7 @@ export default function Welcome({
 
             <h2>Welcome {auth.user.name}!</h2>
 
-            {/* TODO put in the collapse after the test */}
-            {/* <div className='mb-6'>
+            <div className='mb-6'>
                 <Collapsible className="data-[state=open]:bg-muted rounded-md">
                     <CollapsibleTrigger asChild>
                         <Button variant="ghost" className="group w-full">
@@ -47,10 +46,10 @@ export default function Welcome({
                         </Button>
                     </CollapsibleTrigger>
                     <CollapsibleContent className="flex flex-col p-2.5 pt-0">
+                        <BigSearch></BigSearch>
                     </CollapsibleContent>
                 </Collapsible>
-            </div> */}
-            <BigSearch></BigSearch>
+            </div>
 
             <h3>Your draw</h3>
 

@@ -125,6 +125,8 @@ class SavedLinkController extends Controller
         $draws = $request->get('draws', []);
         $tags = $request->get('tags', []);
         $sources = $request->get('sources', []);
+        $startDate = $request->get('start_date');
+        $endDate = $request->get('end_date');
 
         $savedLinks = SavedLink::where('user_id', $userId)
             ->when($text, function (Builder $query, string $text) {
@@ -143,6 +145,12 @@ class SavedLinkController extends Controller
             })
             ->when(!empty($sources), function (Builder $query) use ($sources) {
                 $query->whereIn('base_source', $sources);
+            })
+            ->when($startDate, function (Builder $query) use ($startDate) {
+                $query->where('source_date', '>=', $startDate);
+            })
+            ->when($endDate, function (Builder $query) use ($endDate) {
+                $query->where('source_date', '<=', $endDate);
             })
             ->with('draw')->with('tags')->with('savedObjectProps')->get();
 

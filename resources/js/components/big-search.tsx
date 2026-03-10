@@ -4,12 +4,15 @@ import React, { useEffect, useState } from 'react';
 import SavedLinkList from './saved-link-list';
 import { Skeleton } from './ui/skeleton';
 import { Button } from './ui/button';
-import { FileSearch, TagIcon, WarehouseIcon, GlobeIcon } from 'lucide-react';
+import { FileSearch, TagIcon, WarehouseIcon, GlobeIcon, CalendarIcon, XIcon } from 'lucide-react';
 import { Input } from './ui/input';
 import { Field, FieldLabel } from './ui/field';
 import { Badge } from './ui/badge';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Calendar } from './ui/calendar';
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group';
+import { DateRange } from 'react-day-picker';
 
-// TODO, range of data for the search, search with sources also
 export default function BigSearch({
 }: {
     }) {
@@ -17,6 +20,8 @@ export default function BigSearch({
     const [selectedDraws, setSelectedDraws] = useState<number[]>([]);
     const [selectedTags, setSelectedTags] = useState<number[]>([]);
     const [selectedSources, setSelectedSources] = useState<string[]>([]);
+    const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+    const [openDatePicker, setOpenDatePicker] = useState(false);
 
     const [links, setLinks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,12 +31,19 @@ export default function BigSearch({
     const [tagList, setTagList] = useState<Tag[]>([]);
     const [sourceList, setSourceList] = useState<string[]>([]);
 
+    function formatDate(date: Date | undefined) {
+        if (!date) return "";
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             setIsElementLoading(true);
             try {
                 const response = await axios.get('/data/search-filter-element/');
-                console.log('element', response.data)
                 setTagList(response.data.tags);
                 setDrawList(response.data.draws);
                 setSourceList(response.data.sources);
@@ -56,6 +68,10 @@ export default function BigSearch({
         setSelectedSources(selectedSources.includes(source) ? selectedSources.filter((s) => s !== source) : [...selectedSources, source]);
     }
 
+    const clearDateRange = () => {
+        setDateRange(undefined);
+    }
+
     const search = async (form: React.FormEvent<HTMLFormElement>) => {
         form.preventDefault();
         setIsLoading(true);
@@ -65,7 +81,9 @@ export default function BigSearch({
                     text: searchText,
                     draws: selectedDraws,
                     tags: selectedTags,
-                    sources: selectedSources
+                    sources: selectedSources,
+                    start_date: dateRange?.from ? formatDate(dateRange.from) : '',
+                    end_date: dateRange?.to ? formatDate(dateRange.to) : ''
                 }
             });
             setLinks(response.data);
@@ -142,8 +160,51 @@ export default function BigSearch({
                 </div>
                 <Field>
                     <FieldLabel>
-                        Ranges of date source (todo)
+                        <CalendarIcon size={16} className='text-secondary inline mr-1' />
+                        Date Range
                     </FieldLabel>
+                    <div className="flex gap-2">
+                        <InputGroup className="flex-1">
+                            <InputGroupInput
+                                placeholder={dateRange?.from ? `${formatDate(dateRange.from)} to ${dateRange.to ? formatDate(dateRange.to) : '?'}` : 'Select a date range'}
+                                readOnly
+                                onClick={() => setOpenDatePicker(true)}
+                            />
+                            <InputGroupAddon align="inline-end">
+                                <Popover open={openDatePicker} onOpenChange={setOpenDatePicker}>
+                                    <PopoverTrigger asChild>
+                                        <InputGroupButton
+                                            variant="ghost"
+                                            size="icon-xs"
+                                            aria-label="Select date range"
+                                        >
+                                            <CalendarIcon />
+                                            <span className="sr-only">Select date range</span>
+                                        </InputGroupButton>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto overflow-hidden p-0" align="end">
+                                        <Calendar
+                                            mode="range"
+                                            selected={dateRange}
+                                            onSelect={setDateRange}
+                                            numberOfMonths={2}
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        {dateRange && (
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={clearDateRange}
+                                aria-label="Clear date range"
+                            >
+                                <XIcon className="h-4 w-4" />
+                            </Button>
+                        )}
+                    </div>
                 </Field>
                 <Button
                     type="submit"
