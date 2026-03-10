@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import SavedLinkList from './saved-link-list';
 import { Skeleton } from './ui/skeleton';
 import { Button } from './ui/button';
-import { FileSearch, TagIcon, WarehouseIcon } from 'lucide-react';
+import { FileSearch, TagIcon, WarehouseIcon, GlobeIcon } from 'lucide-react';
 import { Input } from './ui/input';
 import { Field, FieldLabel } from './ui/field';
 import { Badge } from './ui/badge';
@@ -16,6 +16,7 @@ export default function BigSearch({
     const [searchText, setSearchText] = useState('');
     const [selectedDraws, setSelectedDraws] = useState<number[]>([]);
     const [selectedTags, setSelectedTags] = useState<number[]>([]);
+    const [selectedSources, setSelectedSources] = useState<string[]>([]);
 
     const [links, setLinks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,7 @@ export default function BigSearch({
 
     const [drawList, setDrawList] = useState<Draw[]>([]);
     const [tagList, setTagList] = useState<Tag[]>([]);
+    const [sourceList, setSourceList] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +34,7 @@ export default function BigSearch({
                 console.log('element', response.data)
                 setTagList(response.data.tags);
                 setDrawList(response.data.draws);
+                setSourceList(response.data.sources);
             } catch (error: any) {
                 console.error("Error :", error.response.data);
             } finally {
@@ -49,6 +52,10 @@ export default function BigSearch({
         setSelectedDraws(selectedDraws.includes(id) ? selectedDraws.filter((i) => i !== id) : [...selectedDraws, id]);
     }
 
+    const handleSourceClick = (source: string) => {
+        setSelectedSources(selectedSources.includes(source) ? selectedSources.filter((s) => s !== source) : [...selectedSources, source]);
+    }
+
     const search = async (form: React.FormEvent<HTMLFormElement>) => {
         form.preventDefault();
         setIsLoading(true);
@@ -57,7 +64,8 @@ export default function BigSearch({
                 params: {
                     text: searchText,
                     draws: selectedDraws,
-                    tags: selectedTags
+                    tags: selectedTags,
+                    sources: selectedSources
                 }
             });
             setLinks(response.data);
@@ -114,11 +122,24 @@ export default function BigSearch({
                         </div>
                     }
                 </div>
-                <Field>
-                    <FieldLabel>
-                        Sources (todo)
-                    </FieldLabel>
-                </Field>
+                <div>
+                    {sourceList?.length > 0 &&
+                        <div className="flex w-full flex-wrap gap-2">
+                            <GlobeIcon size={18} className='text-secondary'></GlobeIcon>
+                            {sourceList.map((source) => (
+                                <React.Fragment key={source}>
+                                    <Badge
+                                        variant={selectedSources.includes(source) ? 'secondary' : 'outline'}
+                                        className="cursor-pointer"
+                                        onClick={() => handleSourceClick(source)}
+                                    >
+                                        {source}
+                                    </Badge>
+                                </React.Fragment>
+                            ))}
+                        </div>
+                    }
+                </div>
                 <Field>
                     <FieldLabel>
                         Ranges of date source (todo)

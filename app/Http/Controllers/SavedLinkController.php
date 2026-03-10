@@ -124,6 +124,7 @@ class SavedLinkController extends Controller
         $text = trim($request->get('text'));
         $draws = $request->get('draws', []);
         $tags = $request->get('tags', []);
+        $sources = $request->get('sources', []);
 
         $savedLinks = SavedLink::where('user_id', $userId)
             ->when($text, function (Builder $query, string $text) {
@@ -140,6 +141,9 @@ class SavedLinkController extends Controller
             ->when(!empty($draws), function (Builder $query) use ($draws) {
                 $query->whereIn('draw_id', $draws);
             })
+            ->when(!empty($sources), function (Builder $query) use ($sources) {
+                $query->whereIn('base_source', $sources);
+            })
             ->with('draw')->with('tags')->with('savedObjectProps')->get();
 
         return response()->json($savedLinks);
@@ -153,7 +157,14 @@ class SavedLinkController extends Controller
         $tags = Tag::whereHas('savedLinks', function (Builder $query) use ($userId) {
             $query->where('user_id', $userId);
         })->get();
+        
+        $sources = SavedLink::where('user_id', $userId)
+            ->whereNotNull('base_source')
+            ->distinct()
+            ->pluck('base_source')
+            ->filter()
+            ->values();
 
-        return response()->json(['draws' => $draws, 'tags' => $tags]);
+        return response()->json(['draws' => $draws, 'tags' => $tags, 'sources' => $sources]);
     }
 }
