@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\SavedObjectProp;
+use App\Models\SavedLink;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SavedObjectPropController extends Controller
 {
@@ -31,6 +34,33 @@ class SavedObjectPropController extends Controller
         if ($userId != $savedObjectProp->savedLink->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-document']);
         }
+        Log::info('Delete a saved object prop ' . $savedObjectPropId);
         $savedObjectProp->delete();
+    }
+
+    public function add(int $savedLinkId, Request $request)
+    {
+        $savedLink = SavedLink::find($savedLinkId);
+        $userId = Auth::user()->id;
+        if ($userId != $savedLink->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
+        }
+
+        Log::info('Trying add a new saved object prop to the link ' . $savedLinkId);
+        // Link the file if present
+        $uploadedFile = $request->file('file');
+        if ($uploadedFile) {
+            $savedObjectProp = $savedLink->savedObjectProps()->create([
+                'name' => $uploadedFile->getClientOriginalName(),
+                'mime_type' => $uploadedFile->getClientMimeType(),
+                'size' => $uploadedFile->getSize(),
+            ]);
+
+            $savedObjectProp->savedObject()->create([
+                'content' => base64_encode(file_get_contents($uploadedFile->getRealPath())),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Saved link added!');
     }
 }

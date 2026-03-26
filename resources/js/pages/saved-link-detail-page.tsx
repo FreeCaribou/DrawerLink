@@ -7,6 +7,7 @@ import { Form } from "@inertiajs/react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import DateFormater from "@/components/date-formater";
+import SavedObjectForm from "@/components/saved-object-form";
 
 export default function DrawCard({
     savedLink,
@@ -74,7 +75,7 @@ export default function DrawCard({
                                     </a>
                                 </p>
                                 {editMode && (
-                                    <Form action={"/download-saved-object/" + objectProp.id} method="delete">
+                                    <Form action={"/saved-object/" + objectProp.id} method="delete">
                                         <Button
                                             type="submit"
                                             variant="destructive"
@@ -87,6 +88,9 @@ export default function DrawCard({
                             </div>
                         </React.Fragment>
                     ))}
+                    {editMode && (
+                        <SavedObjectForm savedLinkId={savedLink.id}></SavedObjectForm>
+                    )}
 
                 </div>
             )}

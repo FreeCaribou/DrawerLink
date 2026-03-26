@@ -44,11 +44,15 @@ Route::get('/data/draws/{drawId}', [DrawController::class, 'dataDrawDetails'])
 
 Route::get('/download-saved-object/{savedObjectPropId}', [SavedObjectPropController::class, 'download'])
     ->middleware(['auth', 'verified'])
-    ->name('download.saved_object');
+    ->name('saved_object.download');
 
-Route::delete('/download-saved-object/{savedObjectPropId}', [SavedObjectPropController::class, 'delete'])
+Route::delete('/saved-object/{savedObjectPropId}', [SavedObjectPropController::class, 'delete'])
     ->middleware(['auth', 'verified'])
-    ->name('download.delete');
+    ->name('saved_object.delete');
+
+Route::post('/saved-links/{savedLinkId}/saved-object', [SavedObjectPropController::class, 'add'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved_object.add');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
