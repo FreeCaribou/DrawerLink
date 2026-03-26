@@ -15,10 +15,25 @@ class SavedObjectPropController extends Controller
     {
         $userId = Auth::user()->id;
         $savedObjectProp = SavedObjectProp::with('savedObject')->with('savedLink')->find($savedObjectPropId);
-        $fileContent = base64_decode($savedObjectProp->savedObject->content);
         if ($userId != $savedObjectProp->savedLink->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-document']);
         }
+        $fileContent = base64_decode($savedObjectProp->savedObject->content);
+
+        return Response::make($fileContent, 200, [
+            'Content-Type' => $savedObjectProp->mime_type,
+            'Content-Disposition' => 'attachment; filename="' . $savedObjectProp->name . '"',
+            'Content-Length' => strlen($fileContent),
+        ]);
+    }
+
+    public function downloadShared(int $savedObjectPropId, string $sharedKey)
+    {
+        $savedObjectProp = SavedObjectProp::with('savedObject')->with('savedLink')->find($savedObjectPropId);
+        if ($sharedKey != $savedObjectProp->savedLink->shared_key) {
+            return redirect()->route('error')->withErrors(['error.not-your-document']);
+        }
+        $fileContent = base64_decode($savedObjectProp->savedObject->content);
 
         return Response::make($fileContent, 200, [
             'Content-Type' => $savedObjectProp->mime_type,

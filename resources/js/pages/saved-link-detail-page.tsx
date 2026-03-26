@@ -8,19 +8,36 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Badge } from "@/components/ui/badge";
 import DateFormater from "@/components/date-formater";
 import SavedObjectForm from "@/components/saved-object-form";
+import { toast } from "sonner";
 
 export default function DrawCard({
     savedLink,
-    blockEdit = true
+    blockEdit = true,
+    sharedKey,
 }: {
     savedLink: SavedLink;
     blockEdit: boolean;
+    sharedKey: string;
 }) {
     const [openDialog, setOpenDialog] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const baseUrl = window.location.origin;
+    const sharedUrl = savedLink.shared_key
+        ? `${baseUrl}/shared/saved-links/${savedLink.shared_key}`
+        : null;
 
     const handleSuccess = () => {
         setOpenDialog(false);
+    };
+
+    const copyToClipboard = () => {
+        if (sharedUrl) {
+            navigator.clipboard.writeText(sharedUrl)
+                .then(() => {
+                    toast.success("Link url copy to be shared", { position: "top-center" });
+                })
+                .catch(err => console.error('Échec de la copie : ', err));
+        }
     };
 
     return (
@@ -65,7 +82,9 @@ export default function DrawCard({
                                 <p className="flex items-center gap-2">
                                     {objectProp.name}
                                     <a
-                                        href={"/download-saved-object/" + objectProp.id}
+                                        href={sharedKey
+                                            ? "/shared/download-saved-object/" + objectProp.id + "/" + sharedKey
+                                            : "/download-saved-object/" + objectProp.id}
                                         target="_blank"
                                         rel="noopener"
                                         className="flex items-center"
@@ -132,13 +151,45 @@ export default function DrawCard({
             )}
 
             {!blockEdit && (
-                <Button
-                    className="cursor-pointer mt-5"
-                    onClick={() => setEditMode(!editMode)}
-                >
-                    <PencilIcon></PencilIcon>
-                    {!editMode ? "Pass to edit mode" : "Remove edit mode"}
-                </Button>
+                <div>
+                    <Button
+                        className="cursor-pointer mt-5"
+                        onClick={() => setEditMode(!editMode)}
+                    >
+                        <PencilIcon></PencilIcon>
+                        {!editMode ? "Pass to edit mode" : "Remove edit mode"}
+                    </Button>
+
+                    <div className="mt-5">
+                        {savedLink.shared_key ? (
+                            <div>
+                                <p>
+                                    To share this link you can use this url:
+                                    <span className="cursor-pointer text-primary italic" onClick={copyToClipboard}> {sharedUrl}</span>
+                                </p>
+                                <Form action={"/saved-links/" + savedLink.id + "/shared-key"} method="delete">
+                                    <Button
+                                        type="submit"
+                                        variant="destructive"
+                                        className="cursor-pointer mt-2"
+                                    >
+                                        Delete the shared url
+                                    </Button>
+                                </Form>
+                            </div>
+                        ) : (
+                            <Form action={"/saved-links/" + savedLink.id + "/shared-key"} method="patch">
+                                <Button
+                                    type="submit"
+                                    className="cursor-pointer"
+                                >
+                                    Create a shared url for this link
+                                </Button>
+                            </Form>
+                        )}
+                    </div>
+
+                </div>
             )}
         </AppInternLayout>
     );

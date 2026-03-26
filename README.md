@@ -6,7 +6,6 @@ A little app to store "link" to retrieve it easily later and share it
 
 - Make the app real, what needed for a v1
     - Edit a link (source, title, description, tag, draw, date)
-    - Share a saved link to someone else
     - Remove all the TODO from code !
 - i18n
 - Send a shared link by mail

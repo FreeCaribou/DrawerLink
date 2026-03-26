@@ -22,6 +22,14 @@ Route::delete('/saved-links/{savedLinkId}', [SavedLinkController::class, 'delete
     ->middleware(['auth', 'verified'])
     ->name('saved-links.delete');
 
+Route::delete('/saved-links/{savedLinkId}/shared-key', [SavedLinkController::class, 'deleteSharedKey'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.delete-shared-key');
+
+Route::patch('/saved-links/{savedLinkId}/shared-key', [SavedLinkController::class, 'createSharedKey'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.create-shared-key');
+
 Route::get('/data/saved-links', [SavedLinkController::class, 'dataSearch'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.data-search');
@@ -53,6 +61,12 @@ Route::delete('/saved-object/{savedObjectPropId}', [SavedObjectPropController::c
 Route::post('/saved-links/{savedLinkId}/saved-object', [SavedObjectPropController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('saved_object.add');
+
+Route::get('/shared/saved-links/{sharedKey}', [SavedLinkController::class, 'getOneShared'])
+    ->name('shared.saved-links');
+
+Route::get('/shared/download-saved-object/{savedObjectPropId}/{sharedKey}', [SavedObjectPropController::class, 'downloadShared'])
+    ->name('shared.download-saved-object');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');

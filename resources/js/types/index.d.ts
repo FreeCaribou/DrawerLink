@@ -68,6 +68,7 @@ export interface SavedLink {
     source_date: Date;
     created_at: Date;
     updated_at: Date;
+    shared_key: string;
     [key: string]: unknown;
 }
 

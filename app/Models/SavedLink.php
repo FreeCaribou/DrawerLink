@@ -24,11 +24,12 @@ use Carbon\Carbon;
  * full_source -> string
  * base_source -> string a full source is https://jacobin.com/2026/02/natural-disaster-insurance-california-wildfires and the base source is jacobin.com
  * source_date -> date
+ * shared_key -> string a key to share in read mode a saved link
 
  */
 class SavedLink extends Model
 {
-    protected $fillable = ['label', 'description', 'user_id', 'draw_id', 'source_date', 'full_source', 'base_source'];
+    protected $fillable = ['label', 'description', 'user_id', 'draw_id', 'source_date', 'full_source', 'base_source', 'shared_key'];
 
     public function savedObjectProps(): HasMany
     {

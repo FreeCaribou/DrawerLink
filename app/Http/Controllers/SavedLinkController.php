@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class SavedLinkController extends Controller
 {
@@ -104,6 +105,20 @@ class SavedLinkController extends Controller
         ]);
     }
 
+    public function getOneShared(string $sharedKey)
+    {
+        $savedLink = SavedLink::with(['savedObjectProps', 'tags', 'draw'])->where('shared_key', $sharedKey)->first();
+        if (!$savedLink) {
+            return redirect()->route('error')->withErrors(['error.shared-link-not-present']);
+        }
+
+        return Inertia::render('saved-link-detail-page', [
+            'savedLink' => $savedLink,
+            'sharedKey' => $sharedKey,
+            'blockEdit' => true
+        ]);
+    }
+
     public function deleteOne(int $savedLinkId)
     {
         $userId = Auth::user()->id;
@@ -116,6 +131,30 @@ class SavedLinkController extends Controller
         $savedLink->delete();
 
         return redirect()->route('home')->with('success', 'Saved link deleted!');
+    }
+
+    public function deleteSharedKey(int $savedLinkId)
+    {
+        $userId = Auth::user()->id;
+        $savedLink = SavedLink::find($savedLinkId);
+        if ($userId != $savedLink->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
+        }
+
+        $savedLink->shared_key = null;
+        $savedLink->save();
+    }
+
+    public function createSharedKey(int $savedLinkId)
+    {
+        $userId = Auth::user()->id;
+        $savedLink = SavedLink::find($savedLinkId);
+        if ($userId != $savedLink->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
+        }
+
+        $savedLink->shared_key = Str::uuid();
+        $savedLink->save();
     }
 
     public function dataSearch(Request $request)
