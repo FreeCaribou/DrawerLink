@@ -1,7 +1,7 @@
 import { SavedLink } from "@/types";
 import AppInternLayout from "@/layouts/app-intern-layout";
 import React, { useState } from "react";
-import { DownloadIcon, ExternalLinkIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
+import { DownloadIcon, ExternalLinkIcon, PencilIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@inertiajs/react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -14,6 +14,7 @@ export default function DrawCard({
     savedLink: SavedLink;
 }) {
     const [openDialog, setOpenDialog] = useState(false);
+    const [editMode, setEditMode] = useState(false);
 
     const handleSuccess = () => {
         setOpenDialog(false);
@@ -57,20 +58,33 @@ export default function DrawCard({
                     <p className="text-secondary font-extrabold tracking-tight">The related file</p>
                     {savedLink.saved_object_props.map((objectProp) => (
                         <React.Fragment key={objectProp.id}>
-                            <p className="flex items-center gap-2">
-                                {objectProp.name}
-                                <a
-                                    href={"/download-saved-object/" + objectProp.id}
-                                    target="_blank"
-                                    rel="noopener"
-                                    className="flex items-center"
-                                >
-                                    <DownloadIcon className='text-secondary'></DownloadIcon>
-                                    ({Math.round(objectProp.size / (1024 * 1024) * 100) / 100} Mo
-                                    {objectProp.size === 0 && (<span> - Probably an error, please reupload the file</span>)}
-                                    )
-                                </a>
-                            </p>
+                            <div className="mb-2 flex gap-2">
+                                <p className="flex items-center gap-2">
+                                    {objectProp.name}
+                                    <a
+                                        href={"/download-saved-object/" + objectProp.id}
+                                        target="_blank"
+                                        rel="noopener"
+                                        className="flex items-center"
+                                    >
+                                        <DownloadIcon className='text-secondary'></DownloadIcon>
+                                        ({Math.round(objectProp.size / (1024 * 1024) * 100) / 100} Mo
+                                        {objectProp.size === 0 && (<span> - Probably an error, please delete and reupload the file</span>)}
+                                        )
+                                    </a>
+                                </p>
+                                {editMode && (
+                                    <Form action={"/download-saved-object/" + objectProp.id} method="delete">
+                                        <Button
+                                            type="submit"
+                                            variant="destructive"
+                                            className="cursor-pointer"
+                                        >
+                                            <Trash2Icon></Trash2Icon>
+                                        </Button>
+                                    </Form>
+                                )}
+                            </div>
                         </React.Fragment>
                     ))}
 
@@ -83,31 +97,41 @@ export default function DrawCard({
                 </div>
             )}
 
-            <div className="mt-5">
-                <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-                    <DialogTrigger asChild>
-                        <Button variant="destructive" className="cursor-pointer">
-                            <Trash2Icon></Trash2Icon>
-                            Delete
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent showCloseButton={false} className="sm:max-w-sm">
-                        <DialogHeader>
-                            <DialogTitle>Are you sur to delete this saved link ?</DialogTitle>
-                        </DialogHeader>
-                        <Form action={"/saved-links/" + savedLink.id} method="delete" onSuccess={handleSuccess}>
-                            <Button
-                                type="submit"
-                                variant="destructive"
-                                className="cursor-pointer"
-                            >
+            {editMode && (
+                <div className="mt-5">
+                    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                        <DialogTrigger asChild>
+                            <Button variant="destructive" className="cursor-pointer">
                                 <Trash2Icon></Trash2Icon>
-                                Yes
+                                Delete this saved link
                             </Button>
-                        </Form>
-                    </DialogContent>
-                </Dialog>
-            </div>
+                        </DialogTrigger>
+                        <DialogContent showCloseButton={false} className="sm:max-w-sm">
+                            <DialogHeader>
+                                <DialogTitle>Are you sur to delete this saved link ?</DialogTitle>
+                            </DialogHeader>
+                            <Form action={"/saved-links/" + savedLink.id} method="delete" onSuccess={handleSuccess}>
+                                <Button
+                                    type="submit"
+                                    variant="destructive"
+                                    className="cursor-pointer"
+                                >
+                                    <Trash2Icon></Trash2Icon>
+                                    Yes
+                                </Button>
+                            </Form>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+            )}
+
+            <Button
+                className="cursor-pointer mt-5"
+                onClick={() => setEditMode(!editMode)}
+            >
+                <PencilIcon></PencilIcon>
+                {!editMode ? "Pass to edit mode" : "Remove edit mode"}
+            </Button>
         </AppInternLayout>
     );
 }

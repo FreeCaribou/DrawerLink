@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\SavedObjectProp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use Inertia\Inertia;
 
 class SavedObjectPropController extends Controller
 {
@@ -23,5 +22,15 @@ class SavedObjectPropController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $savedObjectProp->name . '"',
             'Content-Length' => strlen($fileContent),
         ]);
+    }
+
+    public function delete(int $savedObjectPropId)
+    {
+        $userId = Auth::user()->id;
+        $savedObjectProp = SavedObjectProp::with('savedObject')->with('savedLink')->find($savedObjectPropId);
+        if ($userId != $savedObjectProp->savedLink->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-document']);
+        }
+        $savedObjectProp->delete();
     }
 }

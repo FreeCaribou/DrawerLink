@@ -46,6 +46,10 @@ Route::get('/download-saved-object/{savedObjectPropId}', [SavedObjectPropControl
     ->middleware(['auth', 'verified'])
     ->name('download.saved_object');
 
+Route::delete('/download-saved-object/{savedObjectPropId}', [SavedObjectPropController::class, 'delete'])
+    ->middleware(['auth', 'verified'])
+    ->name('download.delete');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });
