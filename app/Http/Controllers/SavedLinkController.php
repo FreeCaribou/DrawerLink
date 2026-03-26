@@ -100,6 +100,7 @@ class SavedLinkController extends Controller
 
         return Inertia::render('saved-link-detail-page', [
             'savedLink' => $savedLink,
+            'blockEdit' => false,
         ]);
     }
 
@@ -165,7 +166,7 @@ class SavedLinkController extends Controller
         $tags = Tag::whereHas('savedLinks', function (Builder $query) use ($userId) {
             $query->where('user_id', $userId);
         })->get();
-        
+
         $sources = SavedLink::where('user_id', $userId)
             ->whereNotNull('base_source')
             ->distinct()

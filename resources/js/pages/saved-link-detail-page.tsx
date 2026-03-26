@@ -11,8 +11,10 @@ import SavedObjectForm from "@/components/saved-object-form";
 
 export default function DrawCard({
     savedLink,
+    blockEdit = true
 }: {
     savedLink: SavedLink;
+    blockEdit: boolean;
 }) {
     const [openDialog, setOpenDialog] = useState(false);
     const [editMode, setEditMode] = useState(false);
@@ -129,13 +131,15 @@ export default function DrawCard({
                 </div>
             )}
 
-            <Button
-                className="cursor-pointer mt-5"
-                onClick={() => setEditMode(!editMode)}
-            >
-                <PencilIcon></PencilIcon>
-                {!editMode ? "Pass to edit mode" : "Remove edit mode"}
-            </Button>
+            {!blockEdit && (
+                <Button
+                    className="cursor-pointer mt-5"
+                    onClick={() => setEditMode(!editMode)}
+                >
+                    <PencilIcon></PencilIcon>
+                    {!editMode ? "Pass to edit mode" : "Remove edit mode"}
+                </Button>
+            )}
         </AppInternLayout>
     );
 }

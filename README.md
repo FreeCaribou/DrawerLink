@@ -4,22 +4,23 @@ A little app to store "link" to retrieve it easily later and share it
 
 ## TODO
 
-- make the app real, what needed for a v1
-    - Edit a link (source, title, description)
+- Make the app real, what needed for a v1
+    - Edit a link (source, title, description, tag, draw, date)
     - Share a saved link to someone else
     - Remove all the TODO from code !
 - i18n
-- for link description, have wysiwyg
-- delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
+- Send a shared link by mail
+- Delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - and clean up the code (avoid big file, separate component in front and divide service in back)
-- have an icon not AI generated
+- Have an icon not AI generated
 - (cookie message)
 - For the tag of a saved link
     - For the form, propose some tag by some logic
     - For the search, show the most used tag for example
+- For link description, have wysiwyg
 - Make relations between link
 - Dark mode
-- bash script for the install
+- Bash script for the install
 
 ## Tech
 

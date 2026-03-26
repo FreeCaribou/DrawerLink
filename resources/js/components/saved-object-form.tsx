@@ -1,16 +1,9 @@
 import { Form } from '@inertiajs/react';
 import { Field, FieldGroup, FieldLabel, FieldSet } from "./ui/field";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import React, { useState } from "react";
-import { Draw } from "@/types";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { Calendar } from './ui/calendar';
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group';
-import { CalendarIcon } from 'lucide-react';
+import { useState } from "react";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 export default function SavedObjectForm({
     savedLinkId,
