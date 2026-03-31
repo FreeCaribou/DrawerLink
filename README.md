@@ -41,6 +41,8 @@ https://laravel.com/starter-kits
 
 - npm i && npm run build - to launch the frontend part
 
+- php artisan app:create-user - to create a new user, the only way to add it
+
 ## Some command
 
 php artisan db:show - see the db stade
