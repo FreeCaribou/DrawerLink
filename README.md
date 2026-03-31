@@ -5,7 +5,6 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - Make the app real, what needed for a v1
-    - Edit a link (source, title, description, tag, draw, date)
     - i18n
     - Remove all the TODO from code !
     - Delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
@@ -27,21 +26,17 @@ A little app to store "link" to retrieve it easily later and share it
 
 https://laravel.com/starter-kits
 
-## Production
+### PostgreSQL
 
-- Most of the information are there, https://laravel.com/docs/12.x/deployment
+## Launch for dev
 
-- composer install --no-dev --optimize-autoloader - install the base package
+Install PHP and composer
 
-- php artisan key:generate - usefull to create the APP_KEY env var - needed for the first deploy
+"podman compose -f docker-compose.yaml -p drawerlink_pg up" or equivalent will create the docker DB
 
-- php artisan migrate - to make the migration of the db schema in case of new thing
+"php artisan migrate:fresh --seed" to refresh the DB with mock data
 
-- php artisan optimize
-
-- npm i && npm run build - to launch the frontend part
-
-- php artisan app:create-user - to create a new user, the only way to add it
+"composer run dev" will run the project in localhost
 
 ## Some command
 
@@ -60,3 +55,19 @@ composer run dev - run the project in localhost
 php artisan app:create-user - cmd to create a new user, usefull in prod
 
 podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman the docker and name it drawerlink_pg
+
+## Production
+
+- Most of the information are there, https://laravel.com/docs/12.x/deployment
+
+- composer install --no-dev --optimize-autoloader - install the base package
+
+- php artisan key:generate - usefull to create the APP_KEY env var - needed for the first deploy
+
+- php artisan migrate - to make the migration of the db schema in case of new thing
+
+- php artisan optimize
+
+- npm i && npm run build - to launch the frontend part
+
+- php artisan app:create-user - to create a new user, the only way to add it
