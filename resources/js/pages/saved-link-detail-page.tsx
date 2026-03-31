@@ -109,11 +109,10 @@ export default function DrawCard({
                             </div>
                         </React.Fragment>
                     ))}
-                    {editMode && (
-                        <SavedObjectForm savedLinkId={savedLink.id}></SavedObjectForm>
-                    )}
-
                 </div>
+            )}
+            {editMode && (
+                <SavedObjectForm savedLinkId={savedLink.id}></SavedObjectForm>
             )}
 
             {savedLink.source_date && (

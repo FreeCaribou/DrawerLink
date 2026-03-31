@@ -6,10 +6,10 @@ A little app to store "link" to retrieve it easily later and share it
 
 - Make the app real, what needed for a v1
     - Edit a link (source, title, description, tag, draw, date)
+    - i18n
     - Remove all the TODO from code !
-- i18n
+    - Delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - Send a shared link by mail
-- Delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - and clean up the code (avoid big file, separate component in front and divide service in back)
 - Have an icon not AI generated
 - (cookie message)
