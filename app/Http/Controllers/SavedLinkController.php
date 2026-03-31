@@ -91,6 +91,69 @@ class SavedLinkController extends Controller
         return redirect()->back()->with('success', 'Saved link added!');
     }
 
+    /**
+     * The file are update separetly
+     * TODO avoid duplicate function that are already present in the save function
+     */
+    public function update(int $savedLinkId, Request $request)
+    {
+        $userId = Auth::user()->id;
+        $savedLink = SavedLink::with('tags')->find($savedLinkId);
+        if ($userId != $savedLink->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
+        }
+
+        $request->validate([
+            'label' => 'required|string|max:255',
+            'description' => 'nullable|string|max:2000',
+            'draw_id' => 'required',
+            'editTags' => 'nullable|string',
+            'source_date' => 'nullable',
+            'full_source' => 'nullable|string|max:255',
+        ]);
+
+        DB::transaction(function () use ($request, $savedLinkId, $savedLink) {
+            Log::info('Trying update of link ' . $savedLinkId);
+            $baseSource = null;
+            if (!empty($request->full_source)) {
+                try {
+                    $parsedUrl = parse_url($request->full_source);
+                    // I assume that if a website is called hellowww.net it will not be taken in consideration
+                    $baseSource = str_replace('www.', '', $parsedUrl['host']) ?? null;
+                } catch (\Exception $e) {
+                    // Do nothing
+                }
+            }
+
+            // Base creation
+            $savedLink->update([
+                'label' => $request->label,
+                'description' => $request->description,
+                'draw_id' => $request->draw_id,
+                // For the search function or this kind of thing, it's better to assume that if the user don't put source date, it's now
+                'source_date' => $request->source_date,
+                'full_source' => $request->full_source,
+                'base_source' => $baseSource,
+            ]);
+
+            // Link some tags if present
+            // We separate the string with the "," and then we upper case the first letter
+            if (! empty(trim($request->editTags))) {
+                $tagLabels = array_map(function ($item) {
+                    return ucfirst(strtolower(trim($item)));
+                }, explode(',', $request->editTags));
+                $tags = [];
+                foreach ($tagLabels as $label) {
+                    $tag = Tag::firstOrCreate(['label' => $label]);
+                    $tags[] = $tag->id;
+                }
+                $savedLink->tags()->sync($tags);
+            }
+
+            Log::info('Update of link ' . $savedLinkId);
+        });
+    }
+
     public function getOne(int $savedLinkId)
     {
         $userId = Auth::user()->id;
@@ -99,9 +162,12 @@ class SavedLinkController extends Controller
             return redirect()->route('error')->withErrors(['error.not-your-link']);
         }
 
+        $drawBaseList = Draw::where('user_id', $userId)->get();
+
         return Inertia::render('saved-link-detail-page', [
             'savedLink' => $savedLink,
             'blockEdit' => false,
+            'drawBaseList' => $drawBaseList,
         ]);
     }
 

@@ -18,6 +18,10 @@ Route::post('/saved-links', [SavedLinkController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.add');
 
+Route::put('/saved-links/{savedLinkId}', [SavedLinkController::class, 'update'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.update');
+
 Route::delete('/saved-links/{savedLinkId}', [SavedLinkController::class, 'deleteOne'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.delete');
