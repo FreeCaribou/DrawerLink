@@ -10,6 +10,8 @@
     "add": "Add",
     "cancel": "Cancel",
     "interestingArticleFound": "What is the interesting article you found?",
+    "addDraw": "Add draw",
+    "wantNewDraw": "You want a new draw / category?",
     "form": {
         "email": "Email",
         "password": "Password",

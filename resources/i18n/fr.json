@@ -10,6 +10,8 @@
     "add": "Ajouter",
     "cancel": "Annuler",
     "interestingArticleFound": "Quel est l'article intéressant que vous avez trouvé ?",
+    "addDraw": "Ajouter un tiroir",
+    "wantNewDraw": "Vous voulez un nouveau tiroir / catégorie ?",
     "form": {
         "email": "Email",
         "password": "Mot de passe",

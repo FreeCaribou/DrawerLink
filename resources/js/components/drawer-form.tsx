@@ -5,10 +5,12 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { useTranslation } from 'react-i18next';
 
 export default function DrawerForm({
 }: {
     }) {
+    const { t } = useTranslation();
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleSuccess = () => {
@@ -18,13 +20,13 @@ export default function DrawerForm({
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
-                <Button variant="secondary">Add a draw</Button>
+                <Button variant="secondary">{t('addDraw')}</Button>
             </DialogTrigger>
             <DialogContent showCloseButton={false} className="sm:max-w-sm">
                 <DialogHeader>
-                    <DialogTitle>Add a draw</DialogTitle>
+                    <DialogTitle>{t('addDraw')}</DialogTitle>
                     <DialogDescription>
-                        You want a new draw / category ?
+                        {t('wantNewDraw')}
                     </DialogDescription>
                 </DialogHeader>
                 <Form action="/draws" method='post' resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} className="flex flex-col gap-2">
@@ -34,13 +36,13 @@ export default function DrawerForm({
                                 <FieldGroup>
                                     <Field>
                                         <FieldLabel htmlFor="draw-form-label">
-                                            Label of the draw
+                                            {t('form.label')}
                                         </FieldLabel>
                                         <Input id="draw-form-label" name='label' required />
                                     </Field>
                                     <Field>
                                         <FieldLabel htmlFor="draw-form-description">
-                                            Description
+                                            {t('form.description')}
                                         </FieldLabel>
                                         <Textarea id="draw-form-description" name='description' rows={2} />
                                     </Field>
@@ -49,13 +51,13 @@ export default function DrawerForm({
                         </FieldGroup>
                         <DialogFooter className="mt-5">
                             <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
+                                <Button variant="outline">{t('cancel')}</Button>
                             </DialogClose>
                             <Button
                                 type="submit"
                                 className="cursor-pointer"
                             >
-                                Add
+                                {t('add')}
                             </Button>
                         </DialogFooter>
                     </div>
