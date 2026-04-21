@@ -4,9 +4,14 @@
     "login": "Log in to your account",
     "searchLink": "Search link",
     "yourDraw": "Your draw",
+    "whatDoYouSearch": "What link do you search?",
+    "search": "Search",
     "form": {
         "email": "Email",
         "password": "Password",
-        "remember": "Remember me"
+        "remember": "Remember me",
+        "text": "Texte",
+        "dateRange": "Date range",
+        "selectDateRange": "Select a date range"
     }
 }

@@ -4,9 +4,14 @@
     "login": "Connectez vous",
     "searchLink": "Rechercher un lien",
     "yourDraw": "Vos tiroirs",
+    "whatDoYouSearch": "Quel lien cherchez vous ?",
+    "search": "Chercher",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
-        "remember": "Se souvenir de moi"
+        "remember": "Se souvenir de moi",
+        "text": "Texte",
+        "dateRange": "Date",
+        "selectDateRange": "Sélectionnez des dates"
     }
 }

@@ -12,10 +12,12 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Calendar } from './ui/calendar';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group';
 import { DateRange } from 'react-day-picker';
+import { useTranslation } from 'react-i18next';
 
 export default function BigSearch({
 }: {
     }) {
+    const { t } = useTranslation();
     const [searchText, setSearchText] = useState('');
     const [selectedDraws, setSelectedDraws] = useState<number[]>([]);
     const [selectedTags, setSelectedTags] = useState<number[]>([]);
@@ -96,11 +98,11 @@ export default function BigSearch({
 
     return (
         <div>
-            <h4>What link do you search ?</h4>
+            <h4>{t('whatDoYouSearch')}</h4>
             <form onSubmit={search} className='mb-2 flex flex-col gap-3'>
                 <Field>
                     <FieldLabel htmlFor="draw-form-label">
-                        Text
+                        {t('form.text')}
                     </FieldLabel>
                     <Input id="draw-form-label" name='label' value={searchText}
                         onChange={(e) => setSearchText(e.target.value)} />
@@ -161,12 +163,12 @@ export default function BigSearch({
                 <Field>
                     <FieldLabel>
                         <CalendarIcon size={16} className='text-secondary inline mr-1' />
-                        Date Range
+                        {t('form.dateRange')}
                     </FieldLabel>
                     <div className="flex gap-2">
                         <InputGroup className="flex-1">
                             <InputGroupInput
-                                placeholder={dateRange?.from ? `${formatDate(dateRange.from)} to ${dateRange.to ? formatDate(dateRange.to) : '?'}` : 'Select a date range'}
+                                placeholder={dateRange?.from ? `${formatDate(dateRange.from)} to ${dateRange.to ? formatDate(dateRange.to) : '?'}` : t('form.selectDateRange')}
                                 readOnly
                                 onClick={() => setOpenDatePicker(true)}
                             />
@@ -179,7 +181,7 @@ export default function BigSearch({
                                             aria-label="Select date range"
                                         >
                                             <CalendarIcon />
-                                            <span className="sr-only">Select date range</span>
+                                            <span className="sr-only">{t('form.selectDateRange')}</span>
                                         </InputGroupButton>
                                     </PopoverTrigger>
                                     <PopoverContent className="w-auto overflow-hidden p-0" align="end">
@@ -211,7 +213,7 @@ export default function BigSearch({
                     className="cursor-pointer"
                     variant="secondary"
                 >
-                    <FileSearch></FileSearch> Search
+                    <FileSearch></FileSearch> {t('search')}
                 </Button>
             </form>
             <div>
