@@ -3,8 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 const languages = [
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'fr', name: 'Français', flag: 'fr' },
+    { code: 'en', name: 'English', flag: 'gb' },
+    { code: 'nl', name: 'Nederland', flag: 'nl' },
 ];
 
 export default function Footer({ }: {}) {

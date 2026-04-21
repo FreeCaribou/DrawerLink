@@ -5,7 +5,6 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - Make the app real, what needed for a v1
-    - Finish i18n in all app for at least en / fr (and simple nl)
     - Remove all the TODO from code !
     - Delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - Send a shared link by mail
