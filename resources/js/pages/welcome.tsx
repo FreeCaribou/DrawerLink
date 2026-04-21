@@ -11,6 +11,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Welcome({
     drawBaseList = [],
@@ -20,6 +21,7 @@ export default function Welcome({
     flash: FlashProps;
 }) {
     const { auth } = usePage<SharedData>().props;
+    const { t } = useTranslation();
 
     const [drawList, setDrawList] = useState<Draw[]>([]);
 
@@ -35,7 +37,7 @@ export default function Welcome({
                 </div>
             )}
 
-            <h2>Welcome {auth.user.name}!</h2>
+            <h2>{t('welcome', { name: auth.user.name })}</h2>
 
             <div className='mb-6'>
                 <Collapsible className="data-[state=open]:bg-muted rounded-md">

@@ -3,6 +3,7 @@
     "name": "laravel/drawerlink",
     "type": "project",
     "description": "Save link in drawer for sharing it later",
+    "version": "0.1.0",
     "keywords": [
         "laravel",
         "framework"

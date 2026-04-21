@@ -7,6 +7,7 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { store } from '@/routes/login';
 import { Form, Head } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 
 interface LoginProps {
     status?: string;
@@ -17,9 +18,10 @@ interface LoginProps {
 export default function Login({
     status,
 }: LoginProps) {
+    const { t } = useTranslation();
     return (
         <AuthLayout
-            title="Log in to your account"
+            title={t('login')}
             description="Enter your email and password below to log in"
         >
             <Head title="Log in" />
