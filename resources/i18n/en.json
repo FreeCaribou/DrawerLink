@@ -6,12 +6,25 @@
     "yourDraw": "Your draw",
     "whatDoYouSearch": "What link do you search?",
     "search": "Search",
+    "addLink": "Add a link",
+    "add": "Add",
+    "cancel": "Cancel",
+    "interestingArticleFound": "What is the interesting article you found?",
     "form": {
         "email": "Email",
         "password": "Password",
         "remember": "Remember me",
         "text": "Texte",
         "dateRange": "Date range",
-        "selectDateRange": "Select a date range"
+        "selectDateRange": "Select a date range",
+        "sourceOfLink": "Source of the link",
+        "selectDate": "Select date",
+        "sourceDate": "Date of the source?",
+        "someTags": "Some tags ? (separate them with a \",\")",
+        "fileLink": "A file for the link",
+        "description": "Description",
+        "label": "Label",
+        "chooseDraw": "Choose a draw",
+        "drawForLink": "The draw for the link"
     }
 }

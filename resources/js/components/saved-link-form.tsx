@@ -11,13 +11,14 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Calendar } from './ui/calendar';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group';
 import { CalendarIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function SavedLinkForm({
     drawBaseList = [],
 }: {
     drawBaseList: Draw[]
 }) {
-
+    const { t } = useTranslation();
     const [selectedDrawId, setSelectedDrawId] = useState<string | undefined>(undefined);
     const [openDialog, setOpenDialog] = useState(false);
 
@@ -54,13 +55,13 @@ export default function SavedLinkForm({
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
-                <Button variant="secondary">Add a link</Button>
+                <Button variant="secondary">{t('addLink')}</Button>
             </DialogTrigger>
             <DialogContent showCloseButton={false}>
                 <DialogHeader>
-                    <DialogTitle>Add a link</DialogTitle>
+                    <DialogTitle>{t('addLink')}</DialogTitle>
                     <DialogDescription>
-                        What is the interesting article you found ?
+                        {t('interestingArticleFound')}
                     </DialogDescription>
                 </DialogHeader>
                 <Form
@@ -76,12 +77,12 @@ export default function SavedLinkForm({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-draw">
-                                            The draw for the link
+                                            {t('form.drawForLink')}
                                         </FieldLabel>
                                         <Select name='draw_id' value={selectedDrawId} key={selectedDrawId}
                                             onValueChange={setSelectedDrawId} required>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Choose a draw" />
+                                                <SelectValue placeholder={t('form.chooseDraw')} />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
@@ -97,14 +98,14 @@ export default function SavedLinkForm({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-label">
-                                            Label of the link
+                                            {t('form.label')}
                                         </FieldLabel>
                                         <Input id="link-form-label" name='label' required />
                                     </Field>
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-description">
-                                            Description
+                                            {t('form.description')}
                                         </FieldLabel>
                                         <Textarea id="link-form-description" name='description' rows={5} />
                                     </Field>
@@ -112,21 +113,21 @@ export default function SavedLinkForm({
                                     <Field>
                                         {/* TODO make a max of mb (seem that need less than 8mb) */}
                                         <FieldLabel htmlFor="link-form-file">
-                                            A file for the link
+                                            {t('form.fileLink')}
                                         </FieldLabel>
                                         <Input id="link-form-file" name='file' type='file' />
                                     </Field>
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-tags">
-                                            Some tag ? (separate them with a ",")
+                                            {t('form.someTags')}
                                         </FieldLabel>
                                         <Input id="link-form-tags" name='tags' />
                                     </Field>
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-sourceDate">
-                                            Date of the source ?
+                                            {t('form.sourceDate')}
                                         </FieldLabel>
                                         <InputGroup>
                                             <InputGroupInput
@@ -156,10 +157,10 @@ export default function SavedLinkForm({
                                                             id="date-picker"
                                                             variant="ghost"
                                                             size="icon-xs"
-                                                            aria-label="Select date"
+                                                            aria-label={t('form.sourceLink')}
                                                         >
                                                             <CalendarIcon />
-                                                            <span className="sr-only">Select date</span>
+                                                            <span className="sr-only">{t('form.selectDate')}</span>
                                                         </InputGroupButton>
                                                     </PopoverTrigger>
                                                     <PopoverContent className="w-auto overflow-hidden p-0" align="end">
@@ -182,7 +183,7 @@ export default function SavedLinkForm({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-fullSource">
-                                            Source of the link
+                                            {t('form.sourceOfLink')}
                                         </FieldLabel>
                                         <Input id="link-form-fullSource" type='url' name='full_source' placeholder='https://' />
                                     </Field>
@@ -191,15 +192,15 @@ export default function SavedLinkForm({
                             </FieldSet>
                         </FieldGroup>
 
-                        <DialogFooter className="mt-5">
+                        <DialogFooter className="mt-5 pb-2">
                             <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
+                                <Button variant="outline">{t('cancel')}</Button>
                             </DialogClose>
                             <Button
                                 type="submit"
                                 className="cursor-pointer"
                             >
-                                Add
+                                {t('add')}
                             </Button>
                         </DialogFooter>
                     </div>

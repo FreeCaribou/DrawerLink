@@ -6,12 +6,25 @@
     "yourDraw": "Vos tiroirs",
     "whatDoYouSearch": "Quel lien cherchez vous ?",
     "search": "Chercher",
+    "addLink": "Ajouter un lien",
+    "add": "Ajouter",
+    "cancel": "Annuler",
+    "interestingArticleFound": "Quel est l'article intéressant que vous avez trouvé ?",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
         "remember": "Se souvenir de moi",
         "text": "Texte",
         "dateRange": "Date",
-        "selectDateRange": "Sélectionnez des dates"
+        "selectDateRange": "Sélectionnez des dates",
+        "sourceOfLink": "Source du lien",
+        "selectDate": "Sélectionne une date",
+        "sourceDate": "Date de la source ?",
+        "someTags": "Quelques tags ? (séparez avec des \",\")",
+        "fileLink": "Un document pour le lien",
+        "description": "Description",
+        "label": "Label (titre)",
+        "chooseDraw": "Choissisez un tiroir",
+        "drawForLink": "Le tiroir du lien"
     }
 }
