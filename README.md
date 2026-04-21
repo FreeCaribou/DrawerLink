@@ -5,10 +5,10 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO
 
 - Make the app real, what needed for a v1
-    - Remove all the TODO from code !
     - Delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - Send a shared link by mail
-- and clean up the code (avoid big file, separate component in front and divide service in back)
+- Better backend error handling
+- Clean up the code (avoid big file, separate component in front and divide service in back)
 - Have an icon not AI generated
 - (cookie message)
 - For the tag of a saved link

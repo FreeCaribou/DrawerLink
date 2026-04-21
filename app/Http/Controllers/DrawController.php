@@ -15,7 +15,6 @@ class DrawController extends Controller
             'label' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',
         ]);
-        // TODO return err message if not valid
 
         $user = Auth::user();
         Draw::create([

@@ -8,7 +8,6 @@ import DateFormater from "./date-formater";
 
 /**
  * Component to show a big preview of saved links, used for list without context
- * TODO make it param to show or not the draw title or the download file and the big title
  * @param savedLinks 
  * @returns 
  */

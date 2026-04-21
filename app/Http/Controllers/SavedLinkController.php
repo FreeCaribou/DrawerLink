@@ -24,8 +24,8 @@ class SavedLinkController extends Controller
             'tags' => 'nullable|string',
             'source_date' => 'nullable',
             'full_source' => 'nullable|string|max:255',
+            'file' => 'nullable|file|max:8192',
         ]);
-        // TODO return err message if not valid
 
         $userId = Auth::user()->id;
         $draw = Draw::find($request->draw_id);
@@ -93,7 +93,6 @@ class SavedLinkController extends Controller
 
     /**
      * The file are update separetly
-     * TODO avoid duplicate function that are already present in the save function
      */
     public function update(int $savedLinkId, Request $request)
     {
@@ -193,7 +192,6 @@ class SavedLinkController extends Controller
             return redirect()->route('error')->withErrors(['error.not-your-link']);
         }
 
-        // TODO if the tags don't belong to other saved links, just delete it
         $savedLink->delete();
 
         return redirect()->route('home')->with('success', 'Saved link deleted!');

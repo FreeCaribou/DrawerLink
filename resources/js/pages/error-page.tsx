@@ -13,7 +13,6 @@ export default function ErrorPage({
         <AppInternLayout>
             <h1>An error occur !</h1>
             <h2>{error}</h2>
-            TODO better display of error, show the messages
             {errors && (
                 <div>
                     {Object.entries(errors).map(([key, value]) => (

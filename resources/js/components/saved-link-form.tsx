@@ -12,6 +12,7 @@ import { Calendar } from './ui/calendar';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group';
 import { CalendarIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { toastError } from '@/lib/utils';
 
 export default function SavedLinkForm({
     drawBaseList = [],
@@ -52,6 +53,10 @@ export default function SavedLinkForm({
         setValueDate("");
     };
 
+    const handleError = (err: any) => {
+        toastError(err);
+    }
+
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
@@ -68,6 +73,7 @@ export default function SavedLinkForm({
                     action="/saved-links"
                     method='post'
                     onSuccess={handleSuccess}
+                    onError={handleError}
                     resetOnSuccess={['label', 'description', 'file', 'tags', 'source_date']}
                     className="flex flex-col gap-2">
                     <div className="no-scrollbar -mx-4 max-h-[66vh] overflow-y-auto px-4">
@@ -111,7 +117,6 @@ export default function SavedLinkForm({
                                     </Field>
 
                                     <Field>
-                                        {/* TODO make a max of mb (seem that need less than 8mb) */}
                                         <FieldLabel htmlFor="link-form-file">
                                             {t('form.fileLink')}
                                         </FieldLabel>

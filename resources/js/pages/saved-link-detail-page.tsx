@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { useTranslation } from "react-i18next";
+import { toastError } from "@/lib/utils";
 
 export default function DrawCard({
     savedLink,
@@ -87,6 +88,10 @@ export default function DrawCard({
         setValueDate("");
     };
 
+    const handleError = (err: any) => {
+        toastError(err);
+    }
+
     return (
         <AppInternLayout>
             {!editMode ? (
@@ -134,6 +139,7 @@ export default function DrawCard({
                         action={"/saved-links/" + savedLink.id}
                         method='put'
                         onSuccess={handlePutSuccess}
+                        onError={handleError}
                         className="flex flex-col gap-2">
                         <FieldGroup>
                             <FieldSet>
@@ -284,7 +290,7 @@ export default function DrawCard({
                                     </a>
                                 </p>
                                 {editMode && (
-                                    <Form action={"/saved-object/" + objectProp.id} method="delete">
+                                    <Form action={"/saved-object/" + objectProp.id} onError={handleError} method="delete">
                                         <Button
                                             type="submit"
                                             variant="destructive"
@@ -317,7 +323,7 @@ export default function DrawCard({
                             <DialogHeader>
                                 <DialogTitle>{t('deleteSur')}</DialogTitle>
                             </DialogHeader>
-                            <Form action={"/saved-links/" + savedLink.id} method="delete" onSuccess={handleSuccess}>
+                            <Form action={"/saved-links/" + savedLink.id} method="delete" onSuccess={handleSuccess} onError={handleError}>
                                 <Button
                                     type="submit"
                                     variant="destructive"
@@ -349,7 +355,7 @@ export default function DrawCard({
                                     {t(('shareLinkLink'))}
                                     <span className="cursor-pointer text-primary italic" onClick={copyToClipboard}> {sharedUrl}</span>
                                 </p>
-                                <Form action={"/saved-links/" + savedLink.id + "/shared-key"} method="delete">
+                                <Form action={"/saved-links/" + savedLink.id + "/shared-key"} onError={handleError} method="delete">
                                     <Button
                                         type="submit"
                                         variant="destructive"
@@ -360,7 +366,7 @@ export default function DrawCard({
                                 </Form>
                             </div>
                         ) : (
-                            <Form action={"/saved-links/" + savedLink.id + "/shared-key"} method="patch">
+                            <Form action={"/saved-links/" + savedLink.id + "/shared-key"} onError={handleError} method="patch">
                                 <Button
                                     type="submit"
                                     className="cursor-pointer"

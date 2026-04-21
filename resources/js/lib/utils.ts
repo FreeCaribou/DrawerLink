@@ -1,6 +1,7 @@
 import { InertiaLinkProps } from '@inertiajs/react';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { toast } from "sonner";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -15,4 +16,16 @@ export function isSameUrl(
 
 export function resolveUrl(url: NonNullable<InertiaLinkProps['href']>): string {
     return typeof url === 'string' ? url : url.url;
+}
+
+export function toastError(err: any) {
+    console.error(err);
+    const messages = Object.values(err).join(" | ");
+    toast.error(
+        'Error happen !',
+        {
+            position: "top-right",
+            description: messages,
+        }
+    );
 }

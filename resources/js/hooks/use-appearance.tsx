@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 
-// TODO enable dark mode one day when we are ready for it
-
 export type Appearance = 'light' | 'dark' | 'system';
 
 const prefersDark = () => {

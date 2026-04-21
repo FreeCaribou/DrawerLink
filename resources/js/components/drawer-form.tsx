@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { useTranslation } from 'react-i18next';
+import { toastError } from '@/lib/utils';
 
 export default function DrawerForm({
 }: {
@@ -16,6 +17,10 @@ export default function DrawerForm({
     const handleSuccess = () => {
         setOpenDialog(false);
     };
+
+    const handleError = (err: any) => {
+        toastError(err);
+    }
 
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -29,7 +34,7 @@ export default function DrawerForm({
                         {t('wantNewDraw')}
                     </DialogDescription>
                 </DialogHeader>
-                <Form action="/draws" method='post' resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} className="flex flex-col gap-2">
+                <Form action="/draws" method='post' resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} className="flex flex-col gap-2">
                     <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
                         <FieldGroup>
                             <FieldSet>
