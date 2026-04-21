@@ -70,3 +70,9 @@ podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman t
 - npm i && npm run build - to launch the frontend part
 
 - php artisan app:create-user - to create a new user, the only way to add it
+
+## Language
+
+- English
+- Français
+- Nederland (min of meer... behulp met google trad...)
