@@ -22,9 +22,9 @@ export default function Login({
     return (
         <AuthLayout
             title={t('login')}
-            description="Enter your email and password below to log in"
+            description=""
         >
-            <Head title="Log in" />
+            <Head title={t('login')} />
 
             <Form
                 {...store.form()}
@@ -35,7 +35,7 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">{t('form.email')}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -51,7 +51,7 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <Label htmlFor="password">{t('form.password')}</Label>
                                 </div>
                                 <Input
                                     id="password"
@@ -60,7 +60,7 @@ export default function Login({
                                     required
                                     tabIndex={2}
                                     autoComplete="current-password"
-                                    placeholder="Password"
+                                    placeholder="qwerty"
                                 />
                                 <InputError message={errors.password} />
                             </div>
@@ -71,7 +71,7 @@ export default function Login({
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember">Remember me</Label>
+                                <Label htmlFor="remember">{t('form.remember')}</Label>
                             </div>
 
                             <Button
@@ -82,7 +82,7 @@ export default function Login({
                                 data-test="login-button"
                             >
                                 {processing && <Spinner />}
-                                Log in
+                                {t('login')}
                             </Button>
                         </div>
                     </>

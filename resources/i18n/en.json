@@ -1,5 +1,10 @@
 {
     "welcome": "Welcome {{name}}!",
     "language": "Language",
-    "login": "Log in to your account"
+    "login": "Log in to your account",
+    "form": {
+        "email": "Email",
+        "password": "Password",
+        "remember": "Remember me"
+    }
 }
