@@ -4,12 +4,14 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { useTranslation } from 'react-i18next';
 
 export default function SavedObjectForm({
     savedLinkId,
 }: {
     savedLinkId: number,
 }) {
+    const { t } = useTranslation();
     const [openDialog, setOpenDialog] = useState(false);
 
     /**
@@ -22,11 +24,11 @@ export default function SavedObjectForm({
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
-                <Button variant="secondary">Add a file</Button>
+                <Button variant="secondary">{t(('addFile'))}</Button>
             </DialogTrigger>
             <DialogContent showCloseButton={false}>
                 <DialogHeader>
-                    <DialogTitle>Add a new file for the link</DialogTitle>
+                    <DialogTitle>{t(('addFile'))}</DialogTitle>
                 </DialogHeader>
                 <Form
                     action={"/saved-links/" + savedLinkId + "/saved-object"}
@@ -41,7 +43,7 @@ export default function SavedObjectForm({
                                     <Field>
                                         {/* TODO make a max of mb (seem that need less than 8mb) */}
                                         <FieldLabel htmlFor="link-form-file">
-                                            A file for the link
+                                            {t('form.fileLink')}
                                         </FieldLabel>
                                         <Input id="link-form-file" name='file' type='file' />
                                     </Field>
@@ -50,13 +52,13 @@ export default function SavedObjectForm({
                         </FieldGroup>
                         <DialogFooter className="mt-5">
                             <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
+                                <Button variant="outline"> {t('cancel')}</Button>
                             </DialogClose>
                             <Button
                                 type="submit"
                                 className="cursor-pointer"
                             >
-                                Add
+                                {t('add')}
                             </Button>
                         </DialogFooter>
                     </div>

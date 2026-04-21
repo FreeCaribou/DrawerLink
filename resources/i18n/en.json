@@ -13,6 +13,18 @@
     "addDraw": "Add draw",
     "wantNewDraw": "You want a new draw / category?",
     "logout": "Log out",
+    "yes": "Yes",
+    "no": "No",
+    "sourceDate": "Source date",
+    "save": "Save",
+    "delete": "Delete",
+    "deleteSur": "Are you sur to delete?",
+    "goEditMode": "Pass to edit mode",
+    "cancelEditMode": "Remove edit mode",
+    "deleteSharedLink": "Delete the shared url",
+    "shareLinkLink": "To share this link you can use this url:",
+    "shareLink": "Create a shared url for this link",
+    "addFile": "Add a new file",
     "form": {
         "email": "Email",
         "password": "Password",
@@ -28,6 +40,7 @@
         "description": "Description",
         "label": "Label",
         "chooseDraw": "Choose a draw",
-        "drawForLink": "The draw for the link"
+        "drawForLink": "The draw for the link",
+        "relatedFiles": "The related files"
     }
 }

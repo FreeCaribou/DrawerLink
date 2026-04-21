@@ -157,7 +157,7 @@ export default function SavedLinkForm({
                                                             id="date-picker"
                                                             variant="ghost"
                                                             size="icon-xs"
-                                                            aria-label={t('form.sourceLink')}
+                                                            aria-label={t('form.sourceDate')}
                                                         >
                                                             <CalendarIcon />
                                                             <span className="sr-only">{t('form.selectDate')}</span>

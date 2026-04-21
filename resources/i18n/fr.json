@@ -13,6 +13,18 @@
     "addDraw": "Ajouter un tiroir",
     "wantNewDraw": "Vous voulez un nouveau tiroir / catégorie ?",
     "logout": "Se déconnecter",
+    "yes": "Oui",
+    "no": "Non",
+    "sourceDate": "Date de la source",
+    "save": "Sauver",
+    "delete": "Supprimer",
+    "deleteSur": "Êtes vous sur de supprimer cela ?",
+    "goEditMode": "Passer en mode édition",
+    "cancelEditMode": "Enlever le mode edition",
+    "deleteSharedLink": "Supprimer le partage de lien",
+    "shareLinkLink": "Vous pouvez utiliser cette url pour partager le lien:",
+    "shareLink": "Creez une url pour partager ce lien",
+    "addFile": "Ajouter un nouveau fichier",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
@@ -28,6 +40,7 @@
         "description": "Description",
         "label": "Label (titre)",
         "chooseDraw": "Choissisez un tiroir",
-        "drawForLink": "Le tiroir du lien"
+        "drawForLink": "Le tiroir du lien",
+        "relatedFiles": "Les fichiers liés"
     }
 }

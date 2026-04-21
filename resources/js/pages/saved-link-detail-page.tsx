@@ -16,6 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
+import { useTranslation } from "react-i18next";
 
 export default function DrawCard({
     savedLink,
@@ -28,6 +29,7 @@ export default function DrawCard({
     sharedKey: string;
     drawBaseList: Draw[];
 }) {
+    const { t } = useTranslation();
     const [savedLinkEdit, setSavedLinkEdit] = useState({ ...savedLink, editTags: savedLink.tags.map(t => t.label).join(',') });
     const [selectedDrawId, setSelectedDrawId] = useState<string>(savedLink.draw?.id?.toString());
     const [openDialog, setOpenDialog] = useState(false);
@@ -122,7 +124,7 @@ export default function DrawCard({
 
                     {savedLink.source_date && (
                         <div className="flex gap-2 mt-5 text-secondary">
-                            Source date <DateFormater date={savedLink.source_date}></DateFormater>
+                            {t('sourceDate')} <DateFormater date={savedLink.source_date}></DateFormater>
                         </div>
                     )}
                 </div>
@@ -138,12 +140,12 @@ export default function DrawCard({
                                 <FieldGroup>
                                     <Field>
                                         <FieldLabel htmlFor="link-form-draw">
-                                            The draw for the link
+                                            {t('form.drawForLink')}
                                         </FieldLabel>
                                         <Select name='draw_id' value={selectedDrawId} key={selectedDrawId}
                                             onValueChange={setSelectedDrawId} required>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Choose a draw" />
+                                                <SelectValue placeholder={t('form.chooseDraw')} />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
@@ -159,7 +161,7 @@ export default function DrawCard({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-label">
-                                            Label of the link
+                                            {t('form.label')}
                                         </FieldLabel>
                                         <Input id="link-form-label" name='label'
                                             value={savedLinkEdit.label} onChange={handleChange} required />
@@ -167,7 +169,7 @@ export default function DrawCard({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-description">
-                                            Description
+                                            {t('form.description')}
                                         </FieldLabel>
                                         <Textarea id="link-form-description" name='description'
                                             value={savedLinkEdit.description} onChange={handleChange} rows={5} />
@@ -175,7 +177,7 @@ export default function DrawCard({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-tags">
-                                            Some tag ? (separate them with a ",")
+                                            {t('form.someTags')}
                                         </FieldLabel>
                                         <Input id="link-form-tags" name='editTags'
                                             value={savedLinkEdit.editTags} onChange={handleChange} />
@@ -183,7 +185,7 @@ export default function DrawCard({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-sourceDate">
-                                            Date of the source ?
+                                            {t('form.sourceDate')}
                                         </FieldLabel>
                                         <InputGroup>
                                             <InputGroupInput
@@ -213,10 +215,10 @@ export default function DrawCard({
                                                             id="date-picker"
                                                             variant="ghost"
                                                             size="icon-xs"
-                                                            aria-label="Select date"
+                                                            aria-label={t('form.sourceDate')}
                                                         >
                                                             <CalendarIcon />
-                                                            <span className="sr-only">Select date</span>
+                                                            <span className="sr-only">{t('form.selectDate')}</span>
                                                         </InputGroupButton>
                                                     </PopoverTrigger>
                                                     <PopoverContent className="w-auto overflow-hidden p-0" align="end">
@@ -239,7 +241,7 @@ export default function DrawCard({
 
                                     <Field>
                                         <FieldLabel htmlFor="link-form-fullSource">
-                                            Source of the link
+                                            {t('form.sourceOfLink')}
                                         </FieldLabel>
                                         <Input id="link-form-fullSource" type='url' name='full_source'
                                             placeholder='https://' value={savedLinkEdit.full_source} onChange={handleChange} />
@@ -253,7 +255,7 @@ export default function DrawCard({
                             type="submit"
                             className="cursor-pointer mt-5"
                         >
-                            Save the change
+                            {t('save')}
                         </Button>
                     </Form>
                 </div>
@@ -261,7 +263,7 @@ export default function DrawCard({
 
             {savedLink.saved_object_props.length > 0 && (
                 <div className="mt-5">
-                    <p className="text-secondary font-extrabold tracking-tight">The related file</p>
+                    <p className="text-secondary font-extrabold tracking-tight">{t('form.relatedFiles')}</p>
                     {savedLink.saved_object_props.map((objectProp) => (
                         <React.Fragment key={objectProp.id}>
                             <div className="mb-2 flex gap-2">
@@ -308,12 +310,12 @@ export default function DrawCard({
                         <DialogTrigger asChild>
                             <Button variant="destructive" className="cursor-pointer">
                                 <Trash2Icon></Trash2Icon>
-                                Delete this saved link
+                                {t('delete')}
                             </Button>
                         </DialogTrigger>
                         <DialogContent showCloseButton={false} className="sm:max-w-sm">
                             <DialogHeader>
-                                <DialogTitle>Are you sur to delete this saved link ?</DialogTitle>
+                                <DialogTitle>{t('deleteSur')}</DialogTitle>
                             </DialogHeader>
                             <Form action={"/saved-links/" + savedLink.id} method="delete" onSuccess={handleSuccess}>
                                 <Button
@@ -322,7 +324,7 @@ export default function DrawCard({
                                     className="cursor-pointer"
                                 >
                                     <Trash2Icon></Trash2Icon>
-                                    Yes
+                                    {t('yes')}
                                 </Button>
                             </Form>
                         </DialogContent>
@@ -337,14 +339,14 @@ export default function DrawCard({
                         onClick={() => setEditMode(!editMode)}
                     >
                         <PencilIcon></PencilIcon>
-                        {!editMode ? "Pass to edit mode" : "Remove edit mode"}
+                        {!editMode ? t('goEditMode') : t('cancelEditMode')}
                     </Button>
 
                     <div className="mt-5">
                         {savedLink.shared_key ? (
                             <div>
                                 <p>
-                                    To share this link you can use this url:
+                                    {t(('shareLinkLink'))}
                                     <span className="cursor-pointer text-primary italic" onClick={copyToClipboard}> {sharedUrl}</span>
                                 </p>
                                 <Form action={"/saved-links/" + savedLink.id + "/shared-key"} method="delete">
@@ -353,7 +355,7 @@ export default function DrawCard({
                                         variant="destructive"
                                         className="cursor-pointer mt-2"
                                     >
-                                        Delete the shared url
+                                        {t('deleteSharedLink')}
                                     </Button>
                                 </Form>
                             </div>
@@ -363,7 +365,7 @@ export default function DrawCard({
                                     type="submit"
                                     className="cursor-pointer"
                                 >
-                                    Create a shared url for this link
+                                    {t(('shareLink'))}
                                 </Button>
                             </Form>
                         )}
