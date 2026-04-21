@@ -2,6 +2,8 @@
     "welcome": "Bienvenue {{name}} !",
     "language": "Langue",
     "login": "Connectez vous",
+    "searchLink": "Rechercher un lien",
+    "yourDraw": "Vos tiroirs",
     "form": {
         "email": "Email",
         "password": "Mot de passe",

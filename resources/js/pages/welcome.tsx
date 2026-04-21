@@ -43,7 +43,7 @@ export default function Welcome({
                 <Collapsible className="data-[state=open]:bg-muted rounded-md">
                     <CollapsibleTrigger asChild>
                         <Button variant="ghost" className="group w-full">
-                            <span className='text-secondary text-xl'>Search link</span>
+                            <span className='text-secondary text-xl'>{t('searchLink')}</span>
                             <ChevronDownIcon className="ml-auto group-data-[state=open]:rotate-180" />
                         </Button>
                     </CollapsibleTrigger>
@@ -53,7 +53,7 @@ export default function Welcome({
                 </Collapsible>
             </div>
 
-            <h3>Your draw</h3>
+            <h3>{t('yourDraw')}</h3>
 
             <div>
                 {drawList.map((d) => (

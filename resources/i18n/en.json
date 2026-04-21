@@ -2,6 +2,8 @@
     "welcome": "Welcome {{name}}!",
     "language": "Language",
     "login": "Log in to your account",
+    "searchLink": "Search link",
+    "yourDraw": "Your draw",
     "form": {
         "email": "Email",
         "password": "Password",
