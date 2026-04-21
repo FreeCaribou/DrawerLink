@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { logout } from "@/routes";
 import { Link } from "@inertiajs/react";
 import Footer from "./footer";
+import { useTranslation } from "react-i18next";
 
 export default function AppInternLayout({
     children,
@@ -9,6 +10,7 @@ export default function AppInternLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const { t } = useTranslation();
     return (
         <div className="flex flex-col min-h-screen items-center bg-[#FDFDFC] text-[#1b1b18] md:justify-center ">
             <div className="p-6 md:p-8 sm:w-4/5">
@@ -19,7 +21,7 @@ export default function AppInternLayout({
                             href={logout()}
                             className="cursor-pointer inline-block rounded-sm border border-foreground px-5 py-1.5 text-sm"
                         >
-                            Log out
+                            {t('logout')}
                         </Link>
                     </nav>
                 </header>

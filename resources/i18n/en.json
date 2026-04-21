@@ -12,6 +12,7 @@
     "interestingArticleFound": "What is the interesting article you found?",
     "addDraw": "Add draw",
     "wantNewDraw": "You want a new draw / category?",
+    "logout": "Log out",
     "form": {
         "email": "Email",
         "password": "Password",
