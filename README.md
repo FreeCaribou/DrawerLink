@@ -2,10 +2,8 @@
 
 A little app to store "link" to retrieve it easily later and share it
 
-## TODO
+## TODO for better app
 
-- Make the app real, what needed for a v1
-    - Delete or comment all what we dont need (clean up ! delete everything linked to dashboard, user a part of login, taiwlind prop too long, ...)
 - Send a shared link by mail
 - Better backend error handling
 - Clean up the code (avoid big file, separate component in front and divide service in back)
@@ -71,7 +69,7 @@ podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman t
 
 - php artisan app:create-user - to create a new user, the only way to add it
 
-## Language
+## Language in the app
 
 - English
 - Français

@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0-Unreleased]
+## [1.0.0]
 
 - Terminal script to add a new user
 - Make a new category
