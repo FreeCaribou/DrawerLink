@@ -25,6 +25,7 @@
     "shareLinkLink": "To share this link you can use this url:",
     "shareLink": "Create a shared url for this link",
     "addFile": "Add a new file",
+    "arguments": "Arguments",
     "form": {
         "email": "Email",
         "password": "Password",

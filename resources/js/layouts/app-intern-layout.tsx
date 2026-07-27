@@ -14,12 +14,15 @@ export default function AppInternLayout({
     return (
         <div className="flex flex-col min-h-screen items-center bg-[#FDFDFC] text-[#1b1b18] md:justify-center ">
             <div className="p-6 md:p-8 sm:w-4/5">
-                <header className="mb-6 w-full text-sm not-has-[nav]:hidden md:max-w-4xl">
+                <header className="mb-6">
                     <nav className="flex items-center justify-between w-full">
-                        <Link href="/"><h1 className="m-0!">Drawer Link</h1></Link>
+                        <div className="">
+                            <Link href="/"><h1 className="m-0!">Drawer Link</h1></Link>
+                            <Link href="/arguments"><h2 className="m-0!">{t('arguments')}</h2></Link>
+                        </div>
                         <Link
                             href={logout()}
-                            className="cursor-pointer inline-block rounded-sm border border-foreground px-5 py-1.5 text-sm"
+                            className="cursor-pointer inline-block rounded-sm border border-foreground px-2 py-1.5 text-sm"
                         >
                             {t('logout')}
                         </Link>

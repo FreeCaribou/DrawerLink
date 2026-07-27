@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArgumentController;
 use App\Http\Controllers\DrawController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ErrorController;
@@ -71,6 +72,14 @@ Route::get('/shared/saved-links/{sharedKey}', [SavedLinkController::class, 'getO
 
 Route::get('/shared/download-saved-object/{savedObjectPropId}/{sharedKey}', [SavedObjectPropController::class, 'downloadShared'])
     ->name('shared.download-saved-object');
+
+Route::get('/arguments', [ArgumentController::class, 'home'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-home');
+
+Route::get('/arguments/{argumentTopicId}', [ArgumentController::class, 'detail'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-detail');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
