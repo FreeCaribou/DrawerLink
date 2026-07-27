@@ -17,7 +17,11 @@ export default function ArgumentDetail({
                 <h1>{argumentTopic.label}</h1>
                 {argumentTopic.description}
 
-                <p>{t('argumentArguments')}</p>
+                {argumentTopic.arguments?.length > 0 &&
+                    <div className='mt-5'>
+                        {t('argumentArguments')}
+                    </div>
+                }
                 <ul className='list-disc ml-5'>
                     {argumentTopic.arguments?.map((argument) => (
                         <React.Fragment key={'argument-' + argument.id}>

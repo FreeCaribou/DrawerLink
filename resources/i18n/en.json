@@ -28,6 +28,7 @@
     "arguments": "Arguments",
     "argumentArguments": "Your arguments for the topic",
     "argumentSavedLinks": "Links for your arguments",
+    "addArgumentTopic": "Add a topic",
     "form": {
         "email": "Email",
         "password": "Password",

@@ -81,6 +81,10 @@ Route::get('/arguments/{argumentTopicId}', [ArgumentController::class, 'detail']
     ->middleware(['auth', 'verified'])
     ->name('arguments-detail');
 
+Route::post('/arguments', [ArgumentController::class, 'addTopic'])
+    ->middleware(['auth', 'verified'])
+    ->name('argument-topics.add-topic');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });
