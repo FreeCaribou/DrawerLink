@@ -10,17 +10,14 @@ class ArgumentController extends Controller
 {
     public function home()
     {
-        $userId = Auth::user()->id;
-        $argumentTopics = ArgumentTopic::where('user_id', $userId)->with('arguments')->get();
-
+        $argumentTopics = ArgumentTopic::where('user_id', Auth::id())->with('arguments')->get();
         return Inertia::render('arguments-home', ['argumentTopics' => $argumentTopics]);
     }
 
     public function detail(int $argumentTopicId)
     {
-        $userId = Auth::user()->id;
-        $argumentTopic = ArgumentTopic::with('arguments')->find($argumentTopicId);
-        if ($userId != $argumentTopic->user_id) {
+        $argumentTopic = ArgumentTopic::with('arguments', 'savedLinks')->find($argumentTopicId);
+        if (Auth::id() != $argumentTopic->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
         }
 

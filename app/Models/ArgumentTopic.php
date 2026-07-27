@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * id -> int
  * label -> string (255) not null
  * description -> string (2000) null
+ * arguments -> argument []
+ * savedLinks -> saved link []
  * created_at -> datetime
  * updated_at -> datetime
  */
@@ -27,5 +30,10 @@ class ArgumentTopic extends Model
     public function arguments(): HasMany
     {
         return $this->hasMany(Argument::class);
+    }
+
+    public function savedLinks(): BelongsToMany
+    {
+        return $this->belongsToMany(SavedLink::class);
     }
 }

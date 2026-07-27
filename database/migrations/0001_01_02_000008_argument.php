@@ -28,6 +28,13 @@ return new class extends Migration
             $table->foreign('argument_topic_id')->references('id')->on('argument_topics');
             $table->timestamps();
         });
+
+        Schema::create('argument_topic_saved_link', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('saved_link_id')->constrained();
+            $table->foreignId('argument_topic_id')->constrained();
+            $table->timestamps();
+        });
     }
 
     /**

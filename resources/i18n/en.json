@@ -26,6 +26,8 @@
     "shareLink": "Create a shared url for this link",
     "addFile": "Add a new file",
     "arguments": "Arguments",
+    "argumentArguments": "Your arguments for the topic",
+    "argumentSavedLinks": "Links for your arguments",
     "form": {
         "email": "Email",
         "password": "Password",

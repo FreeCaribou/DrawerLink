@@ -99,6 +99,7 @@ export interface ArgumentTopic {
     label: string;
     description: string;
     arguments: Argument[];
+    saved_links: SavedLink[];
     [key: string]: unknown;
 }
 

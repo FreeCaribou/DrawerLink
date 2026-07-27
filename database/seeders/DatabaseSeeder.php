@@ -88,5 +88,7 @@ class DatabaseSeeder extends Seeder
         $argumentThree = Argument::create(['label' => 'No big gap of wage', 'argument_topic_id' => $argumentTopicOne->id]);
         $argumentFour = Argument::create(['label' => 'For the balance of the world', 'argument_topic_id' => $argumentTopicTwo->id]);
         $argumentFive = Argument::create(['label' => 'Just look at the stats !!!', 'argument_topic_id' => $argumentTopicThree->id]);
+
+        $argumentTopicOne->savedLinks()->attach([$savedLinkOne, $savedLinkFour]);
     }
 }
