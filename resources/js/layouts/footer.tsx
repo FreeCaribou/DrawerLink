@@ -1,6 +1,7 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { usePage } from '@inertiajs/react';
 
 const languages = [
     { code: 'fr', name: 'Français', flag: 'fr' },
@@ -11,6 +12,7 @@ const languages = [
 export default function Footer({ }: {}) {
     const { i18n } = useTranslation();
     const { t } = useTranslation();
+    const { appVersion } = usePage().props;
 
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
@@ -35,6 +37,9 @@ export default function Footer({ }: {}) {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+                <div className='mt-5'>
+                    version {appVersion?.toString() || '0.0.1'}
+                </div>
             </div>
         </footer>
     );

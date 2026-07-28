@@ -63,7 +63,7 @@ podman compose -f docker-compose.yaml -p drawerlink_pg up - launch with podman t
 
 - composer install --no-dev --optimize-autoloader - install the base package
 
-- php artisan key:generate - usefull to create the APP_KEY env var - needed for the first deploy
+- (needed for the first deploy) php artisan key:generate - usefull to create the APP_KEY env var
 
 - php artisan migrate - to make the migration of the db schema in case of new thing
 
