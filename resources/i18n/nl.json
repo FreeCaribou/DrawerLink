@@ -32,6 +32,8 @@
     "addArgument": "Voeg en argument",
     "addArgumentDescription": "Wat is het meest overtuigende argument dat je hebt bedacht?",
     "addArgumentTopicDescription": "Over welk onderwerp wilt u zich voorbereiden?",
+    "linkLink": "Een link koppelen",
+    "linkLinkDescription": "Kies een link om als argument toe te voegen",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",
@@ -48,6 +50,8 @@
         "label": "Label",
         "chooseDraw": "Kies een categorie",
         "drawForLink": "De categorie voor de link",
-        "relatedFiles": "De gerelateerde bestanden"
+        "relatedFiles": "De gerelateerde bestanden",
+        "savedLinks": "Links",
+        "chooseLink": "Kies een link"
     }
 }

@@ -47,6 +47,10 @@ Route::get('/saved-links/{savedLinkId}', [SavedLinkController::class, 'getOne'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.get-one');
 
+Route::get('/data/saved-links', [SavedLinkController::class, 'dataGetAll'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.data-get-all');
+
 Route::post('/draws', [DrawController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('draws.add');
@@ -88,6 +92,10 @@ Route::post('/arguments', [ArgumentController::class, 'addTopic'])
 Route::post('/arguments/{argumentTopicId}/argument', [ArgumentController::class, 'addArgument'])
     ->middleware(['auth', 'verified'])
     ->name('arguments-topics.add-argument');
+
+Route::post('/arguments/{argumentTopicId}/link', [ArgumentController::class, 'addLink'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-topics.add-link');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');

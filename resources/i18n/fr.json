@@ -32,6 +32,8 @@
     "addArgument": "Ajouter un argument",
     "addArgumentDescription": "Quel est l'argument percutant que vous avez trouvé ?",
     "addArgumentTopicDescription": "Quel est le sujet que vous voulez préparer ?",
+    "linkLink": "Lier un lien",
+    "linkLinkDescription": "Choisissez un lien à ajouter comme argument",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
@@ -48,6 +50,8 @@
         "label": "Label (titre)",
         "chooseDraw": "Choissisez un tiroir",
         "drawForLink": "Le tiroir du lien",
-        "relatedFiles": "Les fichiers liés"
+        "relatedFiles": "Les fichiers liés",
+        "savedLinks": "Liens",
+        "chooseLink": "Choisissez un lien"
     }
 }

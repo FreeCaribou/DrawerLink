@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\ArgumentTopic;
 use App\Models\Argument;
+use App\Models\SavedLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -49,7 +50,7 @@ class ArgumentController extends Controller
     {
         $request->validate([
             'label' => 'required|string|max:255',
-            'description' => 'nullable|string|max:5000',
+            'description' => 'nullable|string|max:2000',
         ]);
 
         $argumentTopic = ArgumentTopic::with('arguments')->find($argumentTopicId);
@@ -64,5 +65,25 @@ class ArgumentController extends Controller
         ]);
 
         Log::info('Creation of an argument for the topic with id ' . $argumentTopicId);
+    }
+
+    public function addLink(int $argumentTopicId, Request $request)
+    {
+        $request->validate([
+            'saved_link_id' => 'required',
+        ]);
+
+        $argumentTopic = ArgumentTopic::with('arguments')->find($argumentTopicId);
+        $savedLink = SavedLink::find($request->saved_link_id);
+        if (Auth::id() != $argumentTopic->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
+        }
+        if (Auth::id() != $savedLink->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
+        }
+
+        $argumentTopic->savedLinks()->attach($savedLink);
+
+        Log::info('Link the argument topic ' . $argumentTopicId . ' with the saved link ' . $request->saved_link_id);
     }
 }

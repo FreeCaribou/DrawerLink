@@ -82,12 +82,17 @@ class DatabaseSeeder extends Seeder
         $argumentTopicOne = ArgumentTopic::create(['label' => 'Make more cooperative', 'description' => 'Because it can be nice', 'user_id' => $primaryUser->id]);
         $argumentTopicTwo = ArgumentTopic::create(['label' => 'Tax the rich', 'description' => 'They don\'t know what to do what their money', 'user_id' => $primaryUser->id]);
         $argumentTopicThree = ArgumentTopic::create(['label' => 'Climat change is real', 'description' => 'Trust me, I\m engineer', 'user_id' => $userTwo->id]);
+        $argumentTopicFour = ArgumentTopic::create(['label' => 'Visit Suomi', 'description' => '(just, go)', 'user_id' => $primaryUser->id]);
 
         $argumentOne = Argument::create(['label' => 'Coop belong to the worker', 'argument_topic_id' => $argumentTopicOne->id]);
         $argumentTwo = Argument::create(['label' => 'Worker know for what they work', 'argument_topic_id' => $argumentTopicOne->id, 'description' => 'Because they are the owner of the enterprise']);
         $argumentThree = Argument::create(['label' => 'No big gap of wage', 'argument_topic_id' => $argumentTopicOne->id]);
         $argumentFour = Argument::create(['label' => 'For the balance of the world', 'argument_topic_id' => $argumentTopicTwo->id]);
         $argumentFive = Argument::create(['label' => 'Just look at the stats !!!', 'argument_topic_id' => $argumentTopicThree->id]);
+        $argumentFive = Argument::create(['label' => 'Beautiful forest', 'argument_topic_id' => $argumentTopicFour->id]);
+        $argumentFive = Argument::create(['label' => 'Beautiful lake', 'argument_topic_id' => $argumentTopicFour->id]);
+        $argumentFive = Argument::create(['label' => 'Perkele', 'argument_topic_id' => $argumentTopicFour->id]);
+        $argumentFive = Argument::create(['label' => 'Beautiful train', 'argument_topic_id' => $argumentTopicFour->id]);
 
         $argumentTopicOne->savedLinks()->attach([$savedLinkOne, $savedLinkFour]);
     }
