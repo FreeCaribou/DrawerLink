@@ -12,6 +12,7 @@ import { toastError } from '@/lib/utils';
 import axios from "axios";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Trash2Icon } from 'lucide-react';
 
 export default function ArgumentDetail({
     argumentTopic
@@ -24,6 +25,7 @@ export default function ArgumentDetail({
     const [openDialogLink, setOpenDialogLink] = useState(false);
     const [savedLinks, setSavedLinks] = useState<SavedLink[]>([]);
     const [selectedSavedLinkId, setSelectedSavedLinkId] = useState<string | undefined>(undefined);
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
 
     const handleSuccessArgument = () => {
         setOpenDialogArgument(false);
@@ -32,6 +34,10 @@ export default function ArgumentDetail({
     const handleSuccessLink = () => {
         setOpenDialogLink(false);
         setSelectedSavedLinkId(undefined);
+    };
+
+    const handleSuccessDelete = () => {
+        setOpenDialogDelete(false);
     };
 
     const handleError = (err: any) => {
@@ -204,6 +210,31 @@ export default function ArgumentDetail({
                                         </Button>
                                     </DialogFooter>
                                 </div>
+                            </Form>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+                <div className='mt-8'>
+                    <Dialog open={openDialogDelete} onOpenChange={setOpenDialogDelete}>
+                        <DialogTrigger asChild>
+                            <Button variant="destructive" className="cursor-pointer">
+                                <Trash2Icon></Trash2Icon>
+                                {t('delete')}
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent showCloseButton={false} className="sm:max-w-sm">
+                            <DialogHeader>
+                                <DialogTitle>{t('deleteSur')}</DialogTitle>
+                            </DialogHeader>
+                            <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDelete} onError={handleError}>
+                                <Button
+                                    type="submit"
+                                    variant="destructive"
+                                    className="cursor-pointer"
+                                >
+                                    <Trash2Icon></Trash2Icon>
+                                    {t('yes')}
+                                </Button>
                             </Form>
                         </DialogContent>
                     </Dialog>

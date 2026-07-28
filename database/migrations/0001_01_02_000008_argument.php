@@ -24,15 +24,16 @@ return new class extends Migration
             $table->id();
             $table->string('label', length: 255);
             $table->string('description', length: 5000)->nullable();
-            $table->foreignId('argument_topic_id');
-            $table->foreign('argument_topic_id')->references('id')->on('argument_topics');
+            $table->foreignId('argument_topic_id')
+                ->constrained('argument_topics')
+                ->onDelete('cascade');
             $table->timestamps();
         });
 
         Schema::create('argument_topic_saved_link', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('saved_link_id')->constrained();
-            $table->foreignId('argument_topic_id')->constrained();
+            $table->foreignId('saved_link_id')->constrained()->onDelete('cascade');
+            $table->foreignId('argument_topic_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -86,4 +86,16 @@ class ArgumentController extends Controller
 
         Log::info('Link the argument topic ' . $argumentTopicId . ' with the saved link ' . $request->saved_link_id);
     }
+
+    public function deleteOneTopic(int $argumentTopicId)
+    {
+        $argumentTopic = ArgumentTopic::find($argumentTopicId);
+        if (Auth::id() != $argumentTopic->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
+        }
+
+        $argumentTopic->delete();
+
+        return redirect()->route('arguments-home');
+    }
 }

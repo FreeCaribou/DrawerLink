@@ -97,6 +97,10 @@ Route::post('/arguments/{argumentTopicId}/link', [ArgumentController::class, 'ad
     ->middleware(['auth', 'verified'])
     ->name('arguments-topics.add-link');
 
+Route::delete('/arguments/{argumentTopicId}', [ArgumentController::class, 'deleteOneTopic'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-topic.delete-topic');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });
