@@ -13,10 +13,8 @@ import { Textarea } from '@/components/ui/textarea';
 
 export default function ArgumentHome({
     argumentTopics = [],
-    flash = {},
 }: {
     argumentTopics: ArgumentTopic[];
-    flash: FlashProps;
 }) {
 
     const { t } = useTranslation();
@@ -33,12 +31,6 @@ export default function ArgumentHome({
     return (
         <AppInternLayout>
             <div>
-                {flash?.success && (
-                    <div className="mb-6 p-3 bg-green-100 text-green-800 rounded">
-                        {flash.success}
-                    </div>
-                )}
-
                 {argumentTopics.map((at) => (
                     <React.Fragment key={at.id}>
                         <div className='mb-2'>
@@ -54,6 +46,9 @@ export default function ArgumentHome({
                     <DialogContent showCloseButton={false} className="sm:max-w-sm">
                         <DialogHeader>
                             <DialogTitle>{t('addArgumentTopic')}</DialogTitle>
+                            <DialogDescription>
+                                {t('addArgumentTopicDescription')}
+                            </DialogDescription>
                         </DialogHeader>
                         <Form action="/arguments" method='post' resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} className="flex flex-col gap-2">
                             <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">

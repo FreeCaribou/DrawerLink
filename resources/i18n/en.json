@@ -29,6 +29,9 @@
     "argumentArguments": "Your arguments for the topic",
     "argumentSavedLinks": "Links for your arguments",
     "addArgumentTopic": "Add a topic",
+    "addArgument": "Add an argument",
+    "addArgumentDescription": "What is the most compelling argument you came up with?",
+    "addArgumentTopicDescription": "What topic do you want to prepare?",
     "form": {
         "email": "Email",
         "password": "Password",

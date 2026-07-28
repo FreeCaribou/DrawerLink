@@ -29,6 +29,9 @@
     "argumentArguments": "Uw argumenten voor het onderwerp",
     "argumentSavedLinks": "Links naar uw argumenten",
     "addArgumentTopic": "Voeg een topic",
+    "addArgument": "Voeg en argument",
+    "addArgumentDescription": "Wat is het meest overtuigende argument dat je hebt bedacht?",
+    "addArgumentTopicDescription": "Over welk onderwerp wilt u zich voorbereiden?",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",

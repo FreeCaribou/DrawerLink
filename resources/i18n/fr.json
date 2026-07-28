@@ -29,6 +29,9 @@
     "argumentArguments": "Vos arguments pour le sujet",
     "argumentSavedLinks": "Des liens pour vos arguments",
     "addArgumentTopic": "Ajouter un topic",
+    "addArgument": "Ajouter un argument",
+    "addArgumentDescription": "Quel est l'argument percutant que vous avez trouvé ?",
+    "addArgumentTopicDescription": "Quel est le sujet que vous voulez préparer ?",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
