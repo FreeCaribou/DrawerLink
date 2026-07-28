@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.0]
+
+- Can make topic of argument
+- Link argument to a Saved Link (simple mode)
+
 ## [1.0.0]
 
 - Terminal script to add a new user

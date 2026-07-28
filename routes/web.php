@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArgumentController;
 use App\Http\Controllers\DrawController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ErrorController;
@@ -46,6 +47,10 @@ Route::get('/saved-links/{savedLinkId}', [SavedLinkController::class, 'getOne'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.get-one');
 
+Route::get('/data/saved-links', [SavedLinkController::class, 'dataGetAll'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.data-get-all');
+
 Route::post('/draws', [DrawController::class, 'add'])
     ->middleware(['auth', 'verified'])
     ->name('draws.add');
@@ -71,6 +76,30 @@ Route::get('/shared/saved-links/{sharedKey}', [SavedLinkController::class, 'getO
 
 Route::get('/shared/download-saved-object/{savedObjectPropId}/{sharedKey}', [SavedObjectPropController::class, 'downloadShared'])
     ->name('shared.download-saved-object');
+
+Route::get('/arguments', [ArgumentController::class, 'home'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-home');
+
+Route::get('/arguments/{argumentTopicId}', [ArgumentController::class, 'detail'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-detail');
+
+Route::post('/arguments', [ArgumentController::class, 'addTopic'])
+    ->middleware(['auth', 'verified'])
+    ->name('argument-topics.add-topic');
+
+Route::post('/arguments/{argumentTopicId}/argument', [ArgumentController::class, 'addArgument'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-topics.add-argument');
+
+Route::post('/arguments/{argumentTopicId}/link', [ArgumentController::class, 'addLink'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-topics.add-link');
+
+Route::delete('/arguments/{argumentTopicId}', [ArgumentController::class, 'deleteOneTopic'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-topic.delete-topic');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');

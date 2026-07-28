@@ -279,4 +279,10 @@ class SavedLinkController extends Controller
 
         return response()->json(['draws' => $draws, 'tags' => $tags, 'sources' => $sources]);
     }
+
+    public function dataGetAll()
+    {
+        $savedLinks = SavedLink::where('user_id', Auth::id())->with('draw')->get();
+        return response()->json(['saved_links' => $savedLinks]);
+    }
 }

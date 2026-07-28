@@ -1,5 +1,4 @@
-import { Draw, FlashProps, type SharedData } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
+import { Draw, FlashProps } from '@/types';
 import DrawerForm from '@/components/drawer-form';
 import SavedLinkForm from '@/components/saved-link-form';
 
@@ -20,7 +19,6 @@ export default function Welcome({
     drawBaseList: Draw[];
     flash: FlashProps;
 }) {
-    const { auth } = usePage<SharedData>().props;
     const { t } = useTranslation();
 
     const [drawList, setDrawList] = useState<Draw[]>([]);
@@ -36,8 +34,6 @@ export default function Welcome({
                     {flash.success}
                 </div>
             )}
-
-            <h2>{t('welcome', { name: auth.user.name })}</h2>
 
             <div className='mb-6'>
                 <Collapsible className="data-[state=open]:bg-muted rounded-md">

@@ -25,6 +25,15 @@
     "shareLinkLink": "To share this link you can use this url:",
     "shareLink": "Create a shared url for this link",
     "addFile": "Add a new file",
+    "arguments": "Arguments",
+    "argumentArguments": "Your arguments for the topic",
+    "argumentSavedLinks": "Links for your arguments",
+    "addArgumentTopic": "Add a topic",
+    "addArgument": "Add an argument",
+    "addArgumentDescription": "What is the most compelling argument you came up with?",
+    "addArgumentTopicDescription": "What topic do you want to prepare?",
+    "linkLink": "Link a link",
+    "linkLinkDescription": "Choose a link to add as an argument",
     "form": {
         "email": "Email",
         "password": "Password",
@@ -41,6 +50,8 @@
         "label": "Label",
         "chooseDraw": "Choose a draw",
         "drawForLink": "The draw for the link",
-        "relatedFiles": "The related files"
+        "relatedFiles": "The related files",
+        "savedLinks": "Links",
+        "chooseLink": "Choose a link"
     }
 }

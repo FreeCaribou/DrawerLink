@@ -4,7 +4,10 @@ A little app to store "link" to retrieve it easily later and share it
 
 ## TODO for better app
 
-- Make a feature to "prepar" and store argument / counter argument (and link with drawer link)
+- Delete or update an argument in a topic
+- Delete link of link in a topic
+- From a link, add it in a topic (and see all the topic where the link is linked)
+- Better UI for arguments - Better nav too
 - Send a shared link by mail
 - Better backend error handling
 - Clean up the code (avoid big file, separate component in front and divide service in back)
@@ -13,7 +16,7 @@ A little app to store "link" to retrieve it easily later and share it
 - For the tag of a saved link
     - For the form, propose some tag by some logic
     - For the search, show the most used tag for example
-- For link description, have wysiwyg
+- For link's and argument's description, have wysiwyg
 - Make relations between link
 - Dark mode
 - Bash script for the install

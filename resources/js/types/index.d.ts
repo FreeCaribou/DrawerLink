@@ -93,3 +93,19 @@ export interface FlashProps {
     messages?: string[];
     [key: string]: unknown;
 }
+
+export interface ArgumentTopic {
+    id: number;
+    label: string;
+    description: string;
+    arguments: Argument[];
+    saved_links: SavedLink[];
+    [key: string]: unknown;
+}
+
+export interface Argument {
+    id: number;
+    label: string;
+    description: string;
+    [key: string]: unknown;
+}
