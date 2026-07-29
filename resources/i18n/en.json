@@ -34,6 +34,8 @@
     "addArgumentTopicDescription": "What topic do you want to prepare?",
     "linkLink": "Link a link",
     "linkLinkDescription": "Choose a link to add as an argument",
+    "noAccount": "Don't have an account? Ask the site administrator.",
+    "welcomeLogin": "Welcome to this app for storing your important links so you can quickly access them!",
     "form": {
         "email": "Email",
         "password": "Password",

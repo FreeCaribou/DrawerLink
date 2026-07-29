@@ -7,7 +7,7 @@ A little app to store "link" to retrieve it easily later and share it
 - Delete or update an argument in a topic
 - Delete link of link in a topic
 - From a link, add it in a topic (and see all the topic where the link is linked)
-- Better UI for arguments - Better nav too
+- Better UI for arguments !
 - Send a shared link by mail
 - Better backend error handling
 - Clean up the code (avoid big file, separate component in front and divide service in back)

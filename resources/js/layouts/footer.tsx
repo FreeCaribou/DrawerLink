@@ -38,7 +38,9 @@ export default function Footer({ }: {}) {
                     </SelectContent>
                 </Select>
                 <div className='mt-5'>
-                    version {appVersion?.toString() || '0.0.1'}
+                    <a href='https://github.com/FreeCaribou/DrawerLink/blob/main/CHANGELOG.md' target='_blank'>
+                        version {appVersion?.toString() || '0.0.1'}
+                    </a>
                 </div>
             </div>
         </footer>

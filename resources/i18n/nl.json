@@ -34,6 +34,8 @@
     "addArgumentTopicDescription": "Over welk onderwerp wilt u zich voorbereiden?",
     "linkLink": "Een link koppelen",
     "linkLinkDescription": "Kies een link om als argument toe te voegen",
+    "noAccount": "Nog geen account? Neem contact op met de sitebeheerder.",
+    "welcomeLogin": "Welkom bij deze app voor het opslaan van je belangrijke links, zodat je ze snel kunt terugvinden!",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",

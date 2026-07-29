@@ -12,24 +12,24 @@ export default function AppInternLayout({
 }) {
     const { t } = useTranslation();
     return (
-        <div className="flex flex-col min-h-screen items-center bg-[#FDFDFC] text-[#1b1b18] md:justify-center ">
-            <div className="p-6 md:p-8 sm:w-4/5">
+        <div className="flex flex-col min-h-screen lg:items-center bg-[#FDFDFC] text-[#1b1b18]">
+            <div className="flex-[100] p-6 lg:p-8 lg:w-4/5">
                 <header className="mb-6">
                     <nav className="flex items-center justify-between w-full">
-                        <div className="">
-                            <Link href="/"><h1 className="m-0!">Drawer Link</h1></Link>
+                        <div>
+                            <Link href="/"><h1 className="mb-2!">Drawer Link</h1></Link>
                             <Link href="/arguments"><h2 className="m-0!">{t('arguments')}</h2></Link>
                         </div>
                         <Link
                             href={logout()}
-                            className="cursor-pointer inline-block rounded-sm border border-foreground px-2 py-1.5 text-sm"
+                            className="cursor-pointer inline-block rounded-sm border border-foreground px-2 py-1.5 text-sm ml-2"
                         >
                             {t('logout')}
                         </Link>
                     </nav>
                 </header>
                 <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 md:grow starting:opacity-0">
-                    <main className="w-full  md:max-w-4xl md:flex-row">
+                    <main className="w-full md:max-w-4xl md:flex-row">
                         {children}
                     </main>
                     <Toaster></Toaster>

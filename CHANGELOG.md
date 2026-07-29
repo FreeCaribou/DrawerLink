@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.1]
+
+- Better nav, footer and main placement
+
 ## [1.1.0]
 
 - Can make topic of argument

@@ -61,13 +61,11 @@ export default function Welcome({
                 ))}
             </div>
 
-            <div className='mt-6'>
+            <div className='mt-5 flex gap-2'>
                 {drawList.length > 0 && (
                     <SavedLinkForm drawBaseList={drawList} />
                 )}
-            </div>
 
-            <div className='mt-6'>
                 <DrawerForm />
             </div>
         </AppInternLayout>
