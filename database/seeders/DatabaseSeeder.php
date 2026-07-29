@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             'full_source' => 'https://jacobin.com/2026/02/natural-disaster-insurance-california-wildfires',
             'base_source' => 'jacobin.com',
             'source_date' => '2026-01-01',
-            'shared_key' => 'notBestKeyToProtecSomething',
+            'shared_key' => 'notBestKeyToProtectSomething',
         ]);
         $savedLinkTwo = SavedLink::create(['label' => '5 idea to tax the rich', 'description' => 'And other good idea in this article', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id, 'source_date' => '01/01/2026']);
         $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see - WOW', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id, 'draw_id' => $drawOneBis->id]);
