@@ -12,7 +12,7 @@ import { toastError } from '@/lib/utils';
 import axios from "axios";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trash2Icon } from 'lucide-react';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 import DialogDeleteArgument from '@/components/dialog-delete-argument';
 import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
 
@@ -28,7 +28,7 @@ export default function ArgumentDetail({
     const [savedLinks, setSavedLinks] = useState<SavedLink[]>([]);
     const [selectedSavedLinkId, setSelectedSavedLinkId] = useState<string | undefined>(undefined);
     const [openDialogDeleteTopic, setOpenDialogDeleteTopic] = useState(false);
-    const [openDialogDeleteArgument, setOpenDialogDeleteArgument] = useState(false);
+    const [editMode, setEditMode] = useState(false);
 
     const handleSuccessArgument = () => {
         setOpenDialogArgument(false);
@@ -41,10 +41,6 @@ export default function ArgumentDetail({
 
     const handleSuccessDeleteTopic = () => {
         setOpenDialogDeleteTopic(false);
-    };
-
-    const handleSuccessDeleteArgument = () => {
-        setOpenDialogDeleteArgument(false);
     };
 
     const handleError = (err: any) => {
@@ -98,7 +94,7 @@ export default function ArgumentDetail({
                         <React.Fragment key={'argument-' + argument.id}>
                             <li>
                                 {argument.label}
-                                <DialogDeleteArgument argument={argument} argumentTopicId={argumentTopic.id}></DialogDeleteArgument>
+                                {editMode && (<DialogDeleteArgument argument={argument} argumentTopicId={argumentTopic.id}></DialogDeleteArgument>)}
                                 <p>{argument.description}</p>
                             </li>
                         </React.Fragment>
@@ -115,7 +111,7 @@ export default function ArgumentDetail({
                         <React.Fragment key={'savedLink' + savedLink.id}>
                             <li>
                                 <Link href={'/saved-links/' + savedLink.id}>{savedLink.label}</Link>
-                                <DialogDeleteArgumentLink argumentTopicId={argumentTopic.id} savedLink={savedLink}></DialogDeleteArgumentLink>
+                                {editMode && (<DialogDeleteArgumentLink argumentTopicId={argumentTopic.id} savedLink={savedLink}></DialogDeleteArgumentLink>)}
                             </li>
                         </React.Fragment>
                     ))}
@@ -223,33 +219,43 @@ export default function ArgumentDetail({
                         </DialogContent>
                     </Dialog>
                 </div>
-                <div className='mt-8'>
-                    <Dialog open={openDialogDeleteTopic} onOpenChange={setOpenDialogDeleteTopic}>
-                        <DialogTrigger asChild>
-                            <Button variant="destructive" className="cursor-pointer">
-                                <Trash2Icon></Trash2Icon>
-                                {t('delete')}
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent showCloseButton={false} className="sm:max-w-sm">
-                            <DialogHeader>
-                                <DialogTitle>{t('deleteSur')}</DialogTitle>
-                                <DialogDescription></DialogDescription>
-                            </DialogHeader>
-                            <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDeleteTopic} onError={handleError}>
-                                <Button
-                                    type="submit"
-                                    variant="destructive"
-                                    className="cursor-pointer"
-                                >
+
+                {editMode && (
+                    <div className='mt-8'>
+                        <Dialog open={openDialogDeleteTopic} onOpenChange={setOpenDialogDeleteTopic}>
+                            <DialogTrigger asChild>
+                                <Button variant="destructive" className="cursor-pointer">
                                     <Trash2Icon></Trash2Icon>
-                                    {t('yes')}
+                                    {t('delete')}
                                 </Button>
-                            </Form>
-                        </DialogContent>
-                    </Dialog>
-                </div>
+                            </DialogTrigger>
+                            <DialogContent showCloseButton={false} className="sm:max-w-sm">
+                                <DialogHeader>
+                                    <DialogTitle>{t('deleteSur')}</DialogTitle>
+                                    <DialogDescription></DialogDescription>
+                                </DialogHeader>
+                                <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDeleteTopic} onError={handleError}>
+                                    <Button
+                                        type="submit"
+                                        variant="destructive"
+                                        className="cursor-pointer"
+                                    >
+                                        <Trash2Icon></Trash2Icon>
+                                        {t('yes')}
+                                    </Button>
+                                </Form>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
+                )}
             </div>
+            <Button
+                className="cursor-pointer mt-5"
+                onClick={() => setEditMode(!editMode)}
+            >
+                <PencilIcon></PencilIcon>
+                {!editMode ? t('goEditMode') : t('cancelEditMode')}
+            </Button>
         </AppInternLayout>
     );
 }
