@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\ArgumentController;
 use App\Http\Controllers\DrawController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SavedLinkController;
 use App\Http\Controllers\SavedObjectPropController;
 use Illuminate\Support\Facades\Route;
@@ -101,8 +101,16 @@ Route::delete('/arguments/{argumentTopicId}', [ArgumentController::class, 'delet
     ->middleware(['auth', 'verified'])
     ->name('arguments-topic.delete-topic');
 
+Route::delete('/arguments/{argumentTopicId}/argument/{argumentId}', [ArgumentController::class, 'deleteOneArgument'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-topic.delete-argument');
+
+Route::delete('/arguments/{argumentTopicId}/link/{savedLinkId}', [ArgumentController::class, 'deleteOneArgumentLink'])
+    ->middleware(['auth', 'verified'])
+    ->name('arguments-topic.delete-argument-link');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

@@ -39,6 +39,7 @@
     "argumentsLowerCase": "arguments",
     "linksLowerCase": "liens",
     "and": "et",
+    "deleteSurDescription": "Cela sera définitif",
     "form": {
         "email": "Email",
         "password": "Mot de passe",

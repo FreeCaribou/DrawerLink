@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-use App\Models\ArgumentTopic;
 use App\Models\Argument;
+use App\Models\ArgumentTopic;
 use App\Models\SavedLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class ArgumentController extends Controller
 {
     public function home()
     {
         $argumentTopics = ArgumentTopic::where('user_id', Auth::id())->withCount('savedLinks')->withCount('arguments')->get();
+
         return Inertia::render('arguments-home', ['argumentTopics' => $argumentTopics]);
     }
 
@@ -61,10 +62,10 @@ class ArgumentController extends Controller
         $newArgument = Argument::create([
             'label' => $request->label,
             'description' => $request->description,
-            'argument_topic_id' => $argumentTopicId
+            'argument_topic_id' => $argumentTopicId,
         ]);
 
-        Log::info('Creation of an argument for the topic with id ' . $argumentTopicId);
+        Log::info('Creation of an argument for the topic with id '.$argumentTopicId);
     }
 
     public function addLink(int $argumentTopicId, Request $request)
@@ -84,7 +85,7 @@ class ArgumentController extends Controller
 
         $argumentTopic->savedLinks()->attach($savedLink);
 
-        Log::info('Link the argument topic ' . $argumentTopicId . ' with the saved link ' . $request->saved_link_id);
+        Log::info('Link the argument topic '.$argumentTopicId.' with the saved link '.$request->saved_link_id);
     }
 
     public function deleteOneTopic(int $argumentTopicId)
@@ -95,7 +96,31 @@ class ArgumentController extends Controller
         }
 
         $argumentTopic->delete();
+        Log::info('Argument topic delete '.$argumentTopicId);
 
         return redirect()->route('arguments-home');
+    }
+
+    public function deleteOneArgument(int $argumentTopicId, int $argumentId)
+    {
+        $argumentTopic = ArgumentTopic::find($argumentTopicId);
+        if (Auth::id() != $argumentTopic->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
+        }
+        $argument = Argument::find($argumentId);
+        $argument->delete();
+        Log::info('Argument delete '.$argumentId.' from topic '.$argumentTopicId);
+    }
+
+    public function deleteOneArgumentLink(int $argumentTopicId, int $savedLinkId)
+    {
+        $argumentTopic = ArgumentTopic::find($argumentTopicId);
+        if (Auth::id() != $argumentTopic->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
+        }
+        $savedLink = SavedLink::find($savedLinkId);
+        $argumentTopic->savedLinks()->detach($savedLink);
+
+        Log::info('Argument link delete '.$savedLinkId.' from topic '.$argumentTopicId);
     }
 }

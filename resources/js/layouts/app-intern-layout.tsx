@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 
 export default function AppInternLayout({
     children,
-    ...props
 }: {
     children: React.ReactNode;
 }) {

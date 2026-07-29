@@ -3,6 +3,7 @@
 ## [1.1.2]
 
 - Better UI for list of argument topic
+- Delete argument or linked link
 
 ## [1.1.1]
 

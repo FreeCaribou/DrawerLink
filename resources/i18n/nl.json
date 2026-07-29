@@ -39,6 +39,7 @@
     "argumentsLowerCase": "argumenten",
     "linksLowerCase": "links",
     "and": "en",
+    "deleteSurDescription": "Dit is definitief",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",

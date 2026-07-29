@@ -13,6 +13,8 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Trash2Icon } from 'lucide-react';
+import DialogDeleteArgument from '@/components/dialog-delete-argument';
+import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
 
 export default function ArgumentDetail({
     argumentTopic
@@ -25,7 +27,8 @@ export default function ArgumentDetail({
     const [openDialogLink, setOpenDialogLink] = useState(false);
     const [savedLinks, setSavedLinks] = useState<SavedLink[]>([]);
     const [selectedSavedLinkId, setSelectedSavedLinkId] = useState<string | undefined>(undefined);
-    const [openDialogDelete, setOpenDialogDelete] = useState(false);
+    const [openDialogDeleteTopic, setOpenDialogDeleteTopic] = useState(false);
+    const [openDialogDeleteArgument, setOpenDialogDeleteArgument] = useState(false);
 
     const handleSuccessArgument = () => {
         setOpenDialogArgument(false);
@@ -36,8 +39,12 @@ export default function ArgumentDetail({
         setSelectedSavedLinkId(undefined);
     };
 
-    const handleSuccessDelete = () => {
-        setOpenDialogDelete(false);
+    const handleSuccessDeleteTopic = () => {
+        setOpenDialogDeleteTopic(false);
+    };
+
+    const handleSuccessDeleteArgument = () => {
+        setOpenDialogDeleteArgument(false);
     };
 
     const handleError = (err: any) => {
@@ -82,7 +89,7 @@ export default function ArgumentDetail({
                 {argumentTopic.description}
 
                 {argumentTopic.arguments?.length > 0 &&
-                    <div className='mt-5'>
+                    <div className='mt-5 text-secondary italic'>
                         {t('argumentArguments')}
                     </div>
                 }
@@ -91,6 +98,7 @@ export default function ArgumentDetail({
                         <React.Fragment key={'argument-' + argument.id}>
                             <li>
                                 {argument.label}
+                                <DialogDeleteArgument argument={argument} argumentTopicId={argumentTopic.id}></DialogDeleteArgument>
                                 <p>{argument.description}</p>
                             </li>
                         </React.Fragment>
@@ -98,7 +106,7 @@ export default function ArgumentDetail({
                 </ul>
 
                 {argumentTopic.saved_links?.length > 0 &&
-                    <div className='mt-5'>
+                    <div className='mt-5 text-secondary italic'>
                         {t('argumentSavedLinks')}
                     </div>
                 }
@@ -107,6 +115,7 @@ export default function ArgumentDetail({
                         <React.Fragment key={'savedLink' + savedLink.id}>
                             <li>
                                 <Link href={'/saved-links/' + savedLink.id}>{savedLink.label}</Link>
+                                <DialogDeleteArgumentLink argumentTopicId={argumentTopic.id} savedLink={savedLink}></DialogDeleteArgumentLink>
                             </li>
                         </React.Fragment>
                     ))}
@@ -215,7 +224,7 @@ export default function ArgumentDetail({
                     </Dialog>
                 </div>
                 <div className='mt-8'>
-                    <Dialog open={openDialogDelete} onOpenChange={setOpenDialogDelete}>
+                    <Dialog open={openDialogDeleteTopic} onOpenChange={setOpenDialogDeleteTopic}>
                         <DialogTrigger asChild>
                             <Button variant="destructive" className="cursor-pointer">
                                 <Trash2Icon></Trash2Icon>
@@ -225,8 +234,9 @@ export default function ArgumentDetail({
                         <DialogContent showCloseButton={false} className="sm:max-w-sm">
                             <DialogHeader>
                                 <DialogTitle>{t('deleteSur')}</DialogTitle>
+                                <DialogDescription></DialogDescription>
                             </DialogHeader>
-                            <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDelete} onError={handleError}>
+                            <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDeleteTopic} onError={handleError}>
                                 <Button
                                     type="submit"
                                     variant="destructive"
