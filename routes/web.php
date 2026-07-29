@@ -109,6 +109,10 @@ Route::delete('/arguments/{argumentTopicId}/link/{savedLinkId}', [ArgumentContro
     ->middleware(['auth', 'verified'])
     ->name('arguments-topic.delete-argument-link');
 
+Route::put('/arguments/{argumentTopicId}', [ArgumentController::class, 'editTopic'])
+    ->middleware(['auth', 'verified'])
+    ->name('argument-topics.edit-topic');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });

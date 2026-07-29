@@ -47,6 +47,24 @@ class ArgumentController extends Controller
         return redirect()->route('arguments-detail', ['argumentTopicId' => $newArgumentTopic->id]);
     }
 
+    public function editTopic(int $argumentTopicId, Request $request)
+    {
+        $request->validate([
+            'label' => 'required|string|max:255',
+            'description' => 'nullable|string|max:5000',
+        ]);
+
+        $argumentTopic = ArgumentTopic::with('arguments')->find($argumentTopicId);
+        if (Auth::id() != $argumentTopic->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
+        }
+        $argumentTopic->update([
+            'label' => $request->label,
+            'description' => $request->description,
+        ]);
+        Log::info('Update of of argument topic '.$argumentTopicId);
+    }
+
     public function addArgument(int $argumentTopicId, Request $request)
     {
         $request->validate([

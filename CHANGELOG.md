@@ -4,6 +4,7 @@
 
 - Better UI for list of argument topic
 - Delete argument or linked link
+- Edit an argument topic
 
 ## [1.1.1]
 

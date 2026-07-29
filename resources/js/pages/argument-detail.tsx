@@ -29,6 +29,7 @@ export default function ArgumentDetail({
     const [selectedSavedLinkId, setSelectedSavedLinkId] = useState<string | undefined>(undefined);
     const [openDialogDeleteTopic, setOpenDialogDeleteTopic] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const [argumentTopicEdit, setArgumentTopicEdit] = useState({ ...argumentTopic });
 
     const handleSuccessArgument = () => {
         setOpenDialogArgument(false);
@@ -46,6 +47,17 @@ export default function ArgumentDetail({
     const handleError = (err: any) => {
         toastError(err);
     }
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setArgumentTopicEdit(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handlePutSuccess = () => {
+        console.log('hoooo', argumentTopic)
+        setEditMode(false);
+        setArgumentTopicEdit({ ...argumentTopic });
+    };
 
     /**
      * Get all the saved link from the current user
@@ -81,8 +93,41 @@ export default function ArgumentDetail({
     return (
         <AppInternLayout>
             <div>
-                <h1>{argumentTopic.label}</h1>
-                {argumentTopic.description}
+                {!editMode ? (
+                    <div>
+                        <h1>{argumentTopic.label}</h1>
+                        {argumentTopic.description}
+                    </div>
+                ) : (
+                    <div>
+                        <Form action={'/arguments/' + argumentTopic.id} method='put' resetOnSuccess={['label', 'description']} onSuccess={handlePutSuccess} onError={handleError} className="flex flex-col gap-2">
+                            <FieldGroup>
+                                <FieldSet>
+                                    <FieldGroup>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-topic-form-label">
+                                                {t('form.label')}
+                                            </FieldLabel>
+                                            <Input value={argumentTopicEdit.label} onChange={handleChange} id="argument-topic-form-label" name='label' required />
+                                        </Field>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-topic-form-description">
+                                                {t('form.description')}
+                                            </FieldLabel>
+                                            <Textarea value={argumentTopicEdit.description} onChange={handleChange} id="argument-topic-form-description" name='description' rows={2} />
+                                        </Field>
+                                    </FieldGroup>
+                                </FieldSet>
+                            </FieldGroup>
+                            <Button
+                                type="submit"
+                                className="cursor-pointer mt-5"
+                            >
+                                {t('save')}
+                            </Button>
+                        </Form>
+                    </div>
+                )}
 
                 {argumentTopic.arguments?.length > 0 &&
                     <div className='mt-5 text-secondary italic'>
