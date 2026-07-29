@@ -40,6 +40,9 @@
     "linksLowerCase": "liens",
     "and": "et",
     "deleteSurDescription": "Cela sera définitif",
+    "linkTopic": "Lier à un topic d'argument",
+    "linkTopicDescription": "Choisissez un topic d'argument auquel ajouter ce lien.",
+    "relatedArgumentTopics": "Les topics d'argument utilisant ce lien",
     "form": {
         "email": "Email",
         "password": "Mot de passe",

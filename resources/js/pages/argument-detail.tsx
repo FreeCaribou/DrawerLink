@@ -54,7 +54,6 @@ export default function ArgumentDetail({
     };
 
     const handlePutSuccess = () => {
-        console.log('hoooo', argumentTopic)
         setEditMode(false);
         setArgumentTopicEdit({ ...argumentTopic });
     };

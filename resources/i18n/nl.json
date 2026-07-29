@@ -40,6 +40,9 @@
     "linksLowerCase": "links",
     "and": "en",
     "deleteSurDescription": "Dit is definitief",
+    "linkTopic": "Link naar een argumentatieonderwerp",
+    "linkTopicDescription": "Kies een argumentatieonderwerp waaraan u deze link wilt toevoegen.",
+    "relatedArgumentTopics": "Argumentatieonderwerpen via deze link",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",

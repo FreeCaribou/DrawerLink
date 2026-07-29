@@ -141,4 +141,11 @@ class ArgumentController extends Controller
 
         Log::info('Argument link delete '.$savedLinkId.' from topic '.$argumentTopicId);
     }
+
+    public function dataGetAll()
+    {
+        $argumentTopics = ArgumentTopic::where('user_id', Auth::id())->get();
+
+        return response()->json(['argument_topics' => $argumentTopics]);
+    }
 }

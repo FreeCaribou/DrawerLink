@@ -40,6 +40,9 @@
     "linksLowerCase": "links",
     "and": "and",
     "deleteSurDescription": "This will be final",
+    "linkTopic": "Link to an argument topic",
+    "linkTopicDescription": "Choose an argument topic to which you want to add this link.",
+    "relatedArgumentTopics": "Argument topics using this link",
     "form": {
         "email": "Email",
         "password": "Password",

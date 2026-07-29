@@ -113,6 +113,14 @@ Route::put('/arguments/{argumentTopicId}', [ArgumentController::class, 'editTopi
     ->middleware(['auth', 'verified'])
     ->name('argument-topics.edit-topic');
 
+Route::get('/data/argument-topics', [ArgumentController::class, 'dataGetAll'])
+    ->middleware(['auth', 'verified'])
+    ->name('argument-topics.data-get-all');
+
+Route::post('/saved-links/{savedLinkId}/argument-topic', [SavedLinkController::class, 'addArgumentTopic'])
+    ->middleware(['auth', 'verified'])
+    ->name('saved-links.add-argument-topic');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');
 });

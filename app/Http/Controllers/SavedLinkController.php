@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArgumentTopic;
 use App\Models\Draw;
 use App\Models\SavedLink;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Database\Eloquent\Builder;
-use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class SavedLinkController extends Controller
 {
@@ -36,7 +37,7 @@ class SavedLinkController extends Controller
         DB::transaction(function () use ($request, $userId) {
             Log::info('Trying creation of a link');
             $baseSource = null;
-            if (!empty($request->full_source)) {
+            if (! empty($request->full_source)) {
                 try {
                     $parsedUrl = parse_url($request->full_source);
                     // I assume that if a website is called hellowww.net it will not be taken in consideration
@@ -112,9 +113,9 @@ class SavedLinkController extends Controller
         ]);
 
         DB::transaction(function () use ($request, $savedLinkId, $savedLink) {
-            Log::info('Trying update of link ' . $savedLinkId);
+            Log::info('Trying update of link '.$savedLinkId);
             $baseSource = null;
-            if (!empty($request->full_source)) {
+            if (! empty($request->full_source)) {
                 try {
                     $parsedUrl = parse_url($request->full_source);
                     // I assume that if a website is called hellowww.net it will not be taken in consideration
@@ -149,14 +150,14 @@ class SavedLinkController extends Controller
                 $savedLink->tags()->sync($tags);
             }
 
-            Log::info('Update of link ' . $savedLinkId);
+            Log::info('Update of link '.$savedLinkId);
         });
     }
 
     public function getOne(int $savedLinkId)
     {
         $userId = Auth::user()->id;
-        $savedLink = SavedLink::with('savedObjectProps')->with('tags')->with('draw')->find($savedLinkId);
+        $savedLink = SavedLink::with('savedObjectProps')->with('tags')->with('draw')->with('argumentTopics')->find($savedLinkId);
         if ($userId != $savedLink->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-link']);
         }
@@ -173,14 +174,14 @@ class SavedLinkController extends Controller
     public function getOneShared(string $sharedKey)
     {
         $savedLink = SavedLink::with(['savedObjectProps', 'tags', 'draw'])->where('shared_key', $sharedKey)->first();
-        if (!$savedLink) {
+        if (! $savedLink) {
             return redirect()->route('error')->withErrors(['error.shared-link-not-present']);
         }
 
         return Inertia::render('saved-link-detail-page', [
             'savedLink' => $savedLink,
             'sharedKey' => $sharedKey,
-            'blockEdit' => true
+            'blockEdit' => true,
         ]);
     }
 
@@ -235,19 +236,19 @@ class SavedLinkController extends Controller
         $savedLinks = SavedLink::where('user_id', $userId)
             ->when($text, function (Builder $query, string $text) {
                 $query->where(function (Builder $q) use ($text) {
-                    $q->whereRaw('LOWER(label) LIKE ?', ['%' . strtolower($text) . '%'])
-                        ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($text) . '%']);
+                    $q->whereRaw('LOWER(label) LIKE ?', ['%'.strtolower($text).'%'])
+                        ->orWhereRaw('LOWER(description) LIKE ?', ['%'.strtolower($text).'%']);
                 });
             })
-            ->when(!empty($tags), function (Builder $query) use ($tags) {
+            ->when(! empty($tags), function (Builder $query) use ($tags) {
                 $query->whereHas('tags', function (Builder $q) use ($tags) {
                     $q->whereIn('tags.id', $tags);
                 });
             })
-            ->when(!empty($draws), function (Builder $query) use ($draws) {
+            ->when(! empty($draws), function (Builder $query) use ($draws) {
                 $query->whereIn('draw_id', $draws);
             })
-            ->when(!empty($sources), function (Builder $query) use ($sources) {
+            ->when(! empty($sources), function (Builder $query) use ($sources) {
                 $query->whereIn('base_source', $sources);
             })
             ->when($startDate, function (Builder $query) use ($startDate) {
@@ -283,6 +284,22 @@ class SavedLinkController extends Controller
     public function dataGetAll()
     {
         $savedLinks = SavedLink::where('user_id', Auth::id())->with('draw')->get();
+
         return response()->json(['saved_links' => $savedLinks]);
+    }
+
+    public function addArgumentTopic(int $savedLinkId, Request $request)
+    {
+        $argumentTopic = ArgumentTopic::find($request->argument_topic_id);
+        $savedLink = SavedLink::find($savedLinkId);
+        if (Auth::id() != $argumentTopic->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
+        }
+        if (Auth::id() != $savedLink->user_id) {
+            return redirect()->route('error')->withErrors(['error.not-your-link']);
+        }
+
+        $savedLink->argumentTopics()->attach($argumentTopic);
+        Log::info('Link the saved link '.$savedLinkId.' with the argument topic'.$request->argument_topic_id);
     }
 }

@@ -69,6 +69,7 @@ export interface SavedLink {
     created_at: Date;
     updated_at: Date;
     shared_key: string;
+    argument_topics: ArgumentTopic[];
     [key: string]: unknown;
 }
 
