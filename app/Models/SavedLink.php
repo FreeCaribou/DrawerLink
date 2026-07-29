@@ -51,6 +51,11 @@ class SavedLink extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function argumentTopics(): BelongsToMany
+    {
+        return $this->belongsToMany(ArgumentTopic::class);
+    }
+
     public function setSourceDateAttribute($value)
     {
         if (empty($value)) {

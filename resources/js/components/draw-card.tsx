@@ -62,7 +62,7 @@ export default function DrawCard({
                 <div>
                     {isLoading ? (
                         <div>
-                            {Array.from({ length: draw.saved_links_count }, (_, i) => (
+                            {Array.from({ length: draw.saved_links_count || 0 }, (_, i) => (
                                 <Skeleton key={i} className="h-8 mb-2" />
                             ))}
                         </div>

@@ -10,8 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $drawBaseList = Draw::where('user_id', $user->id)->withCount('savedLinks')->get();
+        $drawBaseList = Draw::where('user_id', Auth::id())->withCount('savedLinks')->get();
 
         return Inertia::render('welcome', [
             'drawBaseList' => $drawBaseList,

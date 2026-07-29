@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2]
+
+- Better UI for list of argument topic
+- Delete argument or linked link
+- Edit an argument topic
+- Link a topic by the saved link page
+
 ## [1.1.1]
 
 - Better nav, footer and main placement

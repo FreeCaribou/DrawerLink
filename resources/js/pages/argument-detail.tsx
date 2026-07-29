@@ -12,7 +12,9 @@ import { toastError } from '@/lib/utils';
 import axios from "axios";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trash2Icon } from 'lucide-react';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
+import DialogDeleteArgument from '@/components/dialog-delete-argument';
+import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
 
 export default function ArgumentDetail({
     argumentTopic
@@ -25,7 +27,9 @@ export default function ArgumentDetail({
     const [openDialogLink, setOpenDialogLink] = useState(false);
     const [savedLinks, setSavedLinks] = useState<SavedLink[]>([]);
     const [selectedSavedLinkId, setSelectedSavedLinkId] = useState<string | undefined>(undefined);
-    const [openDialogDelete, setOpenDialogDelete] = useState(false);
+    const [openDialogDeleteTopic, setOpenDialogDeleteTopic] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [argumentTopicEdit, setArgumentTopicEdit] = useState({ ...argumentTopic });
 
     const handleSuccessArgument = () => {
         setOpenDialogArgument(false);
@@ -36,13 +40,23 @@ export default function ArgumentDetail({
         setSelectedSavedLinkId(undefined);
     };
 
-    const handleSuccessDelete = () => {
-        setOpenDialogDelete(false);
+    const handleSuccessDeleteTopic = () => {
+        setOpenDialogDeleteTopic(false);
     };
 
     const handleError = (err: any) => {
         toastError(err);
     }
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setArgumentTopicEdit(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handlePutSuccess = () => {
+        setEditMode(false);
+        setArgumentTopicEdit({ ...argumentTopic });
+    };
 
     /**
      * Get all the saved link from the current user
@@ -78,11 +92,44 @@ export default function ArgumentDetail({
     return (
         <AppInternLayout>
             <div>
-                <h1>{argumentTopic.label}</h1>
-                {argumentTopic.description}
+                {!editMode ? (
+                    <div>
+                        <h1>{argumentTopic.label}</h1>
+                        {argumentTopic.description}
+                    </div>
+                ) : (
+                    <div>
+                        <Form action={'/arguments/' + argumentTopic.id} method='put' resetOnSuccess={['label', 'description']} onSuccess={handlePutSuccess} onError={handleError} className="flex flex-col gap-2">
+                            <FieldGroup>
+                                <FieldSet>
+                                    <FieldGroup>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-topic-form-label">
+                                                {t('form.label')}
+                                            </FieldLabel>
+                                            <Input value={argumentTopicEdit.label} onChange={handleChange} id="argument-topic-form-label" name='label' required />
+                                        </Field>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-topic-form-description">
+                                                {t('form.description')}
+                                            </FieldLabel>
+                                            <Textarea value={argumentTopicEdit.description} onChange={handleChange} id="argument-topic-form-description" name='description' rows={2} />
+                                        </Field>
+                                    </FieldGroup>
+                                </FieldSet>
+                            </FieldGroup>
+                            <Button
+                                type="submit"
+                                className="cursor-pointer mt-5"
+                            >
+                                {t('save')}
+                            </Button>
+                        </Form>
+                    </div>
+                )}
 
                 {argumentTopic.arguments?.length > 0 &&
-                    <div className='mt-5'>
+                    <div className='mt-5 text-secondary italic'>
                         {t('argumentArguments')}
                     </div>
                 }
@@ -91,6 +138,7 @@ export default function ArgumentDetail({
                         <React.Fragment key={'argument-' + argument.id}>
                             <li>
                                 {argument.label}
+                                {editMode && (<DialogDeleteArgument argument={argument} argumentTopicId={argumentTopic.id}></DialogDeleteArgument>)}
                                 <p>{argument.description}</p>
                             </li>
                         </React.Fragment>
@@ -98,7 +146,7 @@ export default function ArgumentDetail({
                 </ul>
 
                 {argumentTopic.saved_links?.length > 0 &&
-                    <div className='mt-5'>
+                    <div className='mt-5 text-secondary italic'>
                         {t('argumentSavedLinks')}
                     </div>
                 }
@@ -107,6 +155,7 @@ export default function ArgumentDetail({
                         <React.Fragment key={'savedLink' + savedLink.id}>
                             <li>
                                 <Link href={'/saved-links/' + savedLink.id}>{savedLink.label}</Link>
+                                {editMode && (<DialogDeleteArgumentLink argumentTopicId={argumentTopic.id} savedLink={savedLink}></DialogDeleteArgumentLink>)}
                             </li>
                         </React.Fragment>
                     ))}
@@ -214,32 +263,43 @@ export default function ArgumentDetail({
                         </DialogContent>
                     </Dialog>
                 </div>
-                <div className='mt-8'>
-                    <Dialog open={openDialogDelete} onOpenChange={setOpenDialogDelete}>
-                        <DialogTrigger asChild>
-                            <Button variant="destructive" className="cursor-pointer">
-                                <Trash2Icon></Trash2Icon>
-                                {t('delete')}
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent showCloseButton={false} className="sm:max-w-sm">
-                            <DialogHeader>
-                                <DialogTitle>{t('deleteSur')}</DialogTitle>
-                            </DialogHeader>
-                            <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDelete} onError={handleError}>
-                                <Button
-                                    type="submit"
-                                    variant="destructive"
-                                    className="cursor-pointer"
-                                >
+
+                {editMode && (
+                    <div className='mt-8'>
+                        <Dialog open={openDialogDeleteTopic} onOpenChange={setOpenDialogDeleteTopic}>
+                            <DialogTrigger asChild>
+                                <Button variant="destructive" className="cursor-pointer">
                                     <Trash2Icon></Trash2Icon>
-                                    {t('yes')}
+                                    {t('delete')}
                                 </Button>
-                            </Form>
-                        </DialogContent>
-                    </Dialog>
-                </div>
+                            </DialogTrigger>
+                            <DialogContent showCloseButton={false} className="sm:max-w-sm">
+                                <DialogHeader>
+                                    <DialogTitle>{t('deleteSur')}</DialogTitle>
+                                    <DialogDescription></DialogDescription>
+                                </DialogHeader>
+                                <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDeleteTopic} onError={handleError}>
+                                    <Button
+                                        type="submit"
+                                        variant="destructive"
+                                        className="cursor-pointer"
+                                    >
+                                        <Trash2Icon></Trash2Icon>
+                                        {t('yes')}
+                                    </Button>
+                                </Form>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
+                )}
             </div>
+            <Button
+                className="cursor-pointer mt-5"
+                onClick={() => setEditMode(!editMode)}
+            >
+                <PencilIcon></PencilIcon>
+                {!editMode ? t('goEditMode') : t('cancelEditMode')}
+            </Button>
         </AppInternLayout>
     );
 }

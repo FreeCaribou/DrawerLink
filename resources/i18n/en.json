@@ -36,6 +36,13 @@
     "linkLinkDescription": "Choose a link to add as an argument",
     "noAccount": "Don't have an account? Ask the site administrator.",
     "welcomeLogin": "Welcome to this app for storing your important links so you can quickly access them!",
+    "argumentsLowerCase": "arguments",
+    "linksLowerCase": "links",
+    "and": "and",
+    "deleteSurDescription": "This will be final",
+    "linkTopic": "Link to an argument topic",
+    "linkTopicDescription": "Choose an argument topic to which you want to add this link.",
+    "relatedArgumentTopics": "Argument topics using this link",
     "form": {
         "email": "Email",
         "password": "Password",

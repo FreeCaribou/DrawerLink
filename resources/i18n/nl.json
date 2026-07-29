@@ -36,6 +36,13 @@
     "linkLinkDescription": "Kies een link om als argument toe te voegen",
     "noAccount": "Nog geen account? Neem contact op met de sitebeheerder.",
     "welcomeLogin": "Welkom bij deze app voor het opslaan van je belangrijke links, zodat je ze snel kunt terugvinden!",
+    "argumentsLowerCase": "argumenten",
+    "linksLowerCase": "links",
+    "and": "en",
+    "deleteSurDescription": "Dit is definitief",
+    "linkTopic": "Link naar een argumentatieonderwerp",
+    "linkTopicDescription": "Kies een argumentatieonderwerp waaraan u deze link wilt toevoegen.",
+    "relatedArgumentTopics": "Argumentatieonderwerpen via deze link",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",
