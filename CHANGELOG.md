@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.2]
+
+- Better UI for list of argument topic
+
 ## [1.1.1]
 
 - Better nav, footer and main placement

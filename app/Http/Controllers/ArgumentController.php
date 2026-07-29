@@ -14,7 +14,7 @@ class ArgumentController extends Controller
 {
     public function home()
     {
-        $argumentTopics = ArgumentTopic::where('user_id', Auth::id())->with('arguments')->get();
+        $argumentTopics = ArgumentTopic::where('user_id', Auth::id())->withCount('savedLinks')->withCount('arguments')->get();
         return Inertia::render('arguments-home', ['argumentTopics' => $argumentTopics]);
     }
 

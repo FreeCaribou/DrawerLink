@@ -36,6 +36,9 @@
     "linkLinkDescription": "Choisissez un lien à ajouter comme argument",
     "noAccount": "Vous n'avez pas de compte ? Demandez au gestionnaire du site.",
     "welcomeLogin": "Bienvenue de cette application pour stocker vos liens important à pouvoir ressortir rapidement !",
+    "argumentsLowerCase": "arguments",
+    "linksLowerCase": "liens",
+    "and": "et",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
