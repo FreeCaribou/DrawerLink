@@ -32,7 +32,7 @@ export default function ArgumentForm({
     }
 
     return (
-        <Card className='mt-2'>
+        <Card>
             <CardHeader>
                 <CardTitle className='text-primary'>{t('addArgument')}</CardTitle>
                 <CardDescription className='text-secondary'>{t('addArgumentDescription')}</CardDescription>

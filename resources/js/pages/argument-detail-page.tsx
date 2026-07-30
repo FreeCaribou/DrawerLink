@@ -5,19 +5,19 @@ import { useTranslation } from "react-i18next";
 import { Form, Link } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { toastError } from '@/lib/utils';
 import axios from "axios";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FilePlusIcon, MessageCirclePlusIcon, PencilIcon, SaveIcon, Trash2Icon } from 'lucide-react';
 import DialogDeleteArgument from '@/components/dialog-delete-argument';
 import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
 import { Spinner } from '@/components/ui/spinner';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import ArgumentForm from '@/components/argument-form';
+import LinkLinkToArgumentForm from '@/components/link-link-to-argument-form';
 
 export default function ArgumentDetail({
     argumentTopic
@@ -29,17 +29,10 @@ export default function ArgumentDetail({
     const [openArgumentForm, setOpenArgumentForm] = useState(false);
     const [openLinkForm, setOpenLinkForm] = useState(false);
     const [savedLinks, setSavedLinks] = useState<SavedLink[]>([]);
-    const [selectedSavedLinkId, setSelectedSavedLinkId] = useState<string | undefined>(undefined);
     const [openDialogDeleteTopic, setOpenDialogDeleteTopic] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [argumentTopicEdit, setArgumentTopicEdit] = useState({ ...argumentTopic });
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleSuccessLink = () => {
-        setOpenLinkForm(false);
-        setSelectedSavedLinkId(undefined);
-        setIsLoading(false);
-    };
 
     const handleSuccessDeleteTopic = () => {
         setOpenDialogDeleteTopic(false);
@@ -176,54 +169,15 @@ export default function ArgumentDetail({
                 </div>
 
                 {openArgumentForm && (
-                    <ArgumentForm argumentTopic={argumentTopic} setOpenArgumentForm={setOpenArgumentForm} />
+                    <div className='mt-2'>
+                        <ArgumentForm argumentTopic={argumentTopic} setOpenArgumentForm={setOpenArgumentForm} />
+                    </div>
                 )}
 
                 {openLinkForm && (
-                    <Card className='mt-2'>
-                        <CardHeader>
-                            <CardTitle className='text-primary'>{t('linkLink')}</CardTitle>
-                            <CardDescription className='text-secondary'>
-                                {t('linkLinkDescription')}
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <Form action={'/arguments/' + argumentTopic.id + '/link'} method='post'
-                                resetOnSuccess={['link']} onSuccess={handleSuccessLink} onError={handleError} onBefore={() => setIsLoading(true)}
-                                className="flex flex-col gap-2">
-                                <FieldGroup>
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-link" className='text-secondary'>
-                                            {t('form.savedLinks')}
-                                        </FieldLabel>
-                                        <Select name='saved_link_id' value={selectedSavedLinkId} key={selectedSavedLinkId}
-                                            onValueChange={setSelectedSavedLinkId} required>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder={t('form.chooseLink')} />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    {savedLinks.map((sl) => (
-                                                        <SelectItem key={sl.id} value={sl.id.toString()}>{sl.draw.label} - {sl.label}</SelectItem>
-                                                    ))}
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
-                                    </Field>
-                                </FieldGroup>
-                                <div className="mt-2 flex gap-2">
-                                    <Button variant="outline" onClick={() => setOpenLinkForm(false)}>{t('cancel')}</Button>
-                                    <Button
-                                        type="submit"
-                                        className="cursor-pointer"
-                                        disabled={isLoading}
-                                    >
-                                        {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
-                                    </Button>
-                                </div>
-                            </Form>
-                        </CardContent>
-                    </Card>
+                    <div className='mt-2'>
+                        <LinkLinkToArgumentForm savedLinks={savedLinks} argumentTopic={argumentTopic} setOpenLinkForm={setOpenLinkForm} />
+                    </div>
                 )}
 
                 {editMode && (
