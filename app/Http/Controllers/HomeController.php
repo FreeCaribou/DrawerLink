@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
         $drawBaseList = Draw::where('user_id', Auth::id())->withCount('savedLinks')->get();
 
-        return Inertia::render('welcome', [
+        return Inertia::render('welcome-page', [
             'drawBaseList' => $drawBaseList,
         ]);
     }
