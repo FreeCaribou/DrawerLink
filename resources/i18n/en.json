@@ -44,6 +44,8 @@
     "linkTopic": "Link to an argument topic",
     "linkTopicDescription": "Choose an argument topic to which you want to add this link.",
     "relatedArgumentTopics": "Argument topics using this link",
+    "userInfoChangedGood": "Your user information has changed.",
+    "myProfil": "My profil",
     "form": {
         "email": "Email",
         "password": "Password",
