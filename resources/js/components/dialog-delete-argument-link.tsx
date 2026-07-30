@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from '@/components/ui/button';
 import { toastError } from '@/lib/utils';
 import { Trash2Icon } from 'lucide-react';
+import { Spinner } from './ui/spinner';
 
 export default function DialogDeleteArgumentLink({
     savedLink,
@@ -16,20 +17,23 @@ export default function DialogDeleteArgumentLink({
 }) {
     const { t } = useTranslation();
     const [openDialogDelete, setOpenDialogDelete] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSuccessDelete = () => {
         setOpenDialogDelete(false);
+        setIsLoading(false);
     };
 
     const handleError = (err: any) => {
         toastError(err);
+        setIsLoading(false);
     }
 
     return (
         <Dialog open={openDialogDelete} onOpenChange={setOpenDialogDelete}>
             <DialogTrigger asChild>
-                <Button variant="destructive" size="sm" className="cursor-pointer ml-5 rounded-full">
-                    <Trash2Icon></Trash2Icon>
+                <Button variant="destructive" size="sm" className="cursor-pointer ml-5 rounded-full" disabled={isLoading}>
+                    {isLoading ? <Spinner /> : <Trash2Icon />}
                 </Button>
             </DialogTrigger>
             <DialogContent showCloseButton={false} className="sm:max-w-sm">
@@ -37,14 +41,16 @@ export default function DialogDeleteArgumentLink({
                     <DialogTitle>{t('deleteSur')}</DialogTitle>
                     <DialogDescription>{t('deleteSurDescription')}</DialogDescription>
                 </DialogHeader>
-                <Form action={"/arguments/" + argumentTopicId + '/link/' + savedLink.id} method="delete" onSuccess={handleSuccessDelete} onError={handleError}>
+                <Form action={"/arguments/" + argumentTopicId + '/link/' + savedLink.id} method="delete"
+                    onSuccess={handleSuccessDelete} onError={handleError} onBefore={() => setIsLoading(true)}>
                     <Button
                         type="submit"
                         variant="destructive"
                         className="cursor-pointer"
+                        disabled={isLoading}
                     >
-                        <Trash2Icon></Trash2Icon>
                         {t('yes')}
+                        {isLoading ? <Spinner /> : <Trash2Icon />}
                     </Button>
                 </Form>
             </DialogContent>

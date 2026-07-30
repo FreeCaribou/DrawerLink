@@ -9,8 +9,9 @@ import { Form } from '@inertiajs/react';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FolderPlusIcon } from 'lucide-react';
+import { FolderPlusIcon, SaveIcon } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function ArgumentHome({
     argumentTopics = [],
@@ -61,36 +62,44 @@ export default function ArgumentHome({
                     {t('addArgumentTopic')} <FolderPlusIcon />
                 </Button>
                 {openForm && (
-                    <Form
-                        action="/arguments" method='post'
-                        resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} onBefore={() => setIsLoading(true)}
-                        className="flex flex-col gap-2 mt-2"
-                    >
-                        <FieldGroup>
-                            <Field>
-                                <FieldLabel htmlFor="argument-topic-form-label">
-                                    {t('form.label')}
-                                </FieldLabel>
-                                <Input id="argument-topic-form-label" name='label' required />
-                            </Field>
-                            <Field>
-                                <FieldLabel htmlFor="argument-topic-form-description">
-                                    {t('form.description')}
-                                </FieldLabel>
-                                <Textarea id="argument-topic-form-description" name='description' rows={2} />
-                            </Field>
-                        </FieldGroup>
-                        <div className="mt-5 flex gap-2">
-                            <Button variant="outline" className="cursor-pointer" onClick={() => setOpenForm(false)}>{t('cancel')}</Button>
-                            <Button
-                                type="submit"
-                                className="cursor-pointer"
-                                disabled={isLoading}
+                    <Card className='mt-2'>
+                        <CardHeader>
+                            <CardTitle>{t('addArgumentTopic')}</CardTitle>
+                            <CardDescription>{t('addArgumentTopicDescription')}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Form
+                                action="/arguments" method='post'
+                                resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} onBefore={() => setIsLoading(true)}
+                                className="flex flex-col gap-2 mt-2"
                             >
-                                {t('add')} {isLoading && <Spinner />}
-                            </Button>
-                        </div>
-                    </Form>
+                                <FieldGroup>
+                                    <Field>
+                                        <FieldLabel htmlFor="argument-topic-form-label">
+                                            {t('form.label')}
+                                        </FieldLabel>
+                                        <Input id="argument-topic-form-label" name='label' required />
+                                    </Field>
+                                    <Field>
+                                        <FieldLabel htmlFor="argument-topic-form-description">
+                                            {t('form.description')}
+                                        </FieldLabel>
+                                        <Textarea id="argument-topic-form-description" name='description' rows={2} />
+                                    </Field>
+                                </FieldGroup>
+                                <div className="mt-2 flex gap-2">
+                                    <Button variant="outline" className="cursor-pointer" onClick={() => setOpenForm(false)}>{t('cancel')}</Button>
+                                    <Button
+                                        type="submit"
+                                        className="cursor-pointer"
+                                        disabled={isLoading}
+                                    >
+                                        {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
+                                    </Button>
+                                </div>
+                            </Form>
+                        </CardContent>
+                    </Card>
                 )}
             </div>
         </AppInternLayout>

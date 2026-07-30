@@ -12,9 +12,11 @@ import { toastError } from '@/lib/utils';
 import axios from "axios";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { PencilIcon, Trash2Icon } from 'lucide-react';
+import { FilePlusIcon, MessageCirclePlusIcon, PencilIcon, SaveIcon, Trash2Icon } from 'lucide-react';
 import DialogDeleteArgument from '@/components/dialog-delete-argument';
 import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
+import { Spinner } from '@/components/ui/spinner';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function ArgumentDetail({
     argumentTopic
@@ -30,22 +32,27 @@ export default function ArgumentDetail({
     const [openDialogDeleteTopic, setOpenDialogDeleteTopic] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [argumentTopicEdit, setArgumentTopicEdit] = useState({ ...argumentTopic });
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSuccessArgument = () => {
         setOpenDialogArgument(false);
+        setIsLoading(false);
     };
 
     const handleSuccessLink = () => {
         setOpenDialogLink(false);
         setSelectedSavedLinkId(undefined);
+        setIsLoading(false);
     };
 
     const handleSuccessDeleteTopic = () => {
         setOpenDialogDeleteTopic(false);
+        setIsLoading(false);
     };
 
     const handleError = (err: any) => {
         toastError(err);
+        setIsLoading(false);
     }
 
     const handleChange = (e: any) => {
@@ -56,6 +63,7 @@ export default function ArgumentDetail({
     const handlePutSuccess = () => {
         setEditMode(false);
         setArgumentTopicEdit({ ...argumentTopic });
+        setIsLoading(false);
     };
 
     /**
@@ -99,9 +107,11 @@ export default function ArgumentDetail({
                     </div>
                 ) : (
                     <div>
-                        <Form action={'/arguments/' + argumentTopic.id} method='put' resetOnSuccess={['label', 'description']} onSuccess={handlePutSuccess} onError={handleError} className="flex flex-col gap-2">
-                            <FieldGroup>
-                                <FieldSet>
+                        <Card>
+                            <CardContent>
+                                <Form action={'/arguments/' + argumentTopic.id} method='put'
+                                    resetOnSuccess={['label', 'description']} onSuccess={handlePutSuccess} onError={handleError} onBefore={() => setIsLoading(true)}
+                                    className="flex flex-col gap-2">
                                     <FieldGroup>
                                         <Field>
                                             <FieldLabel htmlFor="argument-topic-form-label">
@@ -116,15 +126,18 @@ export default function ArgumentDetail({
                                             <Textarea value={argumentTopicEdit.description} onChange={handleChange} id="argument-topic-form-description" name='description' rows={2} />
                                         </Field>
                                     </FieldGroup>
-                                </FieldSet>
-                            </FieldGroup>
-                            <Button
-                                type="submit"
-                                className="cursor-pointer mt-5"
-                            >
-                                {t('save')}
-                            </Button>
-                        </Form>
+                                    <div className="mt-2 flex gap-2">
+                                        <Button
+                                            type="submit"
+                                            className="cursor-pointer"
+                                            disabled={isLoading}
+                                        >
+                                            {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </CardContent>
+                        </Card>
                     </div>
                 )}
 
@@ -135,13 +148,11 @@ export default function ArgumentDetail({
                 }
                 <ul className='list-disc ml-5'>
                     {argumentTopic.arguments?.map((argument) => (
-                        <React.Fragment key={'argument-' + argument.id}>
-                            <li>
-                                {argument.label}
-                                {editMode && (<DialogDeleteArgument argument={argument} argumentTopicId={argumentTopic.id}></DialogDeleteArgument>)}
-                                <p>{argument.description}</p>
-                            </li>
-                        </React.Fragment>
+                        <li key={'argument-' + argument.id}>
+                            {argument.label}
+                            {editMode && (<DialogDeleteArgument argument={argument} argumentTopicId={argumentTopic.id}></DialogDeleteArgument>)}
+                            <p>{argument.description}</p>
+                        </li>
                     ))}
                 </ul>
 
@@ -152,18 +163,16 @@ export default function ArgumentDetail({
                 }
                 <ul className='list-disc ml-5'>
                     {argumentTopic.saved_links?.map((savedLink) => (
-                        <React.Fragment key={'savedLink' + savedLink.id}>
-                            <li>
-                                <Link href={'/saved-links/' + savedLink.id}>{savedLink.label}</Link>
-                                {editMode && (<DialogDeleteArgumentLink argumentTopicId={argumentTopic.id} savedLink={savedLink}></DialogDeleteArgumentLink>)}
-                            </li>
-                        </React.Fragment>
+                        <li key={'savedLink' + savedLink.id}>
+                            <Link href={'/saved-links/' + savedLink.id}>{savedLink.label}</Link>
+                            {editMode && (<DialogDeleteArgumentLink argumentTopicId={argumentTopic.id} savedLink={savedLink}></DialogDeleteArgumentLink>)}
+                        </li>
                     ))}
                 </ul>
                 <div className='mt-5 flex gap-2'>
                     <Dialog open={openDialogArgument} onOpenChange={setOpenDialogArgument}>
                         <DialogTrigger asChild>
-                            <Button variant="secondary">{t('addArgument')}</Button>
+                            <Button variant="secondary">{t('addArgument')} <MessageCirclePlusIcon /></Button>
                         </DialogTrigger>
                         <DialogContent showCloseButton={false} className="sm:max-w-sm">
                             <DialogHeader>
@@ -172,25 +181,23 @@ export default function ArgumentDetail({
                                     {t('addArgumentDescription')}
                                 </DialogDescription>
                             </DialogHeader>
-                            <Form action={'/arguments/' + argumentTopic.id + '/argument'} method='post' resetOnSuccess={['label', 'description']} onSuccess={handleSuccessArgument} onError={handleError} className="flex flex-col gap-2">
+                            <Form action={'/arguments/' + argumentTopic.id + '/argument'} method='post'
+                                resetOnSuccess={['label', 'description']} onSuccess={handleSuccessArgument} onError={handleError}
+                                className="flex flex-col gap-2">
                                 <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
                                     <FieldGroup>
-                                        <FieldSet>
-                                            <FieldGroup>
-                                                <Field>
-                                                    <FieldLabel htmlFor="argument-form-label">
-                                                        {t('form.label')}
-                                                    </FieldLabel>
-                                                    <Input id="argument-form-label" name='label' required />
-                                                </Field>
-                                                <Field>
-                                                    <FieldLabel htmlFor="argument-form-description">
-                                                        {t('form.description')}
-                                                    </FieldLabel>
-                                                    <Textarea id="argument-form-description" name='description' rows={2} />
-                                                </Field>
-                                            </FieldGroup>
-                                        </FieldSet>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-form-label">
+                                                {t('form.label')}
+                                            </FieldLabel>
+                                            <Input id="argument-form-label" name='label' required />
+                                        </Field>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-form-description">
+                                                {t('form.description')}
+                                            </FieldLabel>
+                                            <Textarea id="argument-form-description" name='description' rows={2} />
+                                        </Field>
                                     </FieldGroup>
                                     <DialogFooter className="mt-5">
                                         <DialogClose asChild>
@@ -210,7 +217,7 @@ export default function ArgumentDetail({
 
                     <Dialog open={openDialogLink} onOpenChange={(isOpen) => { setOpenDialogLink(isOpen); getSavedLinks() }}>
                         <DialogTrigger asChild>
-                            <Button variant="secondary">{t('linkLink')}</Button>
+                            <Button variant="secondary">{t('linkLink')} <FilePlusIcon /></Button>
                         </DialogTrigger>
                         <DialogContent showCloseButton={false} className="sm:max-w-sm">
                             <DialogHeader>
@@ -219,33 +226,29 @@ export default function ArgumentDetail({
                                     {t('linkLinkDescription')}
                                 </DialogDescription>
                             </DialogHeader>
-                            <Form action={'/arguments/' + argumentTopic.id + '/link'} method='post' resetOnSuccess={['link']} onSuccess={handleSuccessLink} onError={handleError} className="flex flex-col gap-2">
+                            <Form action={'/arguments/' + argumentTopic.id + '/link'} method='post'
+                                resetOnSuccess={['link']} onSuccess={handleSuccessLink} onError={handleError}
+                                className="flex flex-col gap-2">
                                 <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
                                     <FieldGroup>
-                                        <FieldSet>
-                                            <FieldGroup>
-                                                <Field>
-                                                    <FieldLabel htmlFor="link-form-link">
-                                                        {t('form.savedLinks')}
-                                                    </FieldLabel>
-                                                    <Select name='saved_link_id' value={selectedSavedLinkId} key={selectedSavedLinkId}
-                                                        onValueChange={setSelectedSavedLinkId} required>
-                                                        <SelectTrigger>
-                                                            <SelectValue placeholder={t('form.chooseLink')} />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectGroup>
-                                                                {savedLinks.map((sl) => (
-                                                                    <React.Fragment key={sl.id}>
-                                                                        <SelectItem value={sl.id.toString()}>{sl.draw.label} - {sl.label}</SelectItem>
-                                                                    </React.Fragment>
-                                                                ))}
-                                                            </SelectGroup>
-                                                        </SelectContent>
-                                                    </Select>
-                                                </Field>
-                                            </FieldGroup>
-                                        </FieldSet>
+                                        <Field>
+                                            <FieldLabel htmlFor="link-form-link">
+                                                {t('form.savedLinks')}
+                                            </FieldLabel>
+                                            <Select name='saved_link_id' value={selectedSavedLinkId} key={selectedSavedLinkId}
+                                                onValueChange={setSelectedSavedLinkId} required>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder={t('form.chooseLink')} />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        {savedLinks.map((sl) => (
+                                                            <SelectItem key={sl.id} value={sl.id.toString()}>{sl.draw.label} - {sl.label}</SelectItem>
+                                                        ))}
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
+                                        </Field>
                                     </FieldGroup>
                                     <DialogFooter className="mt-5">
                                         <DialogClose asChild>
@@ -268,9 +271,9 @@ export default function ArgumentDetail({
                     <div className='mt-8'>
                         <Dialog open={openDialogDeleteTopic} onOpenChange={setOpenDialogDeleteTopic}>
                             <DialogTrigger asChild>
-                                <Button variant="destructive" className="cursor-pointer">
-                                    <Trash2Icon></Trash2Icon>
+                                <Button variant="destructive" className="cursor-pointer" disabled={isLoading}>
                                     {t('delete')}
+                                    {isLoading ? <Spinner /> : <Trash2Icon />}
                                 </Button>
                             </DialogTrigger>
                             <DialogContent showCloseButton={false} className="sm:max-w-sm">
@@ -278,14 +281,16 @@ export default function ArgumentDetail({
                                     <DialogTitle>{t('deleteSur')}</DialogTitle>
                                     <DialogDescription></DialogDescription>
                                 </DialogHeader>
-                                <Form action={"/arguments/" + argumentTopic.id} method="delete" onSuccess={handleSuccessDeleteTopic} onError={handleError}>
+                                <Form action={"/arguments/" + argumentTopic.id} method="delete"
+                                    onSuccess={handleSuccessDeleteTopic} onError={handleError} onBefore={() => setIsLoading(true)}>
                                     <Button
                                         type="submit"
                                         variant="destructive"
                                         className="cursor-pointer"
+                                        disabled={isLoading}
                                     >
-                                        <Trash2Icon></Trash2Icon>
                                         {t('yes')}
+                                        {isLoading ? <Spinner /> : <Trash2Icon />}
                                     </Button>
                                 </Form>
                             </DialogContent>
@@ -297,8 +302,8 @@ export default function ArgumentDetail({
                 className="cursor-pointer mt-5"
                 onClick={() => setEditMode(!editMode)}
             >
-                <PencilIcon></PencilIcon>
                 {!editMode ? t('goEditMode') : t('cancelEditMode')}
+                <PencilIcon />
             </Button>
         </AppInternLayout>
     );
