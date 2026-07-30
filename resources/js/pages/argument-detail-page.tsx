@@ -17,6 +17,7 @@ import DialogDeleteArgument from '@/components/dialog-delete-argument';
 import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
 import { Spinner } from '@/components/ui/spinner';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import ArgumentForm from '@/components/argument-form';
 
 export default function ArgumentDetail({
     argumentTopic
@@ -33,11 +34,6 @@ export default function ArgumentDetail({
     const [editMode, setEditMode] = useState(false);
     const [argumentTopicEdit, setArgumentTopicEdit] = useState({ ...argumentTopic });
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleSuccessArgument = () => {
-        setOpenArgumentForm(false);
-        setIsLoading(false);
-    };
 
     const handleSuccessLink = () => {
         setOpenLinkForm(false);
@@ -180,42 +176,7 @@ export default function ArgumentDetail({
                 </div>
 
                 {openArgumentForm && (
-                    <Card className='mt-2'>
-                        <CardHeader>
-                            <CardTitle className='text-primary'>{t('addArgument')}</CardTitle>
-                            <CardDescription className='text-secondary'>{t('addArgumentDescription')}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <Form action={'/arguments/' + argumentTopic.id + '/argument'} method='post'
-                                resetOnSuccess={['label', 'description']} onSuccess={handleSuccessArgument} onError={handleError} onBefore={() => setIsLoading(true)}
-                                className="flex flex-col gap-2">
-                                <FieldGroup>
-                                    <Field>
-                                        <FieldLabel htmlFor="argument-form-label" className='text-secondary'>
-                                            {t('form.label')}
-                                        </FieldLabel>
-                                        <Input id="argument-form-label" name='label' required />
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel htmlFor="argument-form-description" className='text-secondary'>
-                                            {t('form.description')}
-                                        </FieldLabel>
-                                        <Textarea id="argument-form-description" name='description' rows={2} />
-                                    </Field>
-                                </FieldGroup>
-                                <div className="mt-2 flex gap-2">
-                                    <Button variant="outline" onClick={() => setOpenArgumentForm(false)}>{t('cancel')}</Button>
-                                    <Button
-                                        type="submit"
-                                        className="cursor-pointer"
-                                        disabled={isLoading}
-                                    >
-                                        {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
-                                    </Button>
-                                </div>
-                            </Form>
-                        </CardContent>
-                    </Card>
+                    <ArgumentForm argumentTopic={argumentTopic} setOpenArgumentForm={setOpenArgumentForm} />
                 )}
 
                 {openLinkForm && (
