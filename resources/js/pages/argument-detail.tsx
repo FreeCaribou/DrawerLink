@@ -174,56 +174,9 @@ export default function ArgumentDetail({
                         {t('addArgument')} <MessageCirclePlusIcon />
                     </Button>
 
-                    <Dialog open={openLinkForm} onOpenChange={(isOpen) => { setOpenLinkForm(isOpen); getSavedLinks() }}>
-                        <DialogTrigger asChild>
-                            <Button variant="secondary">{t('linkLink')} <FilePlusIcon /></Button>
-                        </DialogTrigger>
-                        <DialogContent showCloseButton={false} className="sm:max-w-sm">
-                            <DialogHeader>
-                                <DialogTitle>{t('linkLink')}</DialogTitle>
-                                <DialogDescription>
-                                    {t('linkLinkDescription')}
-                                </DialogDescription>
-                            </DialogHeader>
-                            <Form action={'/arguments/' + argumentTopic.id + '/link'} method='post'
-                                resetOnSuccess={['link']} onSuccess={handleSuccessLink} onError={handleError}
-                                className="flex flex-col gap-2">
-                                <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
-                                    <FieldGroup>
-                                        <Field>
-                                            <FieldLabel htmlFor="link-form-link">
-                                                {t('form.savedLinks')}
-                                            </FieldLabel>
-                                            <Select name='saved_link_id' value={selectedSavedLinkId} key={selectedSavedLinkId}
-                                                onValueChange={setSelectedSavedLinkId} required>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder={t('form.chooseLink')} />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectGroup>
-                                                        {savedLinks.map((sl) => (
-                                                            <SelectItem key={sl.id} value={sl.id.toString()}>{sl.draw.label} - {sl.label}</SelectItem>
-                                                        ))}
-                                                    </SelectGroup>
-                                                </SelectContent>
-                                            </Select>
-                                        </Field>
-                                    </FieldGroup>
-                                    <DialogFooter className="mt-5">
-                                        <DialogClose asChild>
-                                            <Button variant="outline">{t('cancel')}</Button>
-                                        </DialogClose>
-                                        <Button
-                                            type="submit"
-                                            className="cursor-pointer"
-                                        >
-                                            {t('add')}
-                                        </Button>
-                                    </DialogFooter>
-                                </div>
-                            </Form>
-                        </DialogContent>
-                    </Dialog>
+                    <Button variant="secondary" onClick={() => { getSavedLinks(); setOpenLinkForm(!openArgumentForm) }}>
+                        {t('linkLink')} <FilePlusIcon />
+                    </Button>
                 </div>
 
                 {openArgumentForm && (
@@ -252,6 +205,53 @@ export default function ArgumentDetail({
                                 </FieldGroup>
                                 <div className="mt-2 flex gap-2">
                                     <Button variant="outline" onClick={() => setOpenArgumentForm(false)}>{t('cancel')}</Button>
+                                    <Button
+                                        type="submit"
+                                        className="cursor-pointer"
+                                        disabled={isLoading}
+                                    >
+                                        {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
+                                    </Button>
+                                </div>
+                            </Form>
+                        </CardContent>
+                    </Card>
+                )}
+
+                {openLinkForm && (
+                    <Card className='mt-2'>
+                        <CardHeader>
+                            <CardTitle className='text-primary'>{t('linkLink')}</CardTitle>
+                            <CardDescription className='text-secondary'>
+                                {t('linkLinkDescription')}
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Form action={'/arguments/' + argumentTopic.id + '/link'} method='post'
+                                resetOnSuccess={['link']} onSuccess={handleSuccessLink} onError={handleError} onBefore={() => setIsLoading(true)}
+                                className="flex flex-col gap-2">
+                                <FieldGroup>
+                                    <Field>
+                                        <FieldLabel htmlFor="link-form-link" className='text-secondary'>
+                                            {t('form.savedLinks')}
+                                        </FieldLabel>
+                                        <Select name='saved_link_id' value={selectedSavedLinkId} key={selectedSavedLinkId}
+                                            onValueChange={setSelectedSavedLinkId} required>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={t('form.chooseLink')} />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    {savedLinks.map((sl) => (
+                                                        <SelectItem key={sl.id} value={sl.id.toString()}>{sl.draw.label} - {sl.label}</SelectItem>
+                                                    ))}
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </Field>
+                                </FieldGroup>
+                                <div className="mt-2 flex gap-2">
+                                    <Button variant="outline" onClick={() => setOpenLinkForm(false)}>{t('cancel')}</Button>
                                     <Button
                                         type="submit"
                                         className="cursor-pointer"
