@@ -1,9 +1,9 @@
 import { ArgumentTopic, SavedLink } from '@/types';
 import AppInternLayout from '@/layouts/app-intern-layout';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { Form, Link } from '@inertiajs/react';
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
