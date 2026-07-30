@@ -3,6 +3,7 @@
 ## [1.2.1 - current]
 
 - Better form for mobile view
+- Review the global design of the form
 
 ## [1.2.0]
 

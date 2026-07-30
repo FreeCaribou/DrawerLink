@@ -64,8 +64,8 @@ export default function ArgumentHome({
                 {openForm && (
                     <Card className='mt-2'>
                         <CardHeader>
-                            <CardTitle>{t('addArgumentTopic')}</CardTitle>
-                            <CardDescription>{t('addArgumentTopicDescription')}</CardDescription>
+                            <CardTitle className='text-primary'>{t('addArgumentTopic')}</CardTitle>
+                            <CardDescription className='text-secondary'>{t('addArgumentTopicDescription')}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <Form
@@ -75,13 +75,13 @@ export default function ArgumentHome({
                             >
                                 <FieldGroup>
                                     <Field>
-                                        <FieldLabel htmlFor="argument-topic-form-label">
+                                        <FieldLabel htmlFor="argument-topic-form-label" className='text-secondary'>
                                             {t('form.label')}
                                         </FieldLabel>
                                         <Input id="argument-topic-form-label" name='label' required />
                                     </Field>
                                     <Field>
-                                        <FieldLabel htmlFor="argument-topic-form-description">
+                                        <FieldLabel htmlFor="argument-topic-form-description" className='text-secondary'>
                                             {t('form.description')}
                                         </FieldLabel>
                                         <Textarea id="argument-topic-form-description" name='description' rows={2} />
