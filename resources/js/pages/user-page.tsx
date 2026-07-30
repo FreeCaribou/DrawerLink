@@ -15,7 +15,13 @@ export default function UserPage({
 }) {
     const { t } = useTranslation();
 
-    const [userEdit, setUserEdit] = useState({ ...user });
+    const [userEdit, setUserEdit] = useState({
+        ...user,
+        current_password: "",
+        password: "",
+        password_confirmation: "",
+    });
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -23,7 +29,13 @@ export default function UserPage({
     };
 
     const handleSuccess = (response: any) => {
-        setUserEdit(response.props.user);
+        setUserEdit({
+            ...response.props.user,
+            current_password: "",
+            password: "",
+            password_confirmation: "",
+        });
+        setShowSuccess(true);
     };
 
     const handleError = (err: any) => {
@@ -33,6 +45,12 @@ export default function UserPage({
     return (
         <AppInternLayout>
             <h2>{t('hello', { 'name': user.name })}</h2>
+
+            {showSuccess && (
+                <div className="mb-6 p-3 bg-green-100 text-green-800 rounded">
+                    {t('userInfoChangedGood')}
+                </div>
+            )}
 
             <div className="mt-8">
                 <Form
@@ -57,6 +75,45 @@ export default function UserPage({
                                     </FieldLabel>
                                     <Input id="user-form-email" name='email' type="mail"
                                         value={userEdit.email} onChange={handleChange} required />
+                                </Field>
+                                <Field>
+                                    <FieldLabel htmlFor="user-form-current-password">
+                                        {t('form.currentPassword')}
+                                    </FieldLabel>
+                                    <Input
+                                        id="user-form-current-password"
+                                        name='current_password'
+                                        type="password"
+                                        value={userEdit.current_password}
+                                        onChange={handleChange}
+                                        placeholder={t('form.currentPasswordPlaceholder')}
+                                    />
+                                </Field>
+                                <Field>
+                                    <FieldLabel htmlFor="user-form-password">
+                                        {t('form.newPassword')}
+                                    </FieldLabel>
+                                    <Input
+                                        id="user-form-password"
+                                        name='password'
+                                        type="password"
+                                        value={userEdit.password}
+                                        onChange={handleChange}
+                                        placeholder={t('form.newPasswordPlaceholder')}
+                                    />
+                                </Field>
+                                <Field>
+                                    <FieldLabel htmlFor="user-form-password-confirmation">
+                                        {t('form.confirmPassword')}
+                                    </FieldLabel>
+                                    <Input
+                                        id="user-form-password-confirmation"
+                                        name='password_confirmation'
+                                        type="password"
+                                        value={userEdit.password_confirmation}
+                                        onChange={handleChange}
+                                        placeholder={t('form.confirmPasswordPlaceholder')}
+                                    />
                                 </Field>
                             </FieldGroup>
                         </FieldSet>

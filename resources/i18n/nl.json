@@ -66,6 +66,12 @@
         "chooseTopic": "Kies een onderwerp",
         "argumentTopics": "Onderwerpen lijst",
         "username": "Gebruikersnaam",
-        "useremail": "E-mailadres van de gebruiker"
+        "useremail": "E-mailadres van de gebruiker",
+        "currentPassword": "Huidig wachtwoord",
+        "currentPasswordPlaceholder": "Voer uw huidige wachtwoord in",
+        "newPassword": "Nieuw wachtwoord",
+        "newPasswordPlaceholder": "Voer uw nieuwe wachtwoord in",
+        "confirmPassword": "Bevestig wachtwoord",
+        "confirmPasswordPlaceholder": "Bevestig uw nieuwe wachtwoord"
     }
 }

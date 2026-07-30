@@ -2,7 +2,7 @@
 
 ## [1.2.0]
 
-- User page to see and change some detail
+- User page to see and change some detail (name, email and password)
 
 ## [1.1.3]
 

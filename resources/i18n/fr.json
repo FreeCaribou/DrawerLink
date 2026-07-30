@@ -66,6 +66,12 @@
         "chooseTopic": "Choisissez un topic",
         "argumentTopics": "Liste des topics",
         "username": "Nom d'utilisateur",
-        "useremail": "E-mail d'utilisateur"
+        "useremail": "E-mail d'utilisateur",
+        "currentPassword": "Mot de passe actuel",
+        "currentPasswordPlaceholder": "Entrez votre mot de passe actuel",
+        "newPassword": "Nouveau mot de passe",
+        "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe"
     }
 }
