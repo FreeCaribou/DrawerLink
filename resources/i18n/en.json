@@ -1,5 +1,6 @@
 {
     "welcome": "Welcome {{name}}!",
+    "hello": "Hello {{name}}!",
     "language": "Language",
     "login": "Log in to your account",
     "searchLink": "Search link",
@@ -43,6 +44,8 @@
     "linkTopic": "Link to an argument topic",
     "linkTopicDescription": "Choose an argument topic to which you want to add this link.",
     "relatedArgumentTopics": "Argument topics using this link",
+    "userInfoChangedGood": "Your user information has changed.",
+    "myProfil": "My profil",
     "form": {
         "email": "Email",
         "password": "Password",
@@ -63,6 +66,14 @@
         "savedLinks": "Links",
         "chooseLink": "Choose a link",
         "chooseTopic": "Choose a topic",
-        "argumentTopics": "List of topics"
+        "argumentTopics": "List of topics",
+        "username": "Username",
+        "useremail": "User email",
+        "currentPassword": "Current Password",
+        "currentPasswordPlaceholder": "Enter your current password",
+        "newPassword": "New Password",
+        "newPasswordPlaceholder": "Enter your new password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "Confirm your new password"
     }
 }

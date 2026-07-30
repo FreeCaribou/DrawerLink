@@ -1,7 +1,7 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 const languages = [
     { code: 'fr', name: 'Français', flag: 'fr' },
@@ -37,6 +37,9 @@ export default function Footer({ }: {}) {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+                <div className='mt-2'>
+                    <Link href="/myself">{t('myProfil')}</Link>
+                </div>
                 <div className='mt-5'>
                     <a href='https://github.com/FreeCaribou/DrawerLink/blob/main/CHANGELOG.md' target='_blank'>
                         version {appVersion?.toString() || '0.0.1'}

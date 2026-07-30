@@ -1,5 +1,6 @@
 {
     "welcome": "Welkom {{name}}!",
+    "hello": "Hallo {{name}}!",
     "language": "Taal",
     "login": "Log in op je account",
     "searchLink": "Zoek een link",
@@ -43,6 +44,8 @@
     "linkTopic": "Link naar een argumentatieonderwerp",
     "linkTopicDescription": "Kies een argumentatieonderwerp waaraan u deze link wilt toevoegen.",
     "relatedArgumentTopics": "Argumentatieonderwerpen via deze link",
+    "userInfoChangedGood": "Je gebruikersgegevens zijn gewijzigd.",
+    "myProfil": "Mijn profiel",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",
@@ -63,6 +66,14 @@
         "savedLinks": "Links",
         "chooseLink": "Kies een link",
         "chooseTopic": "Kies een onderwerp",
-        "argumentTopics": "Onderwerpen lijst"
+        "argumentTopics": "Onderwerpen lijst",
+        "username": "Gebruikersnaam",
+        "useremail": "E-mailadres van de gebruiker",
+        "currentPassword": "Huidig wachtwoord",
+        "currentPasswordPlaceholder": "Voer uw huidige wachtwoord in",
+        "newPassword": "Nieuw wachtwoord",
+        "newPasswordPlaceholder": "Voer uw nieuwe wachtwoord in",
+        "confirmPassword": "Bevestig wachtwoord",
+        "confirmPasswordPlaceholder": "Bevestig uw nieuwe wachtwoord"
     }
 }

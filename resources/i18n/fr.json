@@ -1,5 +1,6 @@
 {
     "welcome": "Bienvenue {{name}} !",
+    "hello": "Bonjour {{name}} !",
     "language": "Langue",
     "login": "Connectez vous",
     "searchLink": "Rechercher un lien",
@@ -43,6 +44,8 @@
     "linkTopic": "Lier à un topic d'argument",
     "linkTopicDescription": "Choisissez un topic d'argument auquel ajouter ce lien.",
     "relatedArgumentTopics": "Les topics d'argument utilisant ce lien",
+    "userInfoChangedGood": "Vos infos d'utilisateur ont bien changées.",
+    "myProfil": "Mon profil",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
@@ -63,6 +66,14 @@
         "savedLinks": "Liens",
         "chooseLink": "Choisissez un lien",
         "chooseTopic": "Choisissez un topic",
-        "argumentTopics": "Liste des topics"
+        "argumentTopics": "Liste des topics",
+        "username": "Nom d'utilisateur",
+        "useremail": "E-mail d'utilisateur",
+        "currentPassword": "Mot de passe actuel",
+        "currentPasswordPlaceholder": "Entrez votre mot de passe actuel",
+        "newPassword": "Nouveau mot de passe",
+        "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe"
     }
 }
