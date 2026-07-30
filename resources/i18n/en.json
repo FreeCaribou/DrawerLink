@@ -1,5 +1,6 @@
 {
     "welcome": "Welcome {{name}}!",
+    "hello": "Hello {{name}}!",
     "language": "Language",
     "login": "Log in to your account",
     "searchLink": "Search link",
@@ -63,6 +64,8 @@
         "savedLinks": "Links",
         "chooseLink": "Choose a link",
         "chooseTopic": "Choose a topic",
-        "argumentTopics": "List of topics"
+        "argumentTopics": "List of topics",
+        "username": "Username",
+        "useremail": "User email"
     }
 }

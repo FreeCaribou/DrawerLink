@@ -1,5 +1,6 @@
 {
     "welcome": "Bienvenue {{name}} !",
+    "hello": "Bonjour {{name}} !",
     "language": "Langue",
     "login": "Connectez vous",
     "searchLink": "Rechercher un lien",
@@ -63,6 +64,8 @@
         "savedLinks": "Liens",
         "chooseLink": "Choisissez un lien",
         "chooseTopic": "Choisissez un topic",
-        "argumentTopics": "Liste des topics"
+        "argumentTopics": "Liste des topics",
+        "username": "Nom d'utilisateur",
+        "useremail": "E-mail d'utilisateur"
     }
 }

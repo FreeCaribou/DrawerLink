@@ -1,5 +1,6 @@
 {
     "welcome": "Welkom {{name}}!",
+    "hello": "Hallo {{name}}!",
     "language": "Taal",
     "login": "Log in op je account",
     "searchLink": "Zoek een link",
@@ -63,6 +64,8 @@
         "savedLinks": "Links",
         "chooseLink": "Kies een link",
         "chooseTopic": "Kies een onderwerp",
-        "argumentTopics": "Onderwerpen lijst"
+        "argumentTopics": "Onderwerpen lijst",
+        "username": "Gebruikersnaam",
+        "useremail": "E-mailadres van de gebruiker"
     }
 }

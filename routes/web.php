@@ -6,6 +6,7 @@ use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SavedLinkController;
 use App\Http\Controllers\SavedObjectPropController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/error', [ErrorController::class, 'manageError'])
@@ -120,6 +121,14 @@ Route::get('/data/argument-topics', [ArgumentController::class, 'dataGetAll'])
 Route::post('/saved-links/{savedLinkId}/argument-topic', [SavedLinkController::class, 'addArgumentTopic'])
     ->middleware(['auth', 'verified'])
     ->name('saved-links.add-argument-topic');
+
+Route::get('/myself', [UserController::class, 'getMyself'])
+    ->middleware(['auth', 'verified'])
+    ->name('myself.home');
+
+Route::put('/myself', [UserController::class, 'updateMyself'])
+    ->middleware(['auth', 'verified'])
+    ->name('myself.updateMyself');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', '/');

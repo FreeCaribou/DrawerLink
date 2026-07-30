@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.0]
+
+- User page to see and change some detail
+
 ## [1.1.3]
 
 - Fix useless () in list of argument's topic
