@@ -32,7 +32,7 @@
     "addArgument": "Add an argument",
     "addArgumentDescription": "What is the most compelling argument you came up with?",
     "addArgumentTopicDescription": "What topic do you want to prepare?",
-    "linkLink": "Link a link",
+    "linkLink": "Link to a link",
     "linkLinkDescription": "Choose a link to add as an argument",
     "noAccount": "Don't have an account? Ask the site administrator.",
     "welcomeLogin": "Welcome to this app for storing your important links so you can quickly access them!",
@@ -61,6 +61,8 @@
         "drawForLink": "The draw for the link",
         "relatedFiles": "The related files",
         "savedLinks": "Links",
-        "chooseLink": "Choose a link"
+        "chooseLink": "Choose a link",
+        "chooseTopic": "Choose a topic",
+        "argumentTopics": "List of topics"
     }
 }

@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         $drawOne = Draw::create(['label' => 'Politic', 'user_id' => $primaryUser->id]);
         $drawTwo = Draw::create(['label' => 'Science', 'user_id' => $primaryUser->id]);
         $drawOneBis = Draw::create(['label' => 'Politic Bis', 'user_id' => $userTwo->id]);
+        $drawNature = Draw::create(['label' => 'Nature', 'user_id' => $primaryUser->id]);
 
         $savedLinkOne = SavedLink::create([
             'label' => 'Two stupid good links about stupid politicians',
@@ -53,7 +54,8 @@ class DatabaseSeeder extends Seeder
         ]);
         $savedLinkTwo = SavedLink::create(['label' => '5 idea to tax the rich', 'description' => 'And other good idea in this article', 'user_id' => $primaryUser->id, 'draw_id' => $drawOne->id, 'source_date' => '01/01/2026']);
         $savedLinkThree = SavedLink::create(['label' => 'You will not believe what you will see - WOW', 'description' => 'So ? You believe it or not ?', 'user_id' => $userTwo->id, 'draw_id' => $drawOneBis->id]);
-        $savedLinkFour = SavedLink::create(['label' => '-5 idea to tax the scientific', 'user_id' => $primaryUser->id, 'draw_id' => $drawTwo->id]);
+        $savedLinkFour = SavedLink::create(['label' => '5 idea to tax the scientific', 'user_id' => $primaryUser->id, 'draw_id' => $drawTwo->id]);
+        $savedLinkLakes = SavedLink::create(['label' => 'Top 1000 lakes in Finland', 'user_id' => $primaryUser->id, 'draw_id' => $drawNature->id]);
 
         $savedObjectPropOne = SavedObjectProp::create(['name' => 'document_one.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id, 'size' => 12456]);
         $savedObjectPropTwo = SavedObjectProp::create(['name' => 'document_two.pdf', 'mime_type' => 'application/pdf', 'saved_link_id' => $savedLinkOne->id, 'size' => 98765]);
@@ -82,11 +84,12 @@ class DatabaseSeeder extends Seeder
         $argumentTopicOne = ArgumentTopic::create(['label' => 'Make more cooperative', 'description' => 'Because it can be nice', 'user_id' => $primaryUser->id]);
         $argumentTopicTwo = ArgumentTopic::create(['label' => 'Tax the rich', 'description' => 'They don\'t know what to do whit their money', 'user_id' => $primaryUser->id]);
         $argumentTopicThree = ArgumentTopic::create(['label' => 'Climat change is real', 'description' => 'Trust me, I\m engineer', 'user_id' => $userTwo->id]);
-        $argumentTopicSuomi = ArgumentTopic::create(['label' => 'Visit Suomi', 'description' => '(just, go)', 'user_id' => $primaryUser->id]);
-        $argumentTopicNorsk = ArgumentTopic::create(['label' => 'Visit Norsk', 'description' => '(just, go)', 'user_id' => $primaryUser->id]);
-        $argumentTopicDanemark = ArgumentTopic::create(['label' => 'Visit Danemark', 'description' => '(just, go)', 'user_id' => $primaryUser->id]);
-        $argumentTopicSverige = ArgumentTopic::create(['label' => 'Visit Sverige', 'description' => '(just, go)', 'user_id' => $primaryUser->id]);
-        $argumentTopicIsland = ArgumentTopic::create(['label' => 'Visit Island', 'description' => '(just, go)', 'user_id' => $primaryUser->id]);
+        $argumentTopicSuomi = ArgumentTopic::create(['label' => 'Visit Suomi', 'description' => '(Mene vaan!)', 'user_id' => $primaryUser->id]);
+        $argumentTopicNorsk = ArgumentTopic::create(['label' => 'Visit Norsk', 'description' => '(Kjør på!)', 'user_id' => $primaryUser->id]);
+        $argumentTopicDanemark = ArgumentTopic::create(['label' => 'Visit Danemark', 'description' => '(Kør derudaf!)', 'user_id' => $primaryUser->id]);
+        $argumentTopicSverige = ArgumentTopic::create(['label' => 'Visit Sverige', 'description' => '(Kör bara!)', 'user_id' => $primaryUser->id]);
+        $argumentTopicIsland = ArgumentTopic::create(['label' => 'Visit Island', 'description' => '(Farðu bara!)', 'user_id' => $primaryUser->id]);
+        $argumentTopicBelgium = ArgumentTopic::create(['label' => 'Visit Belgique-België-Belgien', 'description' => 'Nice towns and fries!', 'user_id' => $primaryUser->id]);
 
         $argumentOne = Argument::create(['label' => 'Coop belong to the worker', 'argument_topic_id' => $argumentTopicOne->id]);
         $argumentTwo = Argument::create(['label' => 'Worker know for what they work', 'argument_topic_id' => $argumentTopicOne->id, 'description' => 'Because they are the owner of the enterprise']);
@@ -103,5 +106,6 @@ class DatabaseSeeder extends Seeder
         $argumentThirteen = Argument::create(['label' => 'I realy need argument for that ?', 'argument_topic_id' => $argumentTopicIsland->id]);
 
         $argumentTopicOne->savedLinks()->attach([$savedLinkOne, $savedLinkFour]);
+        $argumentTopicSuomi->savedLinks()->attach($savedLinkLakes);
     }
 }

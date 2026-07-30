@@ -5,6 +5,7 @@ A little app to store "link" to retrieve it easily later and share it
 ## TODO for better app
 
 - A kind of "user" page so an user can change his password, name and email
+- Avoid dialog form (complicate with mobile)
 - Send a shared link by mail
 - Better backend error handling
 - Clean up the code (avoid big file, separate component in front and divide service in back, refactor some duplicate in frontend)

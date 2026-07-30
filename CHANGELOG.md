@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.3]
+
+- Fix useless () in list of argument's topic
+- Avoid some too long text
+- Some i18n
+
 ## [1.1.2]
 
 - Better UI for list of argument topic

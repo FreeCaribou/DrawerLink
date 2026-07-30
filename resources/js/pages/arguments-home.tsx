@@ -38,19 +38,21 @@ export default function ArgumentHome({
                                 <Link href={'/arguments/' + at.id.toString()}>
                                     <h4 className='text-secondary! mb-0!'>{at.label}</h4>
                                 </Link>
-                                <p className='text-secondary italic'>
-                                    (
-                                    {(at.arguments_count && at.arguments_count > 0) ?
-                                        <span>{at.arguments_count} {t('argumentsLowerCase')}</span> : ''
-                                    }
-                                    {(at.arguments_count && at.arguments_count > 0 && at.saved_links_count && at.saved_links_count > 0) ?
-                                        <span> {t('and')} </span> : ''
-                                    }
-                                    {(at.saved_links_count && at.saved_links_count > 0) ?
-                                        <span>{at.saved_links_count} {t('linksLowerCase')}</span> : ''
-                                    }
-                                    )
-                                </p>
+                                {(at.arguments_count && at.arguments_count > 0 || at.saved_links_count && at.saved_links_count > 0) ?
+                                    <p className='text-secondary italic'>
+                                        (
+                                        {(at.arguments_count && at.arguments_count > 0) ?
+                                            <span>{at.arguments_count} {t('argumentsLowerCase')}</span> : ''
+                                        }
+                                        {(at.arguments_count && at.arguments_count > 0 && at.saved_links_count && at.saved_links_count > 0) ?
+                                            <span> {t('and')} </span> : ''
+                                        }
+                                        {(at.saved_links_count && at.saved_links_count > 0) ?
+                                            <span>{at.saved_links_count} {t('linksLowerCase')}</span> : ''
+                                        }
+                                        )
+                                    </p>
+                                    : ''}
                                 <p className='whitespace-nowrap overflow-hidden text-ellipsis'>
                                     {at.description}
                                 </p>

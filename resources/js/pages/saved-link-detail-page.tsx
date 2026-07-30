@@ -410,12 +410,12 @@ export default function DrawCard({
                                                 <FieldGroup>
                                                     <Field>
                                                         <FieldLabel htmlFor="link-form-link">
-                                                            {t('form.savedLinks')}
+                                                            {t('form.argumentTopics')}
                                                         </FieldLabel>
                                                         <Select name='argument_topic_id' value={selectedArgumentTopicId} key={selectedArgumentTopicId}
                                                             onValueChange={setSelectedArgumentTopicId} required>
                                                             <SelectTrigger>
-                                                                <SelectValue placeholder={t('form.chooseLink')} />
+                                                                <SelectValue placeholder={t('form.chooseTopic')} />
                                                             </SelectTrigger>
                                                             <SelectContent>
                                                                 <SelectGroup>

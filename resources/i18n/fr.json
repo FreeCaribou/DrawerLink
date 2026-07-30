@@ -32,7 +32,7 @@
     "addArgument": "Ajouter un argument",
     "addArgumentDescription": "Quel est l'argument percutant que vous avez trouvé ?",
     "addArgumentTopicDescription": "Quel est le sujet que vous voulez préparer ?",
-    "linkLink": "Lier un lien",
+    "linkLink": "Lier à un lien",
     "linkLinkDescription": "Choisissez un lien à ajouter comme argument",
     "noAccount": "Vous n'avez pas de compte ? Demandez au gestionnaire du site.",
     "welcomeLogin": "Bienvenue de cette application pour stocker vos liens important à pouvoir ressortir rapidement !",
@@ -61,6 +61,8 @@
         "drawForLink": "Le tiroir du lien",
         "relatedFiles": "Les fichiers liés",
         "savedLinks": "Liens",
-        "chooseLink": "Choisissez un lien"
+        "chooseLink": "Choisissez un lien",
+        "chooseTopic": "Choisissez un topic",
+        "argumentTopics": "Liste des topics"
     }
 }
