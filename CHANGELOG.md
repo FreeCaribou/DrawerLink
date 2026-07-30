@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.1 - current]
+
+- Better form for mobile view
+
 ## [1.2.0]
 
 - User page to see and change some detail (name, email and password)
