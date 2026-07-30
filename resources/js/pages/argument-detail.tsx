@@ -16,7 +16,7 @@ import { FilePlusIcon, MessageCirclePlusIcon, PencilIcon, SaveIcon, Trash2Icon }
 import DialogDeleteArgument from '@/components/dialog-delete-argument';
 import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
 import { Spinner } from '@/components/ui/spinner';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function ArgumentDetail({
     argumentTopic
@@ -25,8 +25,8 @@ export default function ArgumentDetail({
 }) {
     const { t } = useTranslation();
 
-    const [openDialogArgument, setOpenDialogArgument] = useState(false);
-    const [openDialogLink, setOpenDialogLink] = useState(false);
+    const [openArgumentForm, setOpenArgumentForm] = useState(false);
+    const [openLinkForm, setOpenLinkForm] = useState(false);
     const [savedLinks, setSavedLinks] = useState<SavedLink[]>([]);
     const [selectedSavedLinkId, setSelectedSavedLinkId] = useState<string | undefined>(undefined);
     const [openDialogDeleteTopic, setOpenDialogDeleteTopic] = useState(false);
@@ -35,12 +35,12 @@ export default function ArgumentDetail({
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSuccessArgument = () => {
-        setOpenDialogArgument(false);
+        setOpenArgumentForm(false);
         setIsLoading(false);
     };
 
     const handleSuccessLink = () => {
-        setOpenDialogLink(false);
+        setOpenLinkForm(false);
         setSelectedSavedLinkId(undefined);
         setIsLoading(false);
     };
@@ -170,52 +170,11 @@ export default function ArgumentDetail({
                     ))}
                 </ul>
                 <div className='mt-5 flex gap-2'>
-                    <Dialog open={openDialogArgument} onOpenChange={setOpenDialogArgument}>
-                        <DialogTrigger asChild>
-                            <Button variant="secondary">{t('addArgument')} <MessageCirclePlusIcon /></Button>
-                        </DialogTrigger>
-                        <DialogContent showCloseButton={false} className="sm:max-w-sm">
-                            <DialogHeader>
-                                <DialogTitle>{t('addArgument')}</DialogTitle>
-                                <DialogDescription>
-                                    {t('addArgumentDescription')}
-                                </DialogDescription>
-                            </DialogHeader>
-                            <Form action={'/arguments/' + argumentTopic.id + '/argument'} method='post'
-                                resetOnSuccess={['label', 'description']} onSuccess={handleSuccessArgument} onError={handleError}
-                                className="flex flex-col gap-2">
-                                <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
-                                    <FieldGroup>
-                                        <Field>
-                                            <FieldLabel htmlFor="argument-form-label">
-                                                {t('form.label')}
-                                            </FieldLabel>
-                                            <Input id="argument-form-label" name='label' required />
-                                        </Field>
-                                        <Field>
-                                            <FieldLabel htmlFor="argument-form-description">
-                                                {t('form.description')}
-                                            </FieldLabel>
-                                            <Textarea id="argument-form-description" name='description' rows={2} />
-                                        </Field>
-                                    </FieldGroup>
-                                    <DialogFooter className="mt-5">
-                                        <DialogClose asChild>
-                                            <Button variant="outline">{t('cancel')}</Button>
-                                        </DialogClose>
-                                        <Button
-                                            type="submit"
-                                            className="cursor-pointer"
-                                        >
-                                            {t('add')}
-                                        </Button>
-                                    </DialogFooter>
-                                </div>
-                            </Form>
-                        </DialogContent>
-                    </Dialog>
+                    <Button variant="secondary" onClick={() => setOpenArgumentForm(!openArgumentForm)}>
+                        {t('addArgument')} <MessageCirclePlusIcon />
+                    </Button>
 
-                    <Dialog open={openDialogLink} onOpenChange={(isOpen) => { setOpenDialogLink(isOpen); getSavedLinks() }}>
+                    <Dialog open={openLinkForm} onOpenChange={(isOpen) => { setOpenLinkForm(isOpen); getSavedLinks() }}>
                         <DialogTrigger asChild>
                             <Button variant="secondary">{t('linkLink')} <FilePlusIcon /></Button>
                         </DialogTrigger>
@@ -266,6 +225,45 @@ export default function ArgumentDetail({
                         </DialogContent>
                     </Dialog>
                 </div>
+
+                {openArgumentForm && (
+                    <Card className='mt-2'>
+                        <CardHeader>
+                            <CardTitle className='text-primary'>{t('addArgument')}</CardTitle>
+                            <CardDescription className='text-secondary'>{t('addArgumentDescription')}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Form action={'/arguments/' + argumentTopic.id + '/argument'} method='post'
+                                resetOnSuccess={['label', 'description']} onSuccess={handleSuccessArgument} onError={handleError} onBefore={() => setIsLoading(true)}
+                                className="flex flex-col gap-2">
+                                <FieldGroup>
+                                    <Field>
+                                        <FieldLabel htmlFor="argument-form-label" className='text-secondary'>
+                                            {t('form.label')}
+                                        </FieldLabel>
+                                        <Input id="argument-form-label" name='label' required />
+                                    </Field>
+                                    <Field>
+                                        <FieldLabel htmlFor="argument-form-description" className='text-secondary'>
+                                            {t('form.description')}
+                                        </FieldLabel>
+                                        <Textarea id="argument-form-description" name='description' rows={2} />
+                                    </Field>
+                                </FieldGroup>
+                                <div className="mt-2 flex gap-2">
+                                    <Button variant="outline" onClick={() => setOpenArgumentForm(false)}>{t('cancel')}</Button>
+                                    <Button
+                                        type="submit"
+                                        className="cursor-pointer"
+                                        disabled={isLoading}
+                                    >
+                                        {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
+                                    </Button>
+                                </div>
+                            </Form>
+                        </CardContent>
+                    </Card>
+                )}
 
                 {editMode && (
                     <div className='mt-8'>
