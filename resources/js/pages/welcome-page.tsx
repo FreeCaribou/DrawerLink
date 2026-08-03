@@ -72,7 +72,7 @@ export default function Welcome({
 
             <div className='mt-5 flex gap-2'>
                 {drawList.length > 0 && (
-                    <Button variant="secondary" className="cursor-pointer" onClick={() => setOpenLinkForm(!openDrawForm)}>
+                    <Button variant="secondary" className="cursor-pointer" onClick={() => setOpenLinkForm(!openLinkForm)}>
                         {t('addLink')} <ClipboardPlusIcon />
                     </Button>
                 )}
@@ -82,20 +82,17 @@ export default function Welcome({
                 </Button>
             </div>
 
+            {openLinkForm && (
+                <div className='mt-2' ref={linkFormRef}>
+                    <SavedLinkForm drawBaseList={drawList} setOpenLinkForm={setOpenLinkForm} />
+                </div>
+            )}
+
             {openDrawForm && (
                 <div className='mt-2' ref={drawFormRef}>
                     <DrawerForm setOpenDrawForm={setOpenDrawForm} />
                 </div>
             )}
-
-            {
-                openLinkForm && (
-                    <div className='mt-2' ref={linkFormRef}>
-                        <SavedLinkForm drawBaseList={drawList} setOpenLinkForm={setOpenLinkForm} />
-                    </div>
-                )
-            }
-
         </AppInternLayout>
     );
 }
