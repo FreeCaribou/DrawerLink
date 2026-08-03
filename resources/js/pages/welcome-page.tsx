@@ -1,15 +1,14 @@
 import { Draw, FlashProps } from '@/types';
 import DrawerForm from '@/components/drawer-form';
 import SavedLinkForm from '@/components/saved-link-form';
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DrawCard from '@/components/draw-card';
 import AppInternLayout from '@/layouts/app-intern-layout';
 import BigSearch from '@/components/big-search';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
 import { Button } from '@/components/ui/button';
-import { ChevronDownIcon } from 'lucide-react';
+import { ChevronDownIcon, FolderPlusIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function Welcome({
@@ -22,10 +21,18 @@ export default function Welcome({
     const { t } = useTranslation();
 
     const [drawList, setDrawList] = useState<Draw[]>([]);
+    const [openDrawForm, setOpenDrawForm] = useState(false);
+    const drawFormRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setDrawList(drawBaseList);
     }, [drawBaseList]);
+
+    useEffect(() => {
+        if (openDrawForm && drawFormRef.current) {
+            drawFormRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [openDrawForm]);
 
     return (
         <AppInternLayout>
@@ -66,8 +73,17 @@ export default function Welcome({
                     <SavedLinkForm drawBaseList={drawList} />
                 )}
 
-                <DrawerForm />
+                <Button variant="secondary" className="cursor-pointer" onClick={() => setOpenDrawForm(!openDrawForm)}>
+                    {t('addDraw')} <FolderPlusIcon />
+                </Button>
             </div>
+
+            {openDrawForm && (
+                <div className='mt-2' ref={drawFormRef}>
+                    <DrawerForm setOpenDrawForm={setOpenDrawForm} />
+                </div>
+            )}
+
         </AppInternLayout>
     );
 }
