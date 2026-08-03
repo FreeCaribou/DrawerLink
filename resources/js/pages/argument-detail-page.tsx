@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { toastError } from '@/lib/utils';
 import axios from "axios";
 import { toast } from "sonner";
-import { FilePlusIcon, MessageCirclePlusIcon, PencilIcon, SaveIcon, Trash2Icon } from 'lucide-react';
+import { FolderSymlinkIcon, MessageCirclePlusIcon, PencilIcon, SaveIcon, Trash2Icon } from 'lucide-react';
 import DialogDeleteArgument from '@/components/dialog-delete-argument';
 import DialogDeleteArgumentLink from '@/components/dialog-delete-argument-link';
 import { Spinner } from '@/components/ui/spinner';
@@ -185,7 +185,7 @@ export default function ArgumentDetail({
                     </Button>
 
                     <Button variant="secondary" onClick={() => { getSavedLinks(); setOpenLinkForm(!openLinkForm) }}>
-                        {t('linkLink')} <FilePlusIcon />
+                        {t('linkLink')} <FolderSymlinkIcon />
                     </Button>
                 </div>
 

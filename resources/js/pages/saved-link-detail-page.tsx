@@ -1,7 +1,7 @@
 import { ArgumentTopic, Draw, SavedLink } from "@/types";
 import AppInternLayout from "@/layouts/app-intern-layout";
 import React, { useState } from "react";
-import { CalendarIcon, DownloadIcon, ExternalLinkIcon, FilePlusIcon, LinkIcon, PencilIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
+import { CalendarIcon, DownloadIcon, ExternalLinkIcon, FolderSymlinkIcon, LinkIcon, PencilIcon, TagIcon, Trash2Icon, UnlinkIcon, WarehouseIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, Link } from "@inertiajs/react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -341,6 +341,12 @@ export default function DrawCard({
                 </div>
             )}
 
+            {editMode && (
+                <div className="mt-5">
+                    <SavedObjectForm savedLinkId={savedLink.id}></SavedObjectForm>
+                </div>
+            )}
+
             {!blockEdit && savedLink.argument_topics?.length > 0 && (
                 <div className="mt-5">
                     <p className="text-secondary font-extrabold tracking-tight">{t('relatedArgumentTopics')}</p>
@@ -357,16 +363,12 @@ export default function DrawCard({
             )}
 
             {editMode && (
-                <SavedObjectForm savedLinkId={savedLink.id}></SavedObjectForm>
-            )}
-
-            {editMode && (
                 <div className="mt-5">
                     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
                         <DialogTrigger asChild>
                             <Button variant="destructive" className="cursor-pointer">
-                                <Trash2Icon></Trash2Icon>
                                 {t('delete')}
+                                <Trash2Icon></Trash2Icon>
                             </Button>
                         </DialogTrigger>
                         <DialogContent showCloseButton={false} className="sm:max-w-sm">
@@ -393,7 +395,7 @@ export default function DrawCard({
                     <p>
                         <Dialog open={openDialogLink} onOpenChange={(isOpen) => { setOpenDialogLink(isOpen); getArgumentTopics() }}>
                             <DialogTrigger asChild>
-                                <Button variant="secondary">{t('linkTopic')} <FilePlusIcon /></Button>
+                                <Button variant="secondary">{t('linkTopic')} <FolderSymlinkIcon /></Button>
                             </DialogTrigger>
                             <DialogContent showCloseButton={false} className="sm:max-w-sm">
                                 <DialogHeader>
@@ -465,6 +467,7 @@ export default function DrawCard({
                                         className="cursor-pointer mt-2"
                                     >
                                         {t('deleteSharedLink')}
+                                        <UnlinkIcon />
                                     </Button>
                                 </Form>
                             </div>

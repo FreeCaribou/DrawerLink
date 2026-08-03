@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { useTranslation } from 'react-i18next';
 import { toastError } from '@/lib/utils';
+import { FilePlusIcon } from 'lucide-react';
 
 export default function SavedObjectForm({
     savedLinkId,
@@ -39,7 +40,7 @@ export default function SavedObjectForm({
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
-                <Button variant="secondary">{t(('addFile'))}</Button>
+                <Button variant="secondary">{t(('addFile'))} <FilePlusIcon /></Button>
             </DialogTrigger>
             <DialogContent showCloseButton={false}>
                 <DialogHeader>
