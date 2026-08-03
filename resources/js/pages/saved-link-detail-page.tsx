@@ -308,8 +308,8 @@ export default function DrawCard({
                     {savedLink.saved_object_props.map((objectProp) => (
                         <React.Fragment key={objectProp.id}>
                             <div className="mb-2 flex gap-2">
-                                <p className="flex items-center gap-2">
-                                    {objectProp.name}
+                                <p className="flex items-center gap-2 ">
+                                    <span className="break-all">{objectProp.name}</span>
                                     <a
                                         href={sharedKey
                                             ? "/shared/download-saved-object/" + objectProp.id + "/" + sharedKey
