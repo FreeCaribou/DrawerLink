@@ -374,6 +374,7 @@ export default function DrawCard({
                         <DialogContent showCloseButton={false} className="sm:max-w-sm">
                             <DialogHeader>
                                 <DialogTitle>{t('deleteSur')}</DialogTitle>
+                                <DialogDescription>{t('deleteSurDescription')}</DialogDescription>
                             </DialogHeader>
                             <Form action={"/saved-links/" + savedLink.id} method="delete" onSuccess={handleSuccess} onError={handleError}>
                                 <Button

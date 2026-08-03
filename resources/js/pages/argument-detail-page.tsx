@@ -213,7 +213,7 @@ export default function ArgumentDetail({
                             <DialogContent showCloseButton={false} className="sm:max-w-sm">
                                 <DialogHeader>
                                     <DialogTitle>{t('deleteSur')}</DialogTitle>
-                                    <DialogDescription></DialogDescription>
+                                    <DialogDescription>{t('deleteSurDescription')}</DialogDescription>
                                 </DialogHeader>
                                 <Form action={"/arguments/" + argumentTopic.id} method="delete"
                                     onSuccess={handleSuccessDeleteTopic} onError={handleError} onBefore={() => setIsLoading(true)}>
