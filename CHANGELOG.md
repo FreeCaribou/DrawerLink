@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.2]
+
+- Better storage of the file
+
 ## [1.2.1]
 
 - Better form for mobile view

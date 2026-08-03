@@ -4,7 +4,6 @@ A little app to store "link" to retrieve it easily later and share it
 
 ## TODO for better app
 
-- Store the object storage in a proper way
 - Send a shared link by mail
 - Better backend error handling
 - Clean up the code (avoid big file, separate component in front and divide service in back, refactor some duplicate in frontend)
@@ -18,6 +17,7 @@ A little app to store "link" to retrieve it easily later and share it
 - Make relations between link
 - Dark mode
 - Bash script for the install
+- Make script to remove the old way of store data (and script to delete all no more used file in case of)
 
 ## Tech
 
