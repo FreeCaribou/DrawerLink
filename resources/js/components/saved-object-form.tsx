@@ -7,6 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import { useTranslation } from 'react-i18next';
 import { toastError } from '@/lib/utils';
 import { FilePlusIcon } from 'lucide-react';
+import { DialogDescription } from '@radix-ui/react-dialog';
 
 export default function SavedObjectForm({
     savedLinkId,
@@ -45,6 +46,7 @@ export default function SavedObjectForm({
             <DialogContent showCloseButton={false}>
                 <DialogHeader>
                     <DialogTitle>{t(('addFile'))}</DialogTitle>
+                    <DialogDescription className='text-secondary'>{t('form.maxFileSize', { size: '25 Mo' })}</DialogDescription>
                 </DialogHeader>
                 <Form
                     action={"/saved-links/" + savedLinkId + "/saved-object"}
@@ -60,9 +62,6 @@ export default function SavedObjectForm({
                                     {t('form.fileLink')}
                                 </FieldLabel>
                                 <Input id="link-form-file" name='file' onChange={handleFileChange} type='file' />
-                                <small className="text-secondary block mt-1">
-                                    {t('form.maxFileSize', { size: '25 Mo' })}
-                                </small>
                                 {fileToBig && <p className="text-red-500 text-sm mt-1">{t('form.fileToBig')}</p>}
                             </Field>
                         </FieldGroup>
