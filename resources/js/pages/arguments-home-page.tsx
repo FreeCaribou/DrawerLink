@@ -1,6 +1,6 @@
 import { ArgumentTopic } from '@/types';
 import AppInternLayout from '@/layouts/app-intern-layout';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toastError } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,13 @@ export default function ArgumentHome({
     const { t } = useTranslation();
     const [openForm, setOpenForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const formRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (openForm && formRef.current) {
+            formRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [openForm]);
 
     const handleSuccess = () => {
         setOpenForm(false);
@@ -47,34 +54,36 @@ export default function ArgumentHome({
                             <CardDescription className='text-secondary'>{t('addArgumentTopicDescription')}</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <Form
-                                action="/arguments" method='post'
-                                resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} onBefore={() => setIsLoading(true)}
-                                className="flex flex-col gap-2 mt-2"
-                            >
-                                <FieldGroup>
-                                    <Field>
-                                        <FieldLabel htmlFor="argument-topic-form-label" className='text-secondary'>
-                                            {t('form.label')}
-                                        </FieldLabel>
-                                        <Input id="argument-topic-form-label" name='label' required />
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel htmlFor="argument-topic-form-description" className='text-secondary'>
-                                            {t('form.description')}
-                                        </FieldLabel>
-                                        <Textarea id="argument-topic-form-description" name='description' rows={2} />
-                                    </Field>
-                                </FieldGroup>
-                                <div className="mt-2 flex gap-2">
-                                    <Button variant="outline" className="cursor-pointer" onClick={() => setOpenForm(false)}>
-                                        {t('cancel')}
-                                    </Button>
-                                    <Button type="submit" className="cursor-pointer" disabled={isLoading}>
-                                        {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
-                                    </Button>
-                                </div>
-                            </Form>
+                            <div ref={formRef}>
+                                <Form
+                                    action="/arguments" method='post'
+                                    resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} onBefore={() => setIsLoading(true)}
+                                    className="flex flex-col gap-2 mt-2"
+                                >
+                                    <FieldGroup>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-topic-form-label" className='text-secondary'>
+                                                {t('form.label')}
+                                            </FieldLabel>
+                                            <Input id="argument-topic-form-label" name='label' required />
+                                        </Field>
+                                        <Field>
+                                            <FieldLabel htmlFor="argument-topic-form-description" className='text-secondary'>
+                                                {t('form.description')}
+                                            </FieldLabel>
+                                            <Textarea id="argument-topic-form-description" name='description' rows={2} />
+                                        </Field>
+                                    </FieldGroup>
+                                    <div className="mt-2 flex gap-2">
+                                        <Button variant="outline" className="cursor-pointer" onClick={() => setOpenForm(false)}>
+                                            {t('cancel')}
+                                        </Button>
+                                        <Button type="submit" className="cursor-pointer" disabled={isLoading}>
+                                            {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </div>
                         </CardContent>
                     </Card>
                 )}

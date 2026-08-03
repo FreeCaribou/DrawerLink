@@ -1,6 +1,6 @@
 import { ArgumentTopic, SavedLink } from '@/types';
 import AppInternLayout from '@/layouts/app-intern-layout';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { Form, Link } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -33,6 +33,27 @@ export default function ArgumentDetail({
     const [editMode, setEditMode] = useState(false);
     const [argumentTopicEdit, setArgumentTopicEdit] = useState({ ...argumentTopic });
     const [isLoading, setIsLoading] = useState(false);
+    const argumentFormRef = useRef<HTMLDivElement>(null);
+    const linkFormRef = useRef<HTMLDivElement>(null);
+    const updateFormRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (openArgumentForm && argumentFormRef.current) {
+            argumentFormRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [openArgumentForm]);
+
+    useEffect(() => {
+        if (openLinkForm && linkFormRef.current) {
+            linkFormRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [openLinkForm]);
+
+    useEffect(() => {
+        if (editMode && updateFormRef.current) {
+            updateFormRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [editMode]);
 
     const handleSuccessDeleteTopic = () => {
         setOpenDialogDeleteTopic(false);
@@ -95,7 +116,7 @@ export default function ArgumentDetail({
                         {argumentTopic.description}
                     </div>
                 ) : (
-                    <div>
+                    <div ref={updateFormRef}>
                         <Card>
                             <CardContent>
                                 <Form action={'/arguments/' + argumentTopic.id} method='put'
@@ -163,19 +184,19 @@ export default function ArgumentDetail({
                         {t('addArgument')} <MessageCirclePlusIcon />
                     </Button>
 
-                    <Button variant="secondary" onClick={() => { getSavedLinks(); setOpenLinkForm(!openArgumentForm) }}>
+                    <Button variant="secondary" onClick={() => { getSavedLinks(); setOpenLinkForm(!openLinkForm) }}>
                         {t('linkLink')} <FilePlusIcon />
                     </Button>
                 </div>
 
                 {openArgumentForm && (
-                    <div className='mt-2'>
+                    <div className='mt-2' ref={argumentFormRef}>
                         <ArgumentForm argumentTopic={argumentTopic} setOpenArgumentForm={setOpenArgumentForm} />
                     </div>
                 )}
 
                 {openLinkForm && (
-                    <div className='mt-2'>
+                    <div className='mt-2' ref={linkFormRef}>
                         <LinkLinkToArgumentForm savedLinks={savedLinks} argumentTopic={argumentTopic} setOpenLinkForm={setOpenLinkForm} />
                     </div>
                 )}
