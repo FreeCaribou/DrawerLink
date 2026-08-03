@@ -180,11 +180,11 @@ export default function ArgumentDetail({
                     ))}
                 </ul>
                 <div className='mt-5 flex gap-2'>
-                    <Button variant="secondary" onClick={() => setOpenArgumentForm(!openArgumentForm)}>
+                    <Button variant="secondary" className='cursor-pointer' onClick={() => setOpenArgumentForm(!openArgumentForm)}>
                         {t('addArgument')} <MessageCirclePlusIcon />
                     </Button>
 
-                    <Button variant="secondary" onClick={() => { getSavedLinks(); setOpenLinkForm(!openLinkForm) }}>
+                    <Button variant="secondary" className='cursor-pointer' onClick={() => { getSavedLinks(); setOpenLinkForm(!openLinkForm) }}>
                         {t('linkLink')} <FolderSymlinkIcon />
                     </Button>
                 </div>

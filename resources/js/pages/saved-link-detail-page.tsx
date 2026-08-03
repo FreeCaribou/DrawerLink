@@ -1,10 +1,10 @@
 import { ArgumentTopic, Draw, SavedLink } from "@/types";
 import AppInternLayout from "@/layouts/app-intern-layout";
-import React, { useState } from "react";
-import { CalendarIcon, DownloadIcon, ExternalLinkIcon, FolderSymlinkIcon, LinkIcon, PencilIcon, TagIcon, Trash2Icon, UnlinkIcon, WarehouseIcon } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { CalendarIcon, DownloadIcon, ExternalLinkIcon, FolderSymlinkIcon, LinkIcon, PencilIcon, SaveIcon, TagIcon, Trash2Icon, UnlinkIcon, WarehouseIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, Link } from "@inertiajs/react";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import DateFormater from "@/components/date-formater";
 import SavedObjectForm from "@/components/saved-object-form";
@@ -19,6 +19,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { useTranslation } from "react-i18next";
 import { toastError } from "@/lib/utils";
 import axios from "axios";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function DrawCard({
     savedLink,
@@ -43,7 +45,14 @@ export default function DrawCard({
     const [openDialogLink, setOpenDialogLink] = useState(false);
     const [argumentTopics, setArgumentTopics] = useState<ArgumentTopic[]>([]);
     const [selectedArgumentTopicId, setSelectedArgumentTopicId] = useState<string | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState(false);
+    const linkArgumentTopicFormRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        if (openDialogLink && linkArgumentTopicFormRef.current) {
+            linkArgumentTopicFormRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [openDialogLink]);
 
     function formatDate(date: Date | undefined) {
         if (!date) {
@@ -102,24 +111,29 @@ export default function DrawCard({
      * Get all the argument topic from the current user
      */
     const getArgumentTopics = async () => {
-        try {
-            const argumentTopicsAlreadyThere: ArgumentTopic[] = savedLink.argument_topics || [];
-            const argumentTopicsAlreadyThereId: number[] = argumentTopicsAlreadyThere.map(atat => atat.id);
-            const response = await axios.get('/data/argument-topics');
-            const argumentTopicsData: ArgumentTopic[] = response.data.argument_topics;
+        const argumentTopicsAlreadyThere: ArgumentTopic[] = savedLink.argument_topics || [];
+        const argumentTopicsAlreadyThereId: number[] = argumentTopicsAlreadyThere.map(atat => atat.id);
+        if (!argumentTopics || argumentTopics.length === 0) {
+            try {
+                const response = await axios.get('/data/argument-topics');
+                const argumentTopicsData: ArgumentTopic[] = response.data.argument_topics;
+                setArgumentTopics(argumentTopicsData.filter(svd => !argumentTopicsAlreadyThereId.includes(svd.id)));
+            } catch (error: any) {
+                console.error("Error :", error.response.data);
+                toast(
+                    error.response.data.error,
+                    {
+                        position: "top-right",
+                        description: error.response.data.messages?.map(
+                            (m: string, key: number) =>
+                                `${m}${key + 1 >= error.response.data.messages.length ? '' : '/'}`
+                        )
+                    }
+                );
+            }
+        } else {
+            const argumentTopicsData: ArgumentTopic[] = argumentTopics;
             setArgumentTopics(argumentTopicsData.filter(svd => !argumentTopicsAlreadyThereId.includes(svd.id)));
-        } catch (error: any) {
-            console.error("Error :", error.response.data);
-            toast(
-                error.response.data.error,
-                {
-                    position: "top-right",
-                    description: error.response.data.messages?.map(
-                        (m: string, key: number) =>
-                            `${m}${key + 1 >= error.response.data.messages.length ? '' : '/'}`
-                    )
-                }
-            );
         }
     };
 
@@ -394,19 +408,26 @@ export default function DrawCard({
             {!blockEdit && (
                 <div className="mt-5">
                     <p>
-                        <Dialog open={openDialogLink} onOpenChange={(isOpen) => { setOpenDialogLink(isOpen); getArgumentTopics() }}>
-                            <DialogTrigger asChild>
-                                <Button variant="secondary">{t('linkTopic')} <FolderSymlinkIcon /></Button>
-                            </DialogTrigger>
-                            <DialogContent showCloseButton={false} className="sm:max-w-sm">
-                                <DialogHeader>
-                                    <DialogTitle>{t('linkTopic')}</DialogTitle>
-                                    <DialogDescription className='text-secondary'>
+                        <Button variant="secondary" className='cursor-pointer'
+                            onClick={() => { getArgumentTopics(); setOpenDialogLink(!openDialogLink) }}>
+                            {t('linkTopic')} <FolderSymlinkIcon />
+                        </Button>
+                    </p>
+
+                    {openDialogLink && (
+                        <div className="mt-5" ref={linkArgumentTopicFormRef}>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className='text-primary'>{t('linkTopic')}</CardTitle>
+                                    <CardDescription className='text-secondary'>
                                         {t('linkTopicDescription')}
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <Form action={'/saved-links/' + savedLink.id + '/argument-topic'} method='post' resetOnSuccess={['link']} onSuccess={handleSuccessLink} onError={handleError} className="flex flex-col gap-2">
-                                    <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <Form
+                                        action={'/saved-links/' + savedLink.id + '/argument-topic'} method='post' resetOnSuccess={['link']}
+                                        onSuccess={handleSuccessLink} onError={handleError} onBefore={() => setIsLoading(true)}
+                                        className="flex flex-col gap-2">
                                         <FieldGroup>
                                             <Field>
                                                 <FieldLabel htmlFor="link-form-link" className='text-secondary'>
@@ -429,22 +450,21 @@ export default function DrawCard({
                                                 </Select>
                                             </Field>
                                         </FieldGroup>
-                                        <DialogFooter className="mt-5">
-                                            <DialogClose asChild>
-                                                <Button variant="outline">{t('cancel')}</Button>
-                                            </DialogClose>
+                                        <div className="mt-2 flex gap-2">
+                                            <Button variant="outline" onClick={() => setOpenDialogLink(false)}>{t('cancel')}</Button>
                                             <Button
                                                 type="submit"
                                                 className="cursor-pointer"
+                                                disabled={isLoading}
                                             >
-                                                {t('add')}
+                                                {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
                                             </Button>
-                                        </DialogFooter>
-                                    </div>
-                                </Form>
-                            </DialogContent>
-                        </Dialog>
-                    </p>
+                                        </div>
+                                    </Form>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    )}
 
                     <Button
                         className="cursor-pointer mt-5"
