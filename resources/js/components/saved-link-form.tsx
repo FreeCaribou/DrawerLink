@@ -1,28 +1,31 @@
 import { Form } from '@inertiajs/react';
-import { Field, FieldGroup, FieldLabel, FieldSet } from "./ui/field";
+import { Field, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import React, { useState } from "react";
 import { Draw } from "@/types";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Calendar } from './ui/calendar';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from './ui/input-group';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, SaveIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toastError } from '@/lib/utils';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Spinner } from './ui/spinner';
 
 export default function SavedLinkForm({
     drawBaseList = [],
+    setOpenLinkForm
 }: {
-    drawBaseList: Draw[]
+    drawBaseList: Draw[];
+    setOpenLinkForm: (value: boolean) => void;
 }) {
     const { t } = useTranslation();
     const [selectedDrawId, setSelectedDrawId] = useState<string | undefined>(undefined);
-    const [openDialog, setOpenDialog] = useState(false);
     const [fileToBig, setFileToBig] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [openDate, setOpenDate] = React.useState(false);
     const [date, setDate] = React.useState<Date | undefined>(undefined);
@@ -48,14 +51,16 @@ export default function SavedLinkForm({
      */
     const handleSuccess = () => {
         setSelectedDrawId(undefined);
-        setOpenDialog(false);
+        setOpenLinkForm(false);
         setDate(undefined);
         setMonth(undefined);
         setValueDate("");
+        setIsLoading(false);
     };
 
     const handleError = (err: any) => {
         toastError(err);
+        setIsLoading(false);
     }
 
     const handleFileChange = (e: any) => {
@@ -68,163 +73,147 @@ export default function SavedLinkForm({
     };
 
     return (
-        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger asChild>
-                <Button variant="secondary">{t('addLink')}</Button>
-            </DialogTrigger>
-            <DialogContent showCloseButton={false}>
-                <DialogHeader>
-                    <DialogTitle>{t('addLink')}</DialogTitle>
-                    <DialogDescription>
-                        {t('interestingArticleFound')}
-                    </DialogDescription>
-                </DialogHeader>
+        <Card>
+            <CardHeader>
+                <CardTitle className='text-primary'>{t('addLink')}</CardTitle>
+                <CardDescription className='text-secondary'>
+                    {t('interestingArticleFound')}
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
                 <Form
-                    action="/saved-links"
-                    method='post'
-                    onSuccess={handleSuccess}
-                    onError={handleError}
+                    action="/saved-links" method='post'
+                    onSuccess={handleSuccess} onError={handleError} onBefore={() => setIsLoading(true)}
                     resetOnSuccess={['label', 'description', 'file', 'tags', 'source_date']}
                     className="flex flex-col gap-2">
-                    <div className="no-scrollbar -mx-4 max-h-[66vh] overflow-y-auto px-4">
-                        <FieldGroup>
-                            <FieldSet>
-                                <FieldGroup>
+                    <FieldGroup>
+                        <Field>
+                            <FieldLabel htmlFor="link-form-draw" className='text-secondary'>
+                                {t('form.drawForLink')}
+                            </FieldLabel>
+                            <Select name='draw_id' value={selectedDrawId} key={selectedDrawId}
+                                onValueChange={setSelectedDrawId} required>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('form.chooseDraw')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {drawBaseList.map((draw) => (
+                                            <React.Fragment key={draw.id}>
+                                                <SelectItem value={draw.id.toString()}>{draw.label}</SelectItem>
+                                            </React.Fragment>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </Field>
 
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-draw">
-                                            {t('form.drawForLink')}
-                                        </FieldLabel>
-                                        <Select name='draw_id' value={selectedDrawId} key={selectedDrawId}
-                                            onValueChange={setSelectedDrawId} required>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder={t('form.chooseDraw')} />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    {drawBaseList.map((draw) => (
-                                                        <React.Fragment key={draw.id}>
-                                                            <SelectItem value={draw.id.toString()}>{draw.label}</SelectItem>
-                                                        </React.Fragment>
-                                                    ))}
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
-                                    </Field>
+                        <Field>
+                            <FieldLabel htmlFor="link-form-label" className='text-secondary'>
+                                {t('form.label')}
+                            </FieldLabel>
+                            <Input id="link-form-label" name='label' required />
+                        </Field>
 
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-label">
-                                            {t('form.label')}
-                                        </FieldLabel>
-                                        <Input id="link-form-label" name='label' required />
-                                    </Field>
+                        <Field>
+                            <FieldLabel htmlFor="link-form-description" className='text-secondary'>
+                                {t('form.description')}
+                            </FieldLabel>
+                            <Textarea id="link-form-description" name='description' rows={5} />
+                        </Field>
 
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-description">
-                                            {t('form.description')}
-                                        </FieldLabel>
-                                        <Textarea id="link-form-description" name='description' rows={5} />
-                                    </Field>
+                        <Field>
+                            <FieldLabel htmlFor="link-form-file" className='text-secondary'>
+                                {t('form.fileLink')}
+                            </FieldLabel>
+                            <Input id="link-form-file" onChange={handleFileChange} name='file' type='file' />
+                            <small className="text-secondary block mt-1">
+                                {t('form.maxFileSize', { size: '25 Mo' })}
+                            </small>
+                            {fileToBig && <p className="text-red-500 text-sm mt-1">{t('form.fileToBig')}</p>}
+                        </Field>
 
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-file">
-                                            {t('form.fileLink')}
-                                        </FieldLabel>
-                                        <Input id="link-form-file" onChange={handleFileChange} name='file' type='file' />
-                                        <small className="text-secondary block mt-1">
-                                            {t('form.maxFileSize', { size: '25 Mo' })}
-                                        </small>
-                                        {fileToBig && <p className="text-red-500 text-sm mt-1">{t('form.fileToBig')}</p>}
-                                    </Field>
+                        <Field>
+                            <FieldLabel htmlFor="link-form-tags" className='text-secondary'>
+                                {t('form.someTags')}
+                            </FieldLabel>
+                            <Input id="link-form-tags" name='tags' />
+                        </Field>
 
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-tags">
-                                            {t('form.someTags')}
-                                        </FieldLabel>
-                                        <Input id="link-form-tags" name='tags' />
-                                    </Field>
-
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-sourceDate">
-                                            {t('form.sourceDate')}
-                                        </FieldLabel>
-                                        <InputGroup>
-                                            <InputGroupInput
-                                                id="date-required"
-                                                value={valueDate}
-                                                placeholder="01/01/2026"
-                                                name="source_date"
-                                                onChange={(e) => {
-                                                    const date = new Date(e.target.value)
-                                                    setValueDate(e.target.value)
-                                                    if (isValidDate(date)) {
-                                                        setDate(date)
-                                                        setMonth(date)
-                                                    }
-                                                }}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === "ArrowDown") {
-                                                        e.preventDefault()
-                                                        setOpenDate(true)
-                                                    }
+                        <Field>
+                            <FieldLabel htmlFor="link-form-sourceDate" className='text-secondary'>
+                                {t('form.sourceDate')}
+                            </FieldLabel>
+                            <InputGroup>
+                                <InputGroupInput
+                                    id="date-required"
+                                    value={valueDate}
+                                    placeholder="01/01/2026"
+                                    name="source_date"
+                                    onChange={(e) => {
+                                        const date = new Date(e.target.value)
+                                        setValueDate(e.target.value)
+                                        if (isValidDate(date)) {
+                                            setDate(date)
+                                            setMonth(date)
+                                        }
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "ArrowDown") {
+                                            e.preventDefault()
+                                            setOpenDate(true)
+                                        }
+                                    }}
+                                />
+                                <InputGroupAddon align="inline-end">
+                                    <Popover open={openDate} onOpenChange={setOpenDate}>
+                                        <PopoverTrigger asChild>
+                                            <InputGroupButton
+                                                id="date-picker"
+                                                variant="ghost"
+                                                size="icon-xs"
+                                                aria-label={t('form.sourceDate')}
+                                            >
+                                                <CalendarIcon />
+                                                <span className="sr-only">{t('form.selectDate')}</span>
+                                            </InputGroupButton>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto overflow-hidden p-0" align="end">
+                                            <Calendar
+                                                mode="single"
+                                                selected={date}
+                                                month={month}
+                                                onMonthChange={setMonth}
+                                                onSelect={(date) => {
+                                                    setDate(date)
+                                                    setValueDate(formatDate(date))
+                                                    setOpenDate(false)
                                                 }}
                                             />
-                                            <InputGroupAddon align="inline-end">
-                                                <Popover open={openDate} onOpenChange={setOpenDate}>
-                                                    <PopoverTrigger asChild>
-                                                        <InputGroupButton
-                                                            id="date-picker"
-                                                            variant="ghost"
-                                                            size="icon-xs"
-                                                            aria-label={t('form.sourceDate')}
-                                                        >
-                                                            <CalendarIcon />
-                                                            <span className="sr-only">{t('form.selectDate')}</span>
-                                                        </InputGroupButton>
-                                                    </PopoverTrigger>
-                                                    <PopoverContent className="w-auto overflow-hidden p-0" align="end">
-                                                        <Calendar
-                                                            mode="single"
-                                                            selected={date}
-                                                            month={month}
-                                                            onMonthChange={setMonth}
-                                                            onSelect={(date) => {
-                                                                setDate(date)
-                                                                setValueDate(formatDate(date))
-                                                                setOpenDate(false)
-                                                            }}
-                                                        />
-                                                    </PopoverContent>
-                                                </Popover>
-                                            </InputGroupAddon>
-                                        </InputGroup>
-                                    </Field>
+                                        </PopoverContent>
+                                    </Popover>
+                                </InputGroupAddon>
+                            </InputGroup>
+                        </Field>
 
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-fullSource">
-                                            {t('form.sourceOfLink')}
-                                        </FieldLabel>
-                                        <Input id="link-form-fullSource" type='url' name='full_source' placeholder='https://' />
-                                    </Field>
+                        <Field>
+                            <FieldLabel htmlFor="link-form-fullSource" className='text-secondary'>
+                                {t('form.sourceOfLink')}
+                            </FieldLabel>
+                            <Input id="link-form-fullSource" type='url' name='full_source' placeholder='https://' />
+                        </Field>
+                    </FieldGroup>
 
-                                </FieldGroup>
-                            </FieldSet>
-                        </FieldGroup>
-
-                        <DialogFooter className="mt-5 pb-2">
-                            <DialogClose asChild>
-                                <Button variant="outline">{t('cancel')}</Button>
-                            </DialogClose>
-                            <Button
-                                type="submit"
-                                className="cursor-pointer"
-                            >
-                                {t('add')}
-                            </Button>
-                        </DialogFooter>
+                    <div className="mt-2 flex gap-2">
+                        <Button variant="outline" className="cursor-pointer" onClick={() => setOpenLinkForm(false)}>
+                            {t('cancel')}
+                        </Button>
+                        <Button type="submit" className="cursor-pointer" disabled={isLoading}>
+                            {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
+                        </Button>
                     </div>
                 </Form>
-            </DialogContent>
-        </Dialog>
+            </CardContent>
+        </Card>
     );
 }

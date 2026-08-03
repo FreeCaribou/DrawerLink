@@ -46,6 +46,7 @@
     "relatedArgumentTopics": "Argument topics using this link",
     "userInfoChangedGood": "Your user information has changed.",
     "myProfil": "My profil",
+    "numberOfLinkFile": "There are {{number}} files for this link",
     "form": {
         "email": "Email",
         "password": "Password",

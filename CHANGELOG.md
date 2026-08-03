@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.1 - current]
+## [1.2.1]
 
 - Better form for mobile view
 - Review the global design of the form

@@ -46,6 +46,7 @@
     "relatedArgumentTopics": "Argumentatieonderwerpen via deze link",
     "userInfoChangedGood": "Je gebruikersgegevens zijn gewijzigd.",
     "myProfil": "Mijn profiel",
+    "numberOfLinkFile": "Er zijn {{number}} bestanden voor deze link",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",

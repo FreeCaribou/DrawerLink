@@ -5,6 +5,7 @@ import { CalendarCheckIcon, CalendarPlus2Icon, CalendarPlusIcon, DownloadIcon, E
 import { Badge } from "./ui/badge";
 import { Link } from "@inertiajs/react";
 import DateFormater from "./date-formater";
+import { useTranslation } from "react-i18next";
 
 /**
  * Component to show a big preview of saved links, used for list without context
@@ -18,6 +19,8 @@ export default function SavedLinkList({
     savedLinks: SavedLink[];
     withDrawTitle?: boolean;
 }) {
+    const { t } = useTranslation();
+
     return (
         <div>
             {/* <h2>The saved links</h2> */}
@@ -60,26 +63,9 @@ export default function SavedLinkList({
                                     </div>
                                     <div>
                                         {link.saved_object_props?.length > 0 && (
-                                            <div>
-                                                {link.saved_object_props.map((objectProp) => (
-                                                    <React.Fragment key={objectProp.id}>
-                                                        <p className="flex items-center gap-2">
-                                                            {objectProp.name}
-                                                            <a
-                                                                href={"/download-saved-object/" + objectProp.id}
-                                                                target="_blank"
-                                                                rel="noopener"
-                                                                className="flex items-center"
-                                                            >
-                                                                <DownloadIcon className='text-secondary'></DownloadIcon>
-                                                                ({Math.round(objectProp.size / (1024 * 1024) * 100) / 100} Mo
-                                                                {objectProp.size === 0 && (<span> - Probably an error, please reupload the file</span>)}
-                                                                )
-                                                            </a>
-                                                        </p>
-                                                    </React.Fragment>
-                                                ))}
-                                            </div>
+                                            <p>
+                                                {t('numberOfLinkFile', { number: link.saved_object_props.length })}
+                                            </p>
                                         )}
                                         <div className="flex gap-2">
                                             {link.source_date && (<CalendarCheckIcon size={18} className="text-secondary"></CalendarCheckIcon>)}
@@ -88,8 +74,6 @@ export default function SavedLinkList({
                                         </div>
                                     </div>
                                 </div>
-
-
                             </ItemContent>
                         </Item>
                     </React.Fragment>

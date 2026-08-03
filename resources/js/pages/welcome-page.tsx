@@ -8,7 +8,7 @@ import BigSearch from '@/components/big-search';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
 import { Button } from '@/components/ui/button';
-import { ChevronDownIcon, FolderPlusIcon } from 'lucide-react';
+import { ChevronDownIcon, ClipboardPlusIcon, FolderPlusIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function Welcome({
@@ -22,7 +22,9 @@ export default function Welcome({
 
     const [drawList, setDrawList] = useState<Draw[]>([]);
     const [openDrawForm, setOpenDrawForm] = useState(false);
+    const [openLinkForm, setOpenLinkForm] = useState(false);
     const drawFormRef = useRef<HTMLDivElement>(null);
+    const linkFormRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setDrawList(drawBaseList);
@@ -70,7 +72,9 @@ export default function Welcome({
 
             <div className='mt-5 flex gap-2'>
                 {drawList.length > 0 && (
-                    <SavedLinkForm drawBaseList={drawList} />
+                    <Button variant="secondary" className="cursor-pointer" onClick={() => setOpenLinkForm(!openDrawForm)}>
+                        {t('addLink')} <ClipboardPlusIcon />
+                    </Button>
                 )}
 
                 <Button variant="secondary" className="cursor-pointer" onClick={() => setOpenDrawForm(!openDrawForm)}>
@@ -83,6 +87,14 @@ export default function Welcome({
                     <DrawerForm setOpenDrawForm={setOpenDrawForm} />
                 </div>
             )}
+
+            {
+                openLinkForm && (
+                    <div className='mt-2' ref={linkFormRef}>
+                        <SavedLinkForm drawBaseList={drawList} setOpenLinkForm={setOpenLinkForm} />
+                    </div>
+                )
+            }
 
         </AppInternLayout>
     );
