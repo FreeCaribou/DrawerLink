@@ -16,7 +16,7 @@ class ArgumentController extends Controller
     {
         $argumentTopics = ArgumentTopic::where('user_id', Auth::id())->withCount('savedLinks')->withCount('arguments')->get();
 
-        return Inertia::render('arguments-home', ['argumentTopics' => $argumentTopics]);
+        return Inertia::render('arguments-home-page', ['argumentTopics' => $argumentTopics]);
     }
 
     public function detail(int $argumentTopicId)
@@ -26,7 +26,7 @@ class ArgumentController extends Controller
             return redirect()->route('error')->withErrors(['error.not-your-argument-topic']);
         }
 
-        return Inertia::render('argument-detail', ['argumentTopic' => $argumentTopic]);
+        return Inertia::render('argument-detail-page', ['argumentTopic' => $argumentTopic]);
     }
 
     public function addTopic(Request $request)

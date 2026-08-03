@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1]
+
+- Better form for mobile view
+- Review the global design of the form
+- Upload file to 25Mo
+
 ## [1.2.0]
 
 - User page to see and change some detail (name, email and password)

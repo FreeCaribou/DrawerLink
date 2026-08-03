@@ -46,6 +46,7 @@
     "relatedArgumentTopics": "Les topics d'argument utilisant ce lien",
     "userInfoChangedGood": "Vos infos d'utilisateur ont bien changées.",
     "myProfil": "Mon profil",
+    "numberOfLinkFile": "Il y a {{number}} fichiers pour ce lien",
     "form": {
         "email": "Email",
         "password": "Mot de passe",
@@ -74,6 +75,8 @@
         "newPassword": "Nouveau mot de passe",
         "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
         "confirmPassword": "Confirmer le mot de passe",
-        "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe"
+        "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
+        "maxFileSize": "Fichier de maximum {{size}}",
+        "fileToBig": "Fichier trop gros !"
     }
 }

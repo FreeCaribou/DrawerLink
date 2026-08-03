@@ -1,73 +1,67 @@
 import { Form } from '@inertiajs/react';
-import { Field, FieldGroup, FieldLabel, FieldSet } from "./ui/field";
+import { Field, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { useTranslation } from 'react-i18next';
 import { toastError } from '@/lib/utils';
+import { SaveIcon } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Spinner } from './ui/spinner';
 
 export default function DrawerForm({
+    setOpenDrawForm
 }: {
-    }) {
+    setOpenDrawForm: (value: boolean) => void;
+}) {
     const { t } = useTranslation();
-    const [openDialog, setOpenDialog] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSuccess = () => {
-        setOpenDialog(false);
+        setIsLoading(false);
+        setOpenDrawForm(false);
     };
 
     const handleError = (err: any) => {
         toastError(err);
+        setIsLoading(false);
     }
 
     return (
-        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger asChild>
-                <Button variant="secondary">{t('addDraw')}</Button>
-            </DialogTrigger>
-            <DialogContent showCloseButton={false} className="sm:max-w-sm">
-                <DialogHeader>
-                    <DialogTitle>{t('addDraw')}</DialogTitle>
-                    <DialogDescription>
-                        {t('wantNewDraw')}
-                    </DialogDescription>
-                </DialogHeader>
-                <Form action="/draws" method='post' resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} className="flex flex-col gap-2">
-                    <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
-                        <FieldGroup>
-                            <FieldSet>
-                                <FieldGroup>
-                                    <Field>
-                                        <FieldLabel htmlFor="draw-form-label">
-                                            {t('form.label')}
-                                        </FieldLabel>
-                                        <Input id="draw-form-label" name='label' required />
-                                    </Field>
-                                    <Field>
-                                        <FieldLabel htmlFor="draw-form-description">
-                                            {t('form.description')}
-                                        </FieldLabel>
-                                        <Textarea id="draw-form-description" name='description' rows={2} />
-                                    </Field>
-                                </FieldGroup>
-                            </FieldSet>
-                        </FieldGroup>
-                        <DialogFooter className="mt-5">
-                            <DialogClose asChild>
-                                <Button variant="outline">{t('cancel')}</Button>
-                            </DialogClose>
-                            <Button
-                                type="submit"
-                                className="cursor-pointer"
-                            >
-                                {t('add')}
-                            </Button>
-                        </DialogFooter>
+        <Card>
+            <CardHeader>
+                <CardTitle className='text-primary'>{t('addDraw')}</CardTitle>
+                <CardDescription className='text-secondary'>{t('wantNewDraw')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Form action="/draws" method='post'
+                    resetOnSuccess={['label', 'description']} onSuccess={handleSuccess} onError={handleError} onBefore={() => setIsLoading(true)}
+                    className="flex flex-col gap-2">
+                    <FieldGroup>
+                        <Field>
+                            <FieldLabel htmlFor="draw-form-label" className='text-secondary'>
+                                {t('form.label')}
+                            </FieldLabel>
+                            <Input id="draw-form-label" name='label' required />
+                        </Field>
+                        <Field>
+                            <FieldLabel htmlFor="draw-form-description" className='text-secondary'>
+                                {t('form.description')}
+                            </FieldLabel>
+                            <Textarea id="draw-form-description" name='description' rows={2} />
+                        </Field>
+                    </FieldGroup>
+                    <div className="mt-2 flex gap-2">
+                        <Button variant="outline" className="cursor-pointer" onClick={() => setOpenDrawForm(false)}>
+                            {t('cancel')}
+                        </Button>
+                        <Button type="submit" className="cursor-pointer" disabled={isLoading}>
+                            {t('save')} {isLoading ? <Spinner /> : <SaveIcon />}
+                        </Button>
                     </div>
                 </Form>
-            </DialogContent>
-        </Dialog>
+            </CardContent>
+        </Card>
     );
 }

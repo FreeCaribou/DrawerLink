@@ -46,6 +46,7 @@
     "relatedArgumentTopics": "Argument topics using this link",
     "userInfoChangedGood": "Your user information has changed.",
     "myProfil": "My profil",
+    "numberOfLinkFile": "There are {{number}} files for this link",
     "form": {
         "email": "Email",
         "password": "Password",
@@ -74,6 +75,8 @@
         "newPassword": "New Password",
         "newPasswordPlaceholder": "Enter your new password",
         "confirmPassword": "Confirm Password",
-        "confirmPasswordPlaceholder": "Confirm your new password"
+        "confirmPasswordPlaceholder": "Confirm your new password",
+        "maxFileSize": "Max file size {{size}}",
+        "fileToBig": "File to big!"
     }
 }

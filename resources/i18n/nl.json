@@ -46,6 +46,7 @@
     "relatedArgumentTopics": "Argumentatieonderwerpen via deze link",
     "userInfoChangedGood": "Je gebruikersgegevens zijn gewijzigd.",
     "myProfil": "Mijn profiel",
+    "numberOfLinkFile": "Er zijn {{number}} bestanden voor deze link",
     "form": {
         "email": "E-mail",
         "password": "Wachtwoord",
@@ -74,6 +75,8 @@
         "newPassword": "Nieuw wachtwoord",
         "newPasswordPlaceholder": "Voer uw nieuwe wachtwoord in",
         "confirmPassword": "Bevestig wachtwoord",
-        "confirmPasswordPlaceholder": "Bevestig uw nieuwe wachtwoord"
+        "confirmPasswordPlaceholder": "Bevestig uw nieuwe wachtwoord",
+        "maxFileSize": "Bestandsgrootte: maximaal {{size}}",
+        "fileToBig": "Te groot!"
     }
 }

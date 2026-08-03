@@ -4,11 +4,12 @@ A little app to store "link" to retrieve it easily later and share it
 
 ## TODO for better app
 
-- Avoid dialog form (complicate with mobile)
+- Store the object storage in a proper way
 - Send a shared link by mail
 - Better backend error handling
 - Clean up the code (avoid big file, separate component in front and divide service in back, refactor some duplicate in frontend)
 - Have an icon not AI generated
+- Make accessibility feature (aria-label in link for ex)
 - (cookie message)
 - For the tag of a saved link
     - For the form, propose some tag by some logic
