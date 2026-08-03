@@ -74,6 +74,8 @@
         "newPassword": "New Password",
         "newPasswordPlaceholder": "Enter your new password",
         "confirmPassword": "Confirm Password",
-        "confirmPasswordPlaceholder": "Confirm your new password"
+        "confirmPasswordPlaceholder": "Confirm your new password",
+        "maxFileSize": "Max file size {{size}}",
+        "fileToBig": "File to big!"
     }
 }

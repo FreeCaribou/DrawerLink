@@ -56,7 +56,7 @@ class SavedObjectPropController extends Controller
     public function add(int $savedLinkId, Request $request)
     {
         $request->validate([
-            'file' => 'nullable|file|max:8192',
+            'file' => 'nullable|file|max:25600',
         ]);
 
         $savedLink = SavedLink::find($savedLinkId);

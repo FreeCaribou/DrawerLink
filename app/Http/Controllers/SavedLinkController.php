@@ -25,7 +25,7 @@ class SavedLinkController extends Controller
             'tags' => 'nullable|string',
             'source_date' => 'nullable',
             'full_source' => 'nullable|string|max:255',
-            'file' => 'nullable|file|max:8192',
+            'file' => 'nullable|file|max:25600',
         ]);
 
         $userId = Auth::user()->id;

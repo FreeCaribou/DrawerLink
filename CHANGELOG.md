@@ -4,6 +4,7 @@
 
 - Better form for mobile view
 - Review the global design of the form
+- Upload file to 25Mo
 
 ## [1.2.0]
 

@@ -74,6 +74,8 @@
         "newPassword": "Nieuw wachtwoord",
         "newPasswordPlaceholder": "Voer uw nieuwe wachtwoord in",
         "confirmPassword": "Bevestig wachtwoord",
-        "confirmPasswordPlaceholder": "Bevestig uw nieuwe wachtwoord"
+        "confirmPasswordPlaceholder": "Bevestig uw nieuwe wachtwoord",
+        "maxFileSize": "Bestandsgrootte: maximaal {{size}}",
+        "fileToBig": "Te groot!"
     }
 }

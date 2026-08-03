@@ -22,6 +22,7 @@ export default function SavedLinkForm({
     const { t } = useTranslation();
     const [selectedDrawId, setSelectedDrawId] = useState<string | undefined>(undefined);
     const [openDialog, setOpenDialog] = useState(false);
+    const [fileToBig, setFileToBig] = useState(false);
 
     const [openDate, setOpenDate] = React.useState(false);
     const [date, setDate] = React.useState<Date | undefined>(undefined);
@@ -56,6 +57,15 @@ export default function SavedLinkForm({
     const handleError = (err: any) => {
         toastError(err);
     }
+
+    const handleFileChange = (e: any) => {
+        const file = e?.target?.files[0];
+        if (file && file.size > 25 * 1024 * 1024) { // 25 Mo en octets
+            setFileToBig(true);
+        } else {
+            setFileToBig(false);
+        }
+    };
 
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -120,7 +130,11 @@ export default function SavedLinkForm({
                                         <FieldLabel htmlFor="link-form-file">
                                             {t('form.fileLink')}
                                         </FieldLabel>
-                                        <Input id="link-form-file" name='file' type='file' />
+                                        <Input id="link-form-file" onChange={handleFileChange} name='file' type='file' />
+                                        <small className="text-secondary block mt-1">
+                                            {t('form.maxFileSize', { size: '25 Mo' })}
+                                        </small>
+                                        {fileToBig && <p className="text-red-500 text-sm mt-1">{t('form.fileToBig')}</p>}
                                     </Field>
 
                                     <Field>
