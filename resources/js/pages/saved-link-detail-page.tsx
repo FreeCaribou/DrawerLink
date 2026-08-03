@@ -1,7 +1,7 @@
 import { ArgumentTopic, Draw, SavedLink } from "@/types";
 import AppInternLayout from "@/layouts/app-intern-layout";
 import React, { useState } from "react";
-import { CalendarIcon, DownloadIcon, ExternalLinkIcon, PencilIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
+import { CalendarIcon, DownloadIcon, ExternalLinkIcon, FilePlusIcon, LinkIcon, PencilIcon, TagIcon, Trash2Icon, WarehouseIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, Link } from "@inertiajs/react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -379,8 +379,8 @@ export default function DrawCard({
                                     variant="destructive"
                                     className="cursor-pointer"
                                 >
-                                    <Trash2Icon></Trash2Icon>
                                     {t('yes')}
+                                    <Trash2Icon></Trash2Icon>
                                 </Button>
                             </Form>
                         </DialogContent>
@@ -393,7 +393,7 @@ export default function DrawCard({
                     <p>
                         <Dialog open={openDialogLink} onOpenChange={(isOpen) => { setOpenDialogLink(isOpen); getArgumentTopics() }}>
                             <DialogTrigger asChild>
-                                <Button variant="secondary">{t('linkTopic')}</Button>
+                                <Button variant="secondary">{t('linkTopic')} <FilePlusIcon /></Button>
                             </DialogTrigger>
                             <DialogContent showCloseButton={false} className="sm:max-w-sm">
                                 <DialogHeader>
@@ -447,8 +447,8 @@ export default function DrawCard({
                         className="cursor-pointer mt-5"
                         onClick={() => setEditMode(!editMode)}
                     >
-                        <PencilIcon></PencilIcon>
                         {!editMode ? t('goEditMode') : t('cancelEditMode')}
+                        <PencilIcon></PencilIcon>
                     </Button>
 
                     <div className="mt-5">
@@ -475,6 +475,7 @@ export default function DrawCard({
                                     className="cursor-pointer"
                                 >
                                     {t(('shareLink'))}
+                                    <LinkIcon />
                                 </Button>
                             </Form>
                         )}
