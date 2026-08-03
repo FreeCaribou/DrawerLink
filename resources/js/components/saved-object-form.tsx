@@ -54,20 +54,16 @@ export default function SavedObjectForm({
                     className="flex flex-col gap-2">
                     <div className="no-scrollbar -mx-4 max-h-[66vh] overflow-y-auto px-4">
                         <FieldGroup>
-                            <FieldSet>
-                                <FieldGroup>
-                                    <Field>
-                                        <FieldLabel htmlFor="link-form-file">
-                                            {t('form.fileLink')}
-                                        </FieldLabel>
-                                        <Input id="link-form-file" name='file' onChange={handleFileChange} type='file' />
-                                        <small className="text-secondary block mt-1">
-                                            {t('form.maxFileSize', { size: '25 Mo' })}
-                                        </small>
-                                        {fileToBig && <p className="text-red-500 text-sm mt-1">{t('form.fileToBig')}</p>}
-                                    </Field>
-                                </FieldGroup>
-                            </FieldSet>
+                            <Field>
+                                <FieldLabel htmlFor="link-form-file" className='text-secondary'>
+                                    {t('form.fileLink')}
+                                </FieldLabel>
+                                <Input id="link-form-file" name='file' onChange={handleFileChange} type='file' />
+                                <small className="text-secondary block mt-1">
+                                    {t('form.maxFileSize', { size: '25 Mo' })}
+                                </small>
+                                {fileToBig && <p className="text-red-500 text-sm mt-1">{t('form.fileToBig')}</p>}
+                            </Field>
                         </FieldGroup>
                         <DialogFooter className="mt-5">
                             <DialogClose asChild>

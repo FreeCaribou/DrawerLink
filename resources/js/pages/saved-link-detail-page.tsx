@@ -180,7 +180,7 @@ export default function DrawCard({
                             <FieldSet>
                                 <FieldGroup>
                                     <Field>
-                                        <FieldLabel htmlFor="link-form-draw">
+                                        <FieldLabel htmlFor="link-form-draw" className='text-secondary'>
                                             {t('form.drawForLink')}
                                         </FieldLabel>
                                         <Select name='draw_id' value={selectedDrawId} key={selectedDrawId}
@@ -201,7 +201,7 @@ export default function DrawCard({
                                     </Field>
 
                                     <Field>
-                                        <FieldLabel htmlFor="link-form-label">
+                                        <FieldLabel htmlFor="link-form-label" className='text-secondary'>
                                             {t('form.label')}
                                         </FieldLabel>
                                         <Input id="link-form-label" name='label'
@@ -209,7 +209,7 @@ export default function DrawCard({
                                     </Field>
 
                                     <Field>
-                                        <FieldLabel htmlFor="link-form-description">
+                                        <FieldLabel htmlFor="link-form-description" className='text-secondary'>
                                             {t('form.description')}
                                         </FieldLabel>
                                         <Textarea id="link-form-description" name='description'
@@ -217,7 +217,7 @@ export default function DrawCard({
                                     </Field>
 
                                     <Field>
-                                        <FieldLabel htmlFor="link-form-tags">
+                                        <FieldLabel htmlFor="link-form-tags" className='text-secondary'>
                                             {t('form.someTags')}
                                         </FieldLabel>
                                         <Input id="link-form-tags" name='editTags'
@@ -225,7 +225,7 @@ export default function DrawCard({
                                     </Field>
 
                                     <Field>
-                                        <FieldLabel htmlFor="link-form-sourceDate">
+                                        <FieldLabel htmlFor="link-form-sourceDate" className='text-secondary'>
                                             {t('form.sourceDate')}
                                         </FieldLabel>
                                         <InputGroup>
@@ -281,7 +281,7 @@ export default function DrawCard({
                                     </Field>
 
                                     <Field>
-                                        <FieldLabel htmlFor="link-form-fullSource">
+                                        <FieldLabel htmlFor="link-form-fullSource" className='text-secondary'>
                                             {t('form.sourceOfLink')}
                                         </FieldLabel>
                                         <Input id="link-form-fullSource" type='url' name='full_source'
@@ -389,8 +389,7 @@ export default function DrawCard({
             )}
 
             {!blockEdit && (
-                <div>
-
+                <div className="mt-5">
                     <p>
                         <Dialog open={openDialogLink} onOpenChange={(isOpen) => { setOpenDialogLink(isOpen); getArgumentTopics() }}>
                             <DialogTrigger asChild>
@@ -399,37 +398,33 @@ export default function DrawCard({
                             <DialogContent showCloseButton={false} className="sm:max-w-sm">
                                 <DialogHeader>
                                     <DialogTitle>{t('linkTopic')}</DialogTitle>
-                                    <DialogDescription>
+                                    <DialogDescription className='text-secondary'>
                                         {t('linkTopicDescription')}
                                     </DialogDescription>
                                 </DialogHeader>
                                 <Form action={'/saved-links/' + savedLink.id + '/argument-topic'} method='post' resetOnSuccess={['link']} onSuccess={handleSuccessLink} onError={handleError} className="flex flex-col gap-2">
                                     <div className="no-scrollbar -mx-4 max-h-[50vh] overflow-y-auto px-4">
                                         <FieldGroup>
-                                            <FieldSet>
-                                                <FieldGroup>
-                                                    <Field>
-                                                        <FieldLabel htmlFor="link-form-link">
-                                                            {t('form.argumentTopics')}
-                                                        </FieldLabel>
-                                                        <Select name='argument_topic_id' value={selectedArgumentTopicId} key={selectedArgumentTopicId}
-                                                            onValueChange={setSelectedArgumentTopicId} required>
-                                                            <SelectTrigger>
-                                                                <SelectValue placeholder={t('form.chooseTopic')} />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectGroup>
-                                                                    {argumentTopics.map((at) => (
-                                                                        <React.Fragment key={at.id}>
-                                                                            <SelectItem value={at.id.toString()}>{at.label}</SelectItem>
-                                                                        </React.Fragment>
-                                                                    ))}
-                                                                </SelectGroup>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </Field>
-                                                </FieldGroup>
-                                            </FieldSet>
+                                            <Field>
+                                                <FieldLabel htmlFor="link-form-link" className='text-secondary'>
+                                                    {t('form.argumentTopics')}
+                                                </FieldLabel>
+                                                <Select name='argument_topic_id' value={selectedArgumentTopicId} key={selectedArgumentTopicId}
+                                                    onValueChange={setSelectedArgumentTopicId} required>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder={t('form.chooseTopic')} />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {argumentTopics.map((at) => (
+                                                                <React.Fragment key={at.id}>
+                                                                    <SelectItem value={at.id.toString()}>{at.label}</SelectItem>
+                                                                </React.Fragment>
+                                                            ))}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </Field>
                                         </FieldGroup>
                                         <DialogFooter className="mt-5">
                                             <DialogClose asChild>
