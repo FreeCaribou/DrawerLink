@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SavedObjectProp;
 use App\Models\SavedLink;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
+use App\Models\SavedObjectProp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class SavedObjectPropController extends Controller
 {
@@ -18,11 +19,17 @@ class SavedObjectPropController extends Controller
         if ($userId != $savedObjectProp->savedLink->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-document']);
         }
-        $fileContent = base64_decode($savedObjectProp->savedObject->content);
+
+        if ($savedObjectProp->path) {
+            $fileContent = Storage::get($savedObjectProp->path);
+        } else {
+            // To manage the old way when we stored that badly in the db
+            $fileContent = base64_decode($savedObjectProp->savedObject->content);
+        }
 
         return Response::make($fileContent, 200, [
             'Content-Type' => $savedObjectProp->mime_type,
-            'Content-Disposition' => 'attachment; filename="' . $savedObjectProp->name . '"',
+            'Content-Disposition' => 'attachment; filename="'.$savedObjectProp->name.'"',
             'Content-Length' => strlen($fileContent),
         ]);
     }
@@ -33,11 +40,17 @@ class SavedObjectPropController extends Controller
         if ($sharedKey != $savedObjectProp->savedLink->shared_key) {
             return redirect()->route('error')->withErrors(['error.not-your-document']);
         }
-        $fileContent = base64_decode($savedObjectProp->savedObject->content);
+
+        if ($savedObjectProp->path) {
+            $fileContent = Storage::get($savedObjectProp->path);
+        } else {
+            // To manage the old way when we stored that badly in the db
+            $fileContent = base64_decode($savedObjectProp->savedObject->content);
+        }
 
         return Response::make($fileContent, 200, [
             'Content-Type' => $savedObjectProp->mime_type,
-            'Content-Disposition' => 'attachment; filename="' . $savedObjectProp->name . '"',
+            'Content-Disposition' => 'attachment; filename="'.$savedObjectProp->name.'"',
             'Content-Length' => strlen($fileContent),
         ]);
     }
@@ -49,7 +62,10 @@ class SavedObjectPropController extends Controller
         if ($userId != $savedObjectProp->savedLink->user_id) {
             return redirect()->route('error')->withErrors(['error.not-your-document']);
         }
-        Log::info('Delete a saved object prop ' . $savedObjectPropId);
+        Log::info('Delete a saved object prop '.$savedObjectPropId);
+        if ($savedObjectProp->path) {
+            Storage::delete($savedObjectProp->path);
+        }
         $savedObjectProp->delete();
     }
 
@@ -65,18 +81,17 @@ class SavedObjectPropController extends Controller
             return redirect()->route('error')->withErrors(['error.not-your-link']);
         }
 
-        Log::info('Trying add a new saved object prop to the link ' . $savedLinkId);
+        Log::info('Trying add a new saved object prop to the link '.$savedLinkId);
         // Link the file if present
         $uploadedFile = $request->file('file');
         if ($uploadedFile) {
+            $path = $uploadedFile->store('uploadfile');
+
             $savedObjectProp = $savedLink->savedObjectProps()->create([
                 'name' => $uploadedFile->getClientOriginalName(),
                 'mime_type' => $uploadedFile->getClientMimeType(),
                 'size' => $uploadedFile->getSize(),
-            ]);
-
-            $savedObjectProp->savedObject()->create([
-                'content' => base64_encode(file_get_contents($uploadedFile->getRealPath())),
+                'path' => $path,
             ]);
         }
 
