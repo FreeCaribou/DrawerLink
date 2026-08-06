@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.0]
+
+- See the title tab changed
+
 ## [1.2.2]
 
 - Better storage of the file

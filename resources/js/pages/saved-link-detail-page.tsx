@@ -3,7 +3,7 @@ import AppInternLayout from "@/layouts/app-intern-layout";
 import React, { useEffect, useRef, useState } from "react";
 import { CalendarIcon, DownloadIcon, ExternalLinkIcon, FolderSymlinkIcon, LinkIcon, PencilIcon, SaveIcon, TagIcon, Trash2Icon, UnlinkIcon, WarehouseIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Form, Link } from "@inertiajs/react";
+import { Form, Head, Link } from "@inertiajs/react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import DateFormater from "@/components/date-formater";
@@ -143,6 +143,7 @@ export default function DrawCard({
 
     return (
         <AppInternLayout>
+            <Head title={'Link - ' + savedLink.label}></Head>
             {!editMode ? (
                 <div>
                     <h2>{savedLink.label}</h2>

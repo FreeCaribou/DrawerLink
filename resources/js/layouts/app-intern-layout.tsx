@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import { logout } from "@/routes";
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Footer from "./footer";
 import { useTranslation } from "react-i18next";
 
@@ -12,6 +12,7 @@ export default function AppInternLayout({
     const { t } = useTranslation();
     return (
         <div className="flex flex-col min-h-screen lg:items-center bg-[#FDFDFC] text-[#1b1b18]">
+            <Head title='Login'></Head>
             <div className="flex-[100] p-6 lg:p-8 lg:w-4/5">
                 <header className="mb-6">
                     <nav className="flex items-center justify-between w-full">

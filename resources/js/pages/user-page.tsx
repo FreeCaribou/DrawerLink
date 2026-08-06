@@ -1,7 +1,7 @@
 import AppInternLayout from "@/layouts/app-intern-layout";
 import { User } from "@/types";
 import { useTranslation } from "react-i18next";
-import { Form } from "@inertiajs/react";
+import { Form, Head } from "@inertiajs/react";
 import { toastError } from "@/lib/utils";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -44,6 +44,7 @@ export default function UserPage({
 
     return (
         <AppInternLayout>
+            <Head title='User'></Head>
             <h2>{t('hello', { 'name': user.name })}</h2>
 
             {showSuccess && (

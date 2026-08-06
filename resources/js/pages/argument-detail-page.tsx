@@ -2,7 +2,7 @@ import { ArgumentTopic, SavedLink } from '@/types';
 import AppInternLayout from '@/layouts/app-intern-layout';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { Form, Link } from '@inertiajs/react';
+import { Form, Head, Link } from '@inertiajs/react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
@@ -109,6 +109,7 @@ export default function ArgumentDetail({
 
     return (
         <AppInternLayout>
+            <Head title={'Topic - ' + argumentTopic.label}></Head>
             <div>
                 {!editMode ? (
                     <div>

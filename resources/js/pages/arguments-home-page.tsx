@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toastError } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Form } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -42,6 +42,7 @@ export default function ArgumentHome({
 
     return (
         <AppInternLayout>
+            <Head title='Topic'></Head>
             <ArgumentTopicsGrid argumentTopics={argumentTopics} />
             <div className='mt-8'>
                 <Button variant="secondary" className="cursor-pointer" onClick={() => setOpenForm(!openForm)}>

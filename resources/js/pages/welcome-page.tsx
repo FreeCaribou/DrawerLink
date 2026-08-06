@@ -10,6 +10,7 @@ import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon, ClipboardPlusIcon, FolderPlusIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Head } from '@inertiajs/react';
 
 export default function Welcome({
     drawBaseList = [],
@@ -38,6 +39,7 @@ export default function Welcome({
 
     return (
         <AppInternLayout>
+            <Head title='Home'></Head>
             {flash?.success && (
                 <div className="mb-6 p-3 bg-green-100 text-green-800 rounded">
                     {flash.success}
